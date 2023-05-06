@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   tabBox: type => ({
     justifyContent: 'center',
     alignItems: 'center',
-    width: '35%',
+    width: '30%',
     borderBottomColor: SECUNDARY,
     borderBottomWidth: type === 1 ? 1 : 0,
   }),

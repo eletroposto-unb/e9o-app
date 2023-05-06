@@ -10,33 +10,16 @@ function MyStack() {
   return (
     <SafeAreaLayout>
       <Stack.Navigator>
-        <Stack.Screen
-          name="Autenticaiton"
-          options={{
+        <Stack.Group
+          screenOptions={{
             title: '',
             headerTransparent: true,
             headerShadowVisible: false,
-          }}
-          component={Autentication}
-        />
-        <Stack.Screen
-          name="Login"
-          options={{
-            title: '',
-            headerTransparent: true,
-            headerShadowVisible: false,
-          }}
-          component={Login}
-        />
-        <Stack.Screen
-          name="Register"
-          options={{
-            title: '',
-            headerTransparent: true,
-            headerShadowVisible: false,
-          }}
-          component={Register}
-        />
+          }}>
+          <Stack.Screen name="Autenticaiton" component={Autentication} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} />
+        </Stack.Group>
       </Stack.Navigator>
     </SafeAreaLayout>
   );
