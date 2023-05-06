@@ -12,6 +12,7 @@ export default SafeAreaLayout;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: PRIMARY
+    backgroundColor: PRIMARY,
+    paddingHorizontal: 20
   },
 });
