@@ -1,6 +1,6 @@
 import {Input, Icon} from 'native-base';
-import { StyleSheet } from 'react-native';
-import { BACKGROUND, WHITE } from '../../styles/colors';
+import {StyleSheet} from 'react-native';
+import {BACKGROUND, WHITE} from '../../styles/colors';
 
 type inputProps = {
   variant: string;
@@ -29,6 +29,7 @@ const InputForm = ({
       paddingBottom={3}
       paddingLeft={5}
       paddingRight={5}
+      fontSize={17}
       color={WHITE}
       variant={variant}
       placeholder={placeHolder}
@@ -36,16 +37,15 @@ const InputForm = ({
       secureTextEntry={secureTextEntry}
       autoCapitalize={autoCapitalize}
       onChangeText={onChangeText}
+      infoTex
     />
   );
 };
 
 export default InputForm;
 
-
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-  });
-  
+  container: {
+    flex: 1,
+  },
+});

@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
-import {Button} from 'native-base';
+import {useToast, Button, Box, Text, Alert} from 'native-base';
 import InputForm from '../../../components/Input';
 import {BACKGROUND, SECUNDARY, WARNING} from '../../../styles/colors';
 import {
@@ -20,6 +20,7 @@ type formData = {
 };
 
 const Register = () => {
+  const toast = useToast();
   const {
     control,
     handleSubmit,
@@ -27,7 +28,42 @@ const Register = () => {
   } = useForm<formData>();
 
   const onSubmit = (data: formData) => {
-    console.log(data);
+    console.log('data', data);
+
+    if (data.password === data.confirm_password) {
+      toast.show({
+        render: () => {
+          return (
+            <Box
+              bg={`error.100`}
+              px="3"
+              py="2"
+              rounded="sm"
+              mb={5}
+              style={styles.toastMessage}>
+              Usuário cadastrado com sucesso!
+            </Box>
+          );
+        },
+      });
+    } else {
+      toast.show({
+        render: () => {
+          return (
+            <Box
+              bg={`error.300`}
+              px="3"
+              py="2"
+              rounded="sm"
+              mb={5}
+              style={styles.toastMessage}>
+              <Alert.Icon style={{marginRight: 10}} />
+              As senhas digitadas não coincidem!
+            </Box>
+          );
+        },
+      });
+    }
   };
 
   return (
@@ -37,10 +73,6 @@ const Register = () => {
         name="name"
         rules={{
           required: 'Nome Obrigatório',
-          pattern: {
-            message: 'Nome inválido',
-            value: nameRegex,
-          },
         }}
         render={({field: {value, onChange}}) => (
           <InputForm
@@ -108,9 +140,9 @@ const Register = () => {
         control={control}
         name="password"
         rules={{
-          required: 'Senha Obrigatório',
+          required: 'Senha obrigatória',
           pattern: {
-            message: 'Senha inválido',
+            message: 'Senha inválida',
             value: passwordRegex,
           },
         }}
@@ -131,7 +163,7 @@ const Register = () => {
         control={control}
         name="confirm_password"
         rules={{
-          required: 'Confirmação de Senha Obrigatória',
+          required: 'Confirmação de senha obrigatória',
         }}
         render={({field: {value, onChange}}) => (
           <InputForm
@@ -167,6 +199,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     marginTop: 50,
+  },
+  toastMessage: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   messageError: {
     display: 'flex',
