@@ -4,7 +4,12 @@ import {useForm, Controller} from 'react-hook-form';
 import {Button} from 'native-base';
 import InputForm from '../../../components/Input';
 import {BACKGROUND, SECUNDARY, WARNING} from '../../../styles/colors';
-import { emailRegex } from '../../../utils/regex';
+import {
+  emailRegex,
+  cpfRegex,
+  nameRegex,
+  passwordRegex,
+} from '../../../utils/regex';
 
 type formData = {
   name: string;
@@ -25,10 +30,6 @@ const Register = () => {
     console.log(data);
   };
 
-  const handleForgotPassword = () => {
-    console.log('handleForgotPassword');
-  };
-
   return (
     <View style={styles.container}>
       <Controller
@@ -36,6 +37,10 @@ const Register = () => {
         name="name"
         rules={{
           required: 'Nome Obrigatório',
+          pattern: {
+            message: 'Nome inválido',
+            value: nameRegex,
+          },
         }}
         render={({field: {value, onChange}}) => (
           <InputForm
@@ -80,6 +85,10 @@ const Register = () => {
         name="cpf"
         rules={{
           required: 'CPF Obrigatório',
+          pattern: {
+            message: 'CPF inválido',
+            value: cpfRegex,
+          },
         }}
         render={({field: {value, onChange}}) => (
           <InputForm
@@ -99,7 +108,11 @@ const Register = () => {
         control={control}
         name="password"
         rules={{
-          required: 'Senha Obrigatória',
+          required: 'Senha Obrigatório',
+          pattern: {
+            message: 'Senha inválido',
+            value: passwordRegex,
+          },
         }}
         render={({field: {value, onChange}}) => (
           <InputForm
@@ -131,7 +144,9 @@ const Register = () => {
         )}
       />
       {errors?.confirm_password && (
-        <Text style={styles.messageError}>{errors.confirm_password.message}</Text>
+        <Text style={styles.messageError}>
+          {errors.confirm_password.message}
+        </Text>
       )}
       <Button
         onPress={handleSubmit(onSubmit)}

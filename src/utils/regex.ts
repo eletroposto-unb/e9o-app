@@ -1,2 +1,4 @@
-export const emailRegex: string = '/^[w+.]+@w+.w{2,}(?:.w{2})?$/';
-export const cpfRegex: string = '(^d{3}.d{3}.d{3}-d{2}$)';
+export const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+export const cpfRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+export const passwordRegex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+export const nameRegex: RegExp = /^[a-z0-9_-]{3,15}$/;
