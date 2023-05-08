@@ -12,7 +12,7 @@ const Autentication = () => {
       status: true,
     },
     register: {
-      title: 'REGISTER',
+      title: 'REGISTRAR',
       status: false,
     },
   });
@@ -24,7 +24,7 @@ const Autentication = () => {
         status: !action.login.status,
       },
       register: {
-        title: 'REGISTER',
+        title: 'REGISTRAR',
         status: !action.register.status,
       },
     });
