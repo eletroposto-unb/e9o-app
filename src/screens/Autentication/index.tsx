@@ -39,6 +39,7 @@ const Autentication = () => {
               color={action.login.status ? SECUNDARY : WHITE}
               bold
               fontSize={18}
+              marginBottom={4}
               onPress={handleTabAction}>
               {action.login.title}
             </Text>
@@ -48,6 +49,7 @@ const Autentication = () => {
               color={action.register.status ? SECUNDARY : WHITE}
               bold
               fontSize={18}
+              marginBottom={4}
               onPress={handleTabAction}>
               {action.register.title}
             </Text>
