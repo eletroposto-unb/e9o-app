@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: PRIMARY,
+    paddingHorizontal: 20
   },
   containerTicketTypes: {
     paddingVertical: 10,

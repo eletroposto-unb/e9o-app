@@ -2,19 +2,19 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Authentication from '../screens/Authentication';
 import Login from '../screens/Authentication/Login';
 import Register from '../screens/Authentication/Register';
-import SafePublicArea from '../components/SafeArea/SafePublicArea';
+import SafeAreaWrapper from '../components/SafeArea';
 
-import Profile from '../screens/Profile';
-import QrCodeReader from '../screens/QRCode';
-import Charge from '../screens/Charge';
-import NfcReader from '../screens/NFC';
-import History from '../screens/History';
+const StackScreens = [
+  {name: 'Authentication', component: Authentication},
+  {name: 'Login', component: Login},
+  {name: 'Register', component: Register},
+];
 
 const Stack = createStackNavigator();
 
-function MyStack() {
+export function PublicNavigator() {
   return (
-    <SafePublicArea>
+    <SafeAreaWrapper>
       <Stack.Navigator>
         <Stack.Group
           screenOptions={{
@@ -22,18 +22,15 @@ function MyStack() {
             headerTransparent: true,
             headerShadowVisible: false,
           }}>
-          <Stack.Screen name="Autenticaiton" component={Authentication} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="QrCodeReader" component={QrCodeReader} />
-          <Stack.Screen name="Charger" component={Charge} />
-          <Stack.Screen name="NfcReader" component={NfcReader} />
-          <Stack.Screen name="History" component={History} />
+          {StackScreens.map((screen, index) => (
+            <Stack.Screen
+              key={index}
+              name={screen.name}
+              component={screen.component}
+            />
+          ))}
         </Stack.Group>
       </Stack.Navigator>
-    </SafePublicArea>
+    </SafeAreaWrapper>
   );
 }
-
-export default MyStack;
