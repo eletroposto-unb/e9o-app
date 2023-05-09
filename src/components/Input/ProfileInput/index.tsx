@@ -1,6 +1,6 @@
 import {Input, Icon} from 'native-base';
 import {StyleSheet} from 'react-native';
-import {BACKGROUND, WHITE} from '../../styles/colors';
+import {BACKGROUND, WHITE} from '../../../styles/colors';
 
 type inputProps = {
   variant: string;
@@ -11,7 +11,7 @@ type inputProps = {
   secureTextEntry?: boolean;
 };
 
-const InputForm = ({
+const ProfileInput = ({
   variant,
   placeHolder,
   value,
@@ -23,8 +23,9 @@ const InputForm = ({
     <Input
       size="xl"
       marginBottom={3}
-      backgroundColor={BACKGROUND}
-      borderWidth={0}
+      backgroundColor={WHITE}
+      borderColor={BACKGROUND}
+      borderWidth={1}
       paddingTop={3}
       paddingBottom={3}
       paddingLeft={5}
@@ -36,13 +37,13 @@ const InputForm = ({
       value={value}
       secureTextEntry={secureTextEntry}
       autoCapitalize={autoCapitalize}
-      onChangeText={onChangeText}
+    //   onChangeText={onChangeText}
       infoTex
     />
   );
 };
 
-export default InputForm;
+export default ProfileInput;
 
 const styles = StyleSheet.create({
   container: {

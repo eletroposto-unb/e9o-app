@@ -2,29 +2,29 @@ import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {NativeBaseProvider, Box, Text} from 'native-base';
 import {PRIMARY, SECUNDARY, WHITE} from '../../styles/colors';
-import Login from './Login';
-import Register from './Register';
+import Profile from './Profile';
+import Cars from './Cars';
 
-const Authentication = () => {
+const Home = () => {
   const [action, setAction] = useState({
-    login: {
-      title: 'LOGIN',
+    profile: {
+      title: 'PERFIL',
       status: true,
     },
-    register: {
-      title: 'REGISTRAR',
+    cars: {
+      title: 'CARROS',
       status: false,
     },
   });
 
   const handleLogin = (value: number) => {
     setAction({
-      login: {
-        title: 'LOGIN',
+      profile: {
+        title: 'PERFIL',
         status: true,
       },
-      register: {
-        title: 'REGISTRAR',
+      cars: {
+        title: 'CARROS',
         status: false,
       },
     });
@@ -32,12 +32,12 @@ const Authentication = () => {
 
   const handleRegister = () => {
     setAction({
-      login: {
-        title: 'LOGIN',
+      profile: {
+        title: 'PERFIL',
         status: false,
       },
-      register: {
-        title: 'REGISTRAR',
+      cars: {
+        title: 'CARROS',
         status: true,
       },
     });
@@ -47,41 +47,28 @@ const Authentication = () => {
     <NativeBaseProvider>
       <View style={styles.container}>
         <View style={styles.containerTicketTypes}>
-          <Box style={styles.tabBox(action.login.status ? 1 : 0)}>
-            <Text
-              color={action.login.status ? SECUNDARY : WHITE}
-              bold
-              fontSize={18}
-              onPress={handleLogin}>
-              {action.login.title}
+          <Box style={styles.tabBox(action.profile.status ? 1 : 0)}>
+            <Text color={PRIMARY} bold fontSize={18} onPress={handleLogin}>
+              {action.profile.title}
             </Text>
           </Box>
-          <Box style={styles.tabBox(action.register.status ? 1 : 0)}>
-            <Text
-              color={action.register.status ? SECUNDARY : WHITE}
-              bold
-              fontSize={18}
-              onPress={handleRegister}>
-              {action.register.title}
+          <Box style={styles.tabBox(action.cars.status ? 1 : 0)}>
+            <Text color={PRIMARY} bold fontSize={18} onPress={handleRegister}>
+              {action.cars.title}
             </Text>
           </Box>
         </View>
-        {action.login.status ? (
-          <Login />
-        ) : (
-          action.register.status && <Register />
-        )}
+        {action.profile.status ? <Profile /> : action.cars.status && <Cars />}
       </View>
     </NativeBaseProvider>
   );
 };
 
-export default Authentication;
+export default Home;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: PRIMARY,
     paddingHorizontal: 20,
   },
   containerTicketTypes: {
@@ -95,7 +82,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '30%',
-    borderBottomColor: SECUNDARY,
+    borderBottomColor: PRIMARY,
     borderBottomWidth: type === 1 ? 1 : 0,
   }),
 });

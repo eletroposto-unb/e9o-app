@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {useToast, Button, Box, Text, Alert} from 'native-base';
-import InputForm from '../../../components/Input';
+import AuthInput from '../../../components/Input/AuthInput';
 import {BACKGROUND, SECUNDARY, WARNING} from '../../../styles/colors';
 import {
   emailRegex,
@@ -75,7 +75,7 @@ const Register = () => {
           required: 'Nome Obrigatório',
         }}
         render={({field: {value, onChange}}) => (
-          <InputForm
+          <AuthInput
             variant="rounded"
             placeHolder="Nome"
             value={value}
@@ -99,7 +99,7 @@ const Register = () => {
           },
         }}
         render={({field: {value, onChange}}) => (
-          <InputForm
+          <AuthInput
             variant="rounded"
             placeHolder="Email"
             value={value}
@@ -123,7 +123,7 @@ const Register = () => {
           },
         }}
         render={({field: {value, onChange}}) => (
-          <InputForm
+          <AuthInput
             variant="rounded"
             placeHolder="CPF"
             value={value}
@@ -147,7 +147,7 @@ const Register = () => {
           },
         }}
         render={({field: {value, onChange}}) => (
-          <InputForm
+          <AuthInput
             variant="rounded"
             placeHolder="Senha"
             value={value}
@@ -166,7 +166,7 @@ const Register = () => {
           required: 'Confirmação de senha obrigatória',
         }}
         render={({field: {value, onChange}}) => (
-          <InputForm
+          <AuthInput
             variant="rounded"
             placeHolder="Confirmar senha"
             value={value}

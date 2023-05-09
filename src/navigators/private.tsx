@@ -1,12 +1,12 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Profile from '../screens/Profile';
 import Charge from '../screens/Charge';
 import NfcReader from '../screens/NFC';
 import QrCodeReader from '../screens/QRCode';
 import History from '../screens/History';
+import Home from '../screens/Home';
 
 const TabScreens = [
-  {name: 'Perfil', component: Profile},
+  {name: 'Home', component: Home},
   {name: 'Charger', component: Charge},
   {name: 'NfcReader', component: NfcReader},
   {name: 'QrCodeReader', component: QrCodeReader},
