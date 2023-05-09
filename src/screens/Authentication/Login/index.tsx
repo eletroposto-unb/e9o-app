@@ -8,11 +8,9 @@ const Login = () => {
   const navigation = useNavigation();
 
   const handleLogin = () => {
+    console.log("isAuthenticated", isAuthenticated)
     login();
-    navigation.navigate('Profile');
   };
-
-  console.log("REALIZA LOGIN", isAuthenticated)
 
   return (
     <View>

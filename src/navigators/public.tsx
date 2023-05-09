@@ -1,8 +1,9 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import Autentication from '../screens/Autentication';
-import Login from '../screens/Autentication/Login';
-import Register from '../screens/Autentication/Register';
-import SafeAreaLayout from '../components/SafeArea';
+import Authentication from '../screens/Authentication';
+import Login from '../screens/Authentication/Login';
+import Register from '../screens/Authentication/Register';
+import SafePublicArea from '../components/SafeArea/SafePublicArea';
+
 import Profile from '../screens/Profile';
 import QrCodeReader from '../screens/QRCode';
 import Charge from '../screens/Charge';
@@ -11,9 +12,9 @@ import History from '../screens/History';
 
 const Stack = createStackNavigator();
 
-function PublicStack() {
+function MyStack() {
   return (
-    <SafeAreaLayout>
+    <SafePublicArea>
       <Stack.Navigator>
         <Stack.Group
           screenOptions={{
@@ -21,7 +22,7 @@ function PublicStack() {
             headerTransparent: true,
             headerShadowVisible: false,
           }}>
-          <Stack.Screen name="Autenticaiton" component={Autentication} />
+          <Stack.Screen name="Autenticaiton" component={Authentication} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Profile" component={Profile} />
@@ -31,8 +32,8 @@ function PublicStack() {
           <Stack.Screen name="History" component={History} />
         </Stack.Group>
       </Stack.Navigator>
-    </SafeAreaLayout>
+    </SafePublicArea>
   );
 }
 
-export default PublicStack;
+export default MyStack;

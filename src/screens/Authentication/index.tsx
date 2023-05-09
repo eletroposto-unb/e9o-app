@@ -5,7 +5,7 @@ import {PRIMARY, SECUNDARY, WHITE} from '../../styles/colors';
 import Login from './Login';
 import Register from './Register';
 
-const Autentication = () => {
+const Authentication = () => {
   const [action, setAction] = useState({
     login: {
       title: 'LOGIN',
@@ -63,7 +63,7 @@ const Autentication = () => {
   );
 };
 
-export default Autentication;
+export default Authentication;
 
 const styles = StyleSheet.create({
   container: {

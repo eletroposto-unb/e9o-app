@@ -2,24 +2,22 @@ import React, {useContext} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from '../context/authProvider';
-import PublicStack from './public';
-import PrivateStack from './private';
+import TabNavigator from '../components/TabNavigator';
+import MyStack from './public';
 
-function ApplicationRotues() {
+function ApplicationRoutes() {
   const {isAuthenticated} = useContext(AuthContext);
-
-  console.log('isAuthenticated', isAuthenticated);
 
   return (
     <>
       {isAuthenticated ? (
         <NavigationContainer>
-          <PrivateStack />
+          <TabNavigator />
         </NavigationContainer>
       ) : (
-        <SafeAreaProvider style={{flex: 1}}>
+        <SafeAreaProvider>
           <NavigationContainer>
-            <PublicStack />
+            <MyStack />
           </NavigationContainer>
         </SafeAreaProvider>
       )}
@@ -27,4 +25,4 @@ function ApplicationRotues() {
   );
 }
 
-export default ApplicationRotues;
+export default ApplicationRoutes;
