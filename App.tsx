@@ -2,15 +2,18 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
-import MyStack from './src/navigators';
+import {AuthContextProvider} from './src/context/authProvider';
+import PublicStack from './src/navigators/public';
+import PrivateStack from './src/navigators/private';
+import ApplicationRotues from './src/navigators';
 
 function App(): JSX.Element {
+  console.log('IS LOGGED', false);
+
   return (
-    <SafeAreaProvider style={{flex: 1}}>
-      <NavigationContainer>
-        <MyStack />
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <AuthContextProvider>
+      <ApplicationRotues />
+    </AuthContextProvider>
   );
 }
 

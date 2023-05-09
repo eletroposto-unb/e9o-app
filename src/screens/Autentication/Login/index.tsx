@@ -1,14 +1,22 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {NativeBaseProvider, Box} from 'native-base';
-import {PRIMARY} from '../../../styles/colors';
-import BottomBar from '../../Homepage/BottomBar';
+import React, {useContext} from 'react';
+import {View, Text} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {AuthContext} from '../../../context/authProvider';
 
 const Login = () => {
+  const {login, isAuthenticated} = useContext(AuthContext);
+  const navigation = useNavigation();
+
+  const handleLogin = () => {
+    login();
+    navigation.navigate('Profile');
+  };
+
+  console.log("REALIZA LOGIN", isAuthenticated)
+
   return (
     <View>
-      <Text>Login</Text>
-      <BottomBar />
+      <Text onPress={() => handleLogin()}>Login</Text>
     </View>
   );
 };

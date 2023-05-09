@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import ProfilePage from '../../Profile';
-import ChargePage from '../../Charge';
-import NFCPage from '../../NFC';
-import QRCodePage from '../../QRCode';
-import HistoryPage from '../../History';
+import Profile from '../../Profile';
+import Charge from '../../Charge';
+import NfcReader from '../../NFC';
+import QrCodeReader from '../../QRCode';
+import History from '../../History';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Icon} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
@@ -24,7 +24,7 @@ function BottomBar() {
     tabBarButton: (props: any) => (
       <TouchableOpacity
         {...props}
-        onPress={() => navigation.navigate('profile')}
+        onPress={() => navigation.navigate('Profile')}
       />
     ),
   };
@@ -34,7 +34,7 @@ function BottomBar() {
     tabBarButton: (props: any) => (
       <TouchableOpacity
         {...props}
-        onPress={() => navigation.navigate('charge')}
+        onPress={() => navigation.navigate('Charge')}
       />
     ),
   };
@@ -42,7 +42,7 @@ function BottomBar() {
   const NFCScreenOptions = {
     tabBarLabel: 'NFC',
     tabBarButton: (props: any) => (
-      <TouchableOpacity {...props} onPress={() => navigation.navigate('nfc')} />
+      <TouchableOpacity {...props} onPress={() => navigation.navigate('NfcReader')} />
     ),
   };
 
@@ -51,7 +51,7 @@ function BottomBar() {
     tabBarButton: (props: any) => (
       <TouchableOpacity
         {...props}
-        onPress={() => navigation.navigate('qrcode')}
+        onPress={() => navigation.navigate('QrCodeReader')}
       />
     ),
   };
@@ -61,7 +61,7 @@ function BottomBar() {
     tabBarButton: (props: any) => (
       <TouchableOpacity
         {...props}
-        onPress={() => navigation.navigate('history')}
+        onPress={() => navigation.navigate('History')}
       />
     ),
   };
@@ -70,23 +70,23 @@ function BottomBar() {
     <Tab.Navigator>
       <Tab.Screen
         name="Profile"
-        component={ProfilePage}
+        component={Profile}
         options={profileScreenOptions}
       />
       <Tab.Screen
         name="Charge"
-        component={ChargePage}
+        component={Charge}
         options={chargeScreenOptions}
       />
-      <Tab.Screen name="NFC" component={NFCPage} options={NFCScreenOptions} />
+      <Tab.Screen name="NFC" component={NfcReader} options={NFCScreenOptions} />
       <Tab.Screen
         name="QRCode"
-        component={QRCodePage}
+        component={QrCodeReader}
         options={qrCodeScreenOptions}
       />
       <Tab.Screen
         name="History"
-        component={HistoryPage}
+        component={History}
         options={historyScreenOptions}
       />
     </Tab.Navigator>

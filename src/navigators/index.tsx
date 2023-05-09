@@ -1,38 +1,30 @@
-import {createStackNavigator} from '@react-navigation/stack';
-import Autentication from '../screens/Autentication';
-import Login from '../screens/Autentication/Login';
-import Register from '../screens/Autentication/Register';
-import SafeAreaLayout from '../components/SafeArea';
-import ProfilePage from '../screens/Profile';
-import QRCodePage from '../screens/QRCode';
-import ChargePage from '../screens/Charge';
-import NFCPage from '../screens/NFC';
-import HistoryPage from '../screens/History';
+import React, {useContext} from 'react';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {NavigationContainer} from '@react-navigation/native';
+import {AuthContext} from '../context/authProvider';
+import PublicStack from './public';
+import PrivateStack from './private';
 
-const Stack = createStackNavigator();
+function ApplicationRotues() {
+  const {isAuthenticated} = useContext(AuthContext);
 
-function MyStack() {
+  console.log('isAuthenticated', isAuthenticated);
+
   return (
-    <SafeAreaLayout>
-      <Stack.Navigator>
-        <Stack.Group
-          screenOptions={{
-            title: '',
-            headerTransparent: true,
-            headerShadowVisible: false,
-          }}>
-          <Stack.Screen name="Autenticaiton" component={Autentication} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="profile" component={ProfilePage} />
-          <Stack.Screen name="qrcode" component={QRCodePage} />
-          <Stack.Screen name="charge" component={ChargePage} />
-          <Stack.Screen name="nfc" component={NFCPage} />
-          <Stack.Screen name="history" component={HistoryPage} />
-        </Stack.Group>
-      </Stack.Navigator>
-    </SafeAreaLayout>
+    <>
+      {isAuthenticated ? (
+        <NavigationContainer>
+          <PrivateStack />
+        </NavigationContainer>
+      ) : (
+        <SafeAreaProvider style={{flex: 1}}>
+          <NavigationContainer>
+            <PublicStack />
+          </NavigationContainer>
+        </SafeAreaProvider>
+      )}
+    </>
   );
 }
 
-export default MyStack;
+export default ApplicationRotues;

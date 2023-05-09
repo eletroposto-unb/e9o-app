@@ -1,5 +1,12 @@
-const NFCPage = () => {
-  return <></>;
+import React from 'react';
+import {View, Text } from 'react-native';
+
+const NfcReader = () => {
+  return (
+    <View>
+      <Text>NfcReader</Text>
+    </View>
+  );
 };
 
-export default NFCPage;
+export default NfcReader;
