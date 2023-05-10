@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {Button, Text, Alert} from 'native-base';
-import {useForm} from 'react-hook-form';
+import {Button, Text, Alert, Stack, Icon, Pressable} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../../../context/authProvider';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
 import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -77,17 +77,21 @@ const Profile = () => {
           variant="rounded"
           placeHolder="Moedas"
           secureTextEntry={false}
+          inputRightElement={
+            <Icon
+              as={<FontAwesome5 name="coins" />}
+              size={6}
+              mr="4"
+              color="muted.400"
+            />
+          }
         />
         <StyledButton
           title="SOLICITAR MOEDAS"
           backgroundColor={SECUNDARY}
           color={PRIMARY}
         />
-        <StyledButton
-          title="SALVAR"
-          backgroundColor={PRIMARY}
-          color={SECUNDARY}
-        />
+        <StyledButton title="SALVAR" backgroundColor={PRIMARY} color={WHITE} />
       </View>
     </ScrollView>
   );

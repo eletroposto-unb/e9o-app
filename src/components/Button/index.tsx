@@ -1,5 +1,6 @@
 import {Button} from 'native-base';
 import {StyleSheet} from 'react-native';
+import {Text} from 'native-base';
 
 type inputProps = {
   title: string;
@@ -14,7 +15,10 @@ const StyledButton = ({title, onPress, color, backgroundColor}: inputProps) => {
       style={styles.container}
       onPress={onPress}
       backgroundColor={backgroundColor}>
-      {title}
+      <Text 
+      style={styles.text}
+      color={color}
+      >{title}</Text>
     </Button>
   );
 };
@@ -26,6 +30,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '100%',
     borderRadius: 15,
+    marginTop: 10,
+    height: 50,
+  },
+  text: {
+    fontWeight: 'bold',
+    fontSize: 16,
     textTransform: 'uppercase',
   },
 });
