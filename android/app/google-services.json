@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "747468820615",
+    "project_id": "eletroposto-unb",
+    "storage_bucket": "eletroposto-unb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747468820615:android:2d315029774bf4c2002822",
+        "android_client_info": {
+          "package_name": "com.eletrogama"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747468820615-bc21n5egm3e4i95l6nrdc9ire1hjg91p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0DPzoEzDaiLAB1gf3FzFvpX3FAo9tMsY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747468820615-bc21n5egm3e4i95l6nrdc9ire1hjg91p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
