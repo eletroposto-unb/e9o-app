@@ -5,27 +5,40 @@ import {PRIMARY, SECUNDARY, WHITE} from '../../styles/colors';
 import Login from './Login';
 import Register from './Register';
 
-const Autentication = () => {
+const Authentication = () => {
   const [action, setAction] = useState({
     login: {
       title: 'LOGIN',
       status: true,
     },
     register: {
-      title: 'REGISTER',
+      title: 'REGISTRAR',
       status: false,
     },
   });
 
-  const handleTabAction = () => {
+  const handleLogin = (value: number) => {
     setAction({
       login: {
         title: 'LOGIN',
-        status: !action.login.status,
+        status: true,
       },
       register: {
-        title: 'REGISTER',
-        status: !action.register.status,
+        title: 'REGISTRAR',
+        status: false,
+      },
+    });
+  };
+
+  const handleRegister = () => {
+    setAction({
+      login: {
+        title: 'LOGIN',
+        status: false,
+      },
+      register: {
+        title: 'REGISTRAR',
+        status: true,
       },
     });
   };
@@ -39,7 +52,7 @@ const Autentication = () => {
               color={action.login.status ? SECUNDARY : WHITE}
               bold
               fontSize={18}
-              onPress={handleTabAction}>
+              onPress={handleLogin}>
               {action.login.title}
             </Text>
           </Box>
@@ -48,7 +61,7 @@ const Autentication = () => {
               color={action.register.status ? SECUNDARY : WHITE}
               bold
               fontSize={18}
-              onPress={handleTabAction}>
+              onPress={handleRegister}>
               {action.register.title}
             </Text>
           </Box>
@@ -63,12 +76,13 @@ const Autentication = () => {
   );
 };
 
-export default Autentication;
+export default Authentication;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: PRIMARY,
+    paddingHorizontal: 20,
   },
   containerTicketTypes: {
     paddingVertical: 10,

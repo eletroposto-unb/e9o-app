@@ -1,28 +1,23 @@
+import React, {useContext} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {AuthContext} from '../context/authProvider';
+import SafeAreaWrapper from '../components/SafeArea';
 import {createStackNavigator} from '@react-navigation/stack';
-import Autentication from '../screens/Autentication';
-import Login from '../screens/Autentication/Login';
-import Register from '../screens/Autentication/Register';
-import SafeAreaLayout from '../components/SafeArea';
+import {PrivateNavigator} from './private';
+import {PublicNavigator} from './public';
 
 const Stack = createStackNavigator();
 
-function MyStack() {
+function ApplicationRoutes() {
+  const {isAuthenticated} = useContext(AuthContext);
+
   return (
-    <SafeAreaLayout>
-      <Stack.Navigator>
-        <Stack.Group
-          screenOptions={{
-            title: '',
-            headerTransparent: true,
-            headerShadowVisible: false,
-          }}>
-          <Stack.Screen name="Autenticaiton" component={Autentication} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-        </Stack.Group>
-      </Stack.Navigator>
-    </SafeAreaLayout>
+    <SafeAreaWrapper>
+      <NavigationContainer>
+        {isAuthenticated ? <PrivateNavigator /> : <PublicNavigator />}
+      </NavigationContainer>
+    </SafeAreaWrapper>
   );
 }
 
-export default MyStack;
+export default ApplicationRoutes;
