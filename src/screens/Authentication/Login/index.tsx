@@ -6,6 +6,7 @@ import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
 import InputForm from '../../../components/Input';
 import {Controller, useForm} from 'react-hook-form';
 import Entypo from 'react-native-vector-icons/Entypo';
+import StyledButton from '../../../components/Button';
 
 type formData = {
   email: string;
@@ -91,12 +92,12 @@ const Login = () => {
           )}
         />
       </Stack>
-      <Button
+      <StyledButton
         onPress={handleSubmit(onSubmit)}
-        style={styles.button}
-        variant={BACKGROUND}>
-        <Text style={styles.text}>ENTRAR</Text>
-      </Button>
+        title="ENTRAR"
+        backgroundColor={SECUNDARY}
+        color={PRIMARY}
+      />
       <Text style={styles.forgotPassword}>
         Esqueceu sua senha?{' '}
         <Text style={{fontWeight: 'bold'}} onPress={handleForgotPassword}>

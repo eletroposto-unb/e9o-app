@@ -3,6 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {useToast, Button, Box, Text, Alert} from 'native-base';
 import InputForm from '../../../components/Input';
+import StyledButton from '../../../components/Button';
 import {
   BACKGROUND,
   SECUNDARY,
@@ -201,12 +202,12 @@ const Register = () => {
           {errors.confirm_password.message}
         </Text>
       )}
-      <Button
+      <StyledButton
         onPress={handleSubmit(onSubmit)}
-        style={styles.button}
-        variant={BACKGROUND}>
-        <Text style={styles.text}>REGISTRAR</Text>
-      </Button>
+        title="REGISTRAR"
+        backgroundColor={SECUNDARY}
+        color={PRIMARY}
+      />
     </View>
   );
 };
