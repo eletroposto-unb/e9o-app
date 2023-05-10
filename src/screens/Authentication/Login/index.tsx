@@ -1,22 +1,119 @@
-import React, {useContext} from 'react';
-import {View, Text} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {AuthContext} from '../../../context/authProvider';
+import React from 'react';
+import {View, StyleSheet, Image} from 'react-native';
+import {Stack, Icon, Pressable, Button, Text} from 'native-base';
+import {BACKGROUND, PRIMARY, SECUNDARY} from '../../../styles/colors';
+import InputForm from '../../../components/Input';
+import {Controller, useForm} from 'react-hook-form';
+import Entypo from 'react-native-vector-icons/Entypo';
+
+type formData = {
+  email: string;
+  password: string;
+};
 
 const Login = () => {
-  const {login, isAuthenticated} = useContext(AuthContext);
-  const navigation = useNavigation();
+  const [show, setShow] = React.useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<formData>();
 
-  const handleLogin = () => {
-    console.log("isAuthenticated", isAuthenticated)
-    login();
+  const onSubmit = (data: formData) => {
+    console.log('data', data);
   };
 
   return (
-    <View>
-      <Text onPress={() => handleLogin()}>Login</Text>
+    <View style={styles.container}>
+      <Image
+        source={require('../../../assets/charging-station.png')}
+        style={styles.image}
+      />
+      <Stack w="100%" alignItems="center">
+        <Controller
+          control={control}
+          name="email"
+          rules={{
+            required: 'Insira seu email',
+          }}
+          render={({field: {value, onChange}}) => (
+            <InputForm
+              placeHolder="Email"
+              variant={'rounded'}
+              value={value}
+              autoCapitalize="none"
+              onChangeText={onChange}
+            />
+          )}
+        />
+        {/* {errors?.email && (
+          <Text style={styles.messageError}>{errors.name.message}</Text>
+        )} */}
+        <Controller
+          control={control}
+          name="password"
+          rules={{
+            required: 'Insira sua senha',
+          }}
+          render={({field: {value, onChange}}) => (
+            <InputForm
+              variant={'rounded'}
+              type={show ? 'text' : 'password'}
+              placeHolder="Senha"
+              autoCapitalize="none"
+              value={value}
+              onChangeText={onChange}
+              inputRightElement={
+                <Pressable onPress={() => setShow(!show)}>
+                  <Icon
+                    as={<Entypo name={show ? 'eye' : 'eye-with-line'} />}
+                    size={6}
+                    mr="4"
+                    color="muted.400"
+                  />
+                </Pressable>
+              }
+            />
+          )}
+        />
+      </Stack>
+      <Button
+        onPress={handleSubmit(onSubmit)}
+        style={styles.button}
+        variant={BACKGROUND}>
+        <Text style={styles.text}>ENTRAR</Text>
+      </Button>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: 50,
+  },
+  button: {
+    backgroundColor: SECUNDARY,
+    width: '100%',
+    borderRadius: 15,
+    marginTop: 30,
+    height: 55,
+  },
+  text: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: PRIMARY,
+  },
+  image: {
+    width: 140,
+    alignItems: 'center',
+    marginBottom: 70,
+    marginLeft: 20,
+    marginTop: 20,
+  },
+});
 
 export default Login;
