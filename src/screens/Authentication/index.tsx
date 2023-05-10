@@ -51,6 +51,7 @@ const Authentication = () => {
             <Text
               color={action.login.status ? SECUNDARY : WHITE}
               bold
+              marginBottom={3}
               fontSize={18}
               onPress={handleLogin}>
               {action.login.title}
@@ -60,6 +61,7 @@ const Authentication = () => {
             <Text
               color={action.register.status ? SECUNDARY : WHITE}
               bold
+              marginBottom={3}
               fontSize={18}
               onPress={handleRegister}>
               {action.register.title}

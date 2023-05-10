@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
+import {AuthContext} from '../../../context/authProvider';
 import {Stack, Icon, Pressable, Button, Text} from 'native-base';
 import {BACKGROUND, PRIMARY, SECUNDARY} from '../../../styles/colors';
 import InputForm from '../../../components/Input';
@@ -13,6 +14,7 @@ type formData = {
 
 const Login = () => {
   const [show, setShow] = React.useState(false);
+  const {login} = useContext(AuthContext);
   const {
     control,
     handleSubmit,
@@ -20,7 +22,13 @@ const Login = () => {
   } = useForm<formData>();
 
   const onSubmit = (data: formData) => {
+    login();
     console.log('data', data);
+  };
+
+  const handleLogin = () => {
+    console.log('dataaaaaaa');
+    login();
   };
 
   return (
@@ -83,6 +91,9 @@ const Login = () => {
         variant={BACKGROUND}>
         <Text style={styles.text}>ENTRAR</Text>
       </Button>
+      <Text style={styles.forgotPassword}>
+        Esqueceu sua senha? <Text style={{fontWeight: 'bold'}} onPress={handleLogin}>Clique aqui!</Text>
+      </Text>
     </View>
   );
 };
@@ -114,6 +125,10 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 20,
   },
+  forgotPassword: {
+    marginTop: 15,
+    color: SECUNDARY
+  }
 });
 
 export default Login;
