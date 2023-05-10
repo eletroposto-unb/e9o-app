@@ -4,9 +4,9 @@ import {Button, Text, Alert} from 'native-base';
 import {useForm} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../../../context/authProvider';
-import ProfileInput from '../../../components/Input/ProfileInput';
+import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
-import {BACKGROUND, PRIMARY, SECUNDARY} from '../../../styles/colors';
+import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -23,35 +23,56 @@ const Profile = () => {
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.inputLabel}>Nome</Text>
-        <ProfileInput
+        <InputForm
           readOnly={true}
+          backgroundColor={WHITE}
+          borderWidth={1}
+          borderColor={BACKGROUND}
+          color={BACKGROUND}
           variant="rounded"
           placeHolder="Nome"
           secureTextEntry={false}
         />
         <Text style={styles.inputLabel}>Email</Text>
-        <ProfileInput
+        <InputForm
           readOnly={true}
+          backgroundColor={WHITE}
+          borderWidth={1}
+          borderColor={BACKGROUND}
+          color={BACKGROUND}
           variant="rounded"
           placeHolder="Email"
           secureTextEntry={false}
           autoCapitalize="words"
         />
         <Text style={styles.inputLabel}>CPF</Text>
-        <ProfileInput
+        <InputForm
           readOnly={true}
+          backgroundColor={WHITE}
+          borderWidth={1}
+          borderColor={BACKGROUND}
+          color={BACKGROUND}
           variant="rounded"
           placeHolder="CPF"
           secureTextEntry={false}
         />
         <Text style={styles.inputLabel}>Telefone</Text>
-        <ProfileInput
+        <InputForm
+          backgroundColor={WHITE}
+          borderWidth={1}
+          borderColor={BACKGROUND}
+          color={BACKGROUND}
           variant="rounded"
           placeHolder="Telefone"
           secureTextEntry={false}
         />
         <Text style={styles.inputLabel}>Moedas</Text>
-        <ProfileInput
+        <InputForm
+          readOnly={true}
+          backgroundColor={WHITE}
+          borderWidth={1}
+          borderColor={BACKGROUND}
+          color={BACKGROUND}
           width={'50%'}
           variant="rounded"
           placeHolder="Moedas"

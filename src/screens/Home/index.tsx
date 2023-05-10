@@ -48,12 +48,22 @@ const Home = () => {
       <View style={styles.container}>
         <View style={styles.containerTicketTypes}>
           <Box style={styles.tabBox(action.profile.status ? 1 : 0)}>
-            <Text color={PRIMARY} bold fontSize={18} onPress={handleLogin}>
+            <Text
+              color={PRIMARY}
+              bold
+              fontSize={18}
+              onPress={handleLogin}
+              style={styles.text}>
               {action.profile.title}
             </Text>
           </Box>
           <Box style={styles.tabBox(action.cars.status ? 1 : 0)}>
-            <Text color={PRIMARY} bold fontSize={18} onPress={handleRegister}>
+            <Text
+              color={PRIMARY}
+              bold
+              fontSize={18}
+              onPress={handleRegister}
+              style={styles.text}>
               {action.cars.title}
             </Text>
           </Box>
@@ -85,4 +95,7 @@ const styles = StyleSheet.create({
     borderBottomColor: PRIMARY,
     borderBottomWidth: type === 1 ? 1 : 0,
   }),
+  text: {
+    marginBottom: 3,
+  },
 });

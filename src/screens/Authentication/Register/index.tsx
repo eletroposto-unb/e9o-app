@@ -2,8 +2,14 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {useToast, Button, Box, Text, Alert} from 'native-base';
-import AuthInput from '../../../components/Input/AuthInput';
-import {BACKGROUND, SECUNDARY, WARNING} from '../../../styles/colors';
+import InputForm from '../../../components/Input';
+import {
+  BACKGROUND,
+  SECUNDARY,
+  WARNING,
+  PRIMARY,
+  WHITE,
+} from '../../../styles/colors';
 import {
   emailRegex,
   cpfRegex,
@@ -75,7 +81,10 @@ const Register = () => {
           required: 'Nome Obrigatório',
         }}
         render={({field: {value, onChange}}) => (
-          <AuthInput
+          <InputForm
+            backgroundColor={BACKGROUND}
+            color={WHITE}
+            borderWidth={0}
             variant="rounded"
             placeHolder="Nome"
             value={value}
@@ -99,7 +108,10 @@ const Register = () => {
           },
         }}
         render={({field: {value, onChange}}) => (
-          <AuthInput
+          <InputForm
+            backgroundColor={BACKGROUND}
+            color={WHITE}
+            borderWidth={0}
             variant="rounded"
             placeHolder="Email"
             value={value}
@@ -123,7 +135,10 @@ const Register = () => {
           },
         }}
         render={({field: {value, onChange}}) => (
-          <AuthInput
+          <InputForm
+            backgroundColor={BACKGROUND}
+            color={WHITE}
+            borderWidth={0}
             variant="rounded"
             placeHolder="CPF"
             value={value}
@@ -147,7 +162,10 @@ const Register = () => {
           },
         }}
         render={({field: {value, onChange}}) => (
-          <AuthInput
+          <InputForm
+            backgroundColor={BACKGROUND}
+            color={WHITE}
+            borderWidth={0}
             variant="rounded"
             placeHolder="Senha"
             value={value}
@@ -166,7 +184,10 @@ const Register = () => {
           required: 'Confirmação de senha obrigatória',
         }}
         render={({field: {value, onChange}}) => (
-          <AuthInput
+          <InputForm
+            backgroundColor={BACKGROUND}
+            color={WHITE}
+            borderWidth={0}
             variant="rounded"
             placeHolder="Confirmar senha"
             value={value}
@@ -184,7 +205,7 @@ const Register = () => {
         onPress={handleSubmit(onSubmit)}
         style={styles.button}
         variant={BACKGROUND}>
-        REGISTRAR
+        <Text style={styles.text}>REGISTRAR</Text>
       </Button>
     </View>
   );
@@ -226,5 +247,11 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 15,
     marginTop: 30,
+    height: 55,
+  },
+  text: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: PRIMARY,
   },
 });

@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {AuthContext} from '../../../context/authProvider';
 import {Stack, Icon, Pressable, Button, Text} from 'native-base';
-import {BACKGROUND, PRIMARY, SECUNDARY} from '../../../styles/colors';
+import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
 import InputForm from '../../../components/Input';
 import {Controller, useForm} from 'react-hook-form';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -26,7 +26,7 @@ const Login = () => {
     console.log('data', data);
   };
 
-  const handleLogin = () => {
+  const handleForgotPassword = () => {
     console.log('dataaaaaaa');
     login();
   };
@@ -47,6 +47,9 @@ const Login = () => {
           render={({field: {value, onChange}}) => (
             <InputForm
               placeHolder="Email"
+              backgroundColor={BACKGROUND}
+              color={WHITE}
+              borderWidth={0}
               variant={'rounded'}
               value={value}
               autoCapitalize="none"
@@ -65,6 +68,9 @@ const Login = () => {
           }}
           render={({field: {value, onChange}}) => (
             <InputForm
+              backgroundColor={BACKGROUND}
+              color={WHITE}
+              borderWidth={0}
               variant={'rounded'}
               type={show ? 'text' : 'password'}
               placeHolder="Senha"
@@ -92,7 +98,10 @@ const Login = () => {
         <Text style={styles.text}>ENTRAR</Text>
       </Button>
       <Text style={styles.forgotPassword}>
-        Esqueceu sua senha? <Text style={{fontWeight: 'bold'}} onPress={handleLogin}>Clique aqui!</Text>
+        Esqueceu sua senha?{' '}
+        <Text style={{fontWeight: 'bold'}} onPress={handleForgotPassword}>
+          Clique aqui!
+        </Text>
       </Text>
     </View>
   );
@@ -127,8 +136,8 @@ const styles = StyleSheet.create({
   },
   forgotPassword: {
     marginTop: 15,
-    color: SECUNDARY
-  }
+    color: SECUNDARY,
+  },
 });
 
 export default Login;

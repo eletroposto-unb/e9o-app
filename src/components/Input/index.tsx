@@ -11,7 +11,13 @@ type inputProps = {
   onChangeText?: any;
   secureTextEntry?: boolean;
   type?: string;
+  backgroundColor?: string;
   inputRightElement?: InterfaceInputProps['InputRightElement'];
+  borderWidth?: number;
+  borderColor?: string;
+  readOnly?: boolean;
+  color?: string;
+  width?: string;
 };
 
 const InputForm = ({
@@ -23,20 +29,29 @@ const InputForm = ({
   secureTextEntry,
   type,
   inputRightElement,
+  backgroundColor,
+  borderWidth,
+  borderColor,
+  readOnly,
+  color,
+  width
 }: inputProps) => {
   return (
     <Input
+      width={width}
+      readOnly={readOnly}
       size="xl"
       height={55}
       marginBottom={3}
-      backgroundColor={BACKGROUND}
-      borderWidth={0}
+      backgroundColor={backgroundColor}
+      borderWidth={borderWidth}
+      borderColor={borderColor}
       paddingTop={3}
       paddingBottom={3}
       paddingLeft={5}
       paddingRight={5}
       fontSize={17}
-      color={WHITE}
+      color={color}
       variant={variant}
       placeholder={placeHolder}
       value={value}
