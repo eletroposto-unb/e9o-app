@@ -4,6 +4,7 @@ import {Stack, Icon, Pressable, Button, Text} from 'native-base';
 import {BACKGROUND, PRIMARY, SECUNDARY} from '../../../styles/colors';
 import InputForm from '../../../components/Input';
 import {Controller, useForm} from 'react-hook-form';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 type formData = {
   email: string;
@@ -65,11 +66,10 @@ const Login = () => {
               inputRightElement={
                 <Pressable onPress={() => setShow(!show)}>
                   <Icon
-                    as={<Icon name={show ? 'eye' : 'eye-with-line'} />}
-                    size={5}
-                    mr="2"
+                    as={<Entypo name={show ? 'eye' : 'eye-with-line'} />}
+                    size={6}
+                    mr="4"
                     color="muted.400"
-                    backgroundColor={BACKGROUND}
                   />
                 </Pressable>
               }
