@@ -7,6 +7,7 @@ import InputForm from '../../../components/Input';
 import {Controller, useForm} from 'react-hook-form';
 import Entypo from 'react-native-vector-icons/Entypo';
 import StyledButton from '../../../components/Button';
+import auth from '@react-native-firebase/auth';
 
 type formData = {
   email: string;
@@ -23,7 +24,13 @@ const Login = () => {
   } = useForm<formData>();
 
   const onSubmit = (data: formData) => {
-    login();
+    // login();
+    auth()
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => console.log(error));
     console.log('data', data);
   };
 
