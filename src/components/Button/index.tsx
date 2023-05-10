@@ -7,12 +7,14 @@ type inputProps = {
   onPress?: any;
   color: string;
   backgroundColor: string;
+  width?: string;
 };
 
-const StyledButton = ({title, onPress, color, backgroundColor}: inputProps) => {
+const StyledButton = ({title, onPress, color, backgroundColor, width}: inputProps) => {
   return (
     <Button
       style={styles.container}
+      width={width ? width : '100%'}
       onPress={onPress}
       backgroundColor={backgroundColor}>
       <Text 
@@ -28,7 +30,6 @@ export default StyledButton;
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    width: '100%',
     borderRadius: 15,
     marginTop: 10,
     height: 50,

@@ -41,7 +41,7 @@ const InputForm = ({
       width={width}
       readOnly={readOnly}
       size="xl"
-      height={55}
+      height={50}
       marginBottom={3}
       backgroundColor={backgroundColor}
       borderWidth={borderWidth}
@@ -58,7 +58,6 @@ const InputForm = ({
       secureTextEntry={secureTextEntry}
       autoCapitalize={autoCapitalize}
       onChangeText={onChangeText}
-      infoTex
       type={type}
       InputRightElement={inputRightElement}
     />

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {Button, Text, Alert, Stack, Icon, Pressable} from 'native-base';
+import {Button, Text, Alert, Stack, Icon, Pressable, Center} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../../../context/authProvider';
 import InputForm from '../../../components/Input';
@@ -66,33 +66,42 @@ const Profile = () => {
           placeHolder="Telefone"
           secureTextEntry={false}
         />
-        <Text style={styles.inputLabel}>Moedas</Text>
-        <InputForm
-          readOnly={true}
-          backgroundColor={WHITE}
-          borderWidth={1}
-          borderColor={BACKGROUND}
-          color={BACKGROUND}
-          width={'50%'}
-          variant="rounded"
-          placeHolder="Moedas"
-          secureTextEntry={false}
-          inputRightElement={
-            <Icon
-              as={<FontAwesome5 name="coins" />}
-              size={6}
-              mr="4"
-              color="muted.400"
+
+        <View style={styles.moedas}>
+          <View style={{width: '50%'}}>
+            <Text style={styles.inputLabel}>Moedas</Text>
+            <InputForm
+              readOnly={true}
+              backgroundColor={WHITE}
+              borderWidth={1}
+              borderColor={BACKGROUND}
+              color={BACKGROUND}
+              width={'100%'}
+              variant="rounded"
+              placeHolder="Moedas"
+              secureTextEntry={false}
+              inputRightElement={
+                <Icon
+                  as={<FontAwesome5 name="coins" />}
+                  size={6}
+                  mr="4"
+                  color="muted.400"
+                />
+              }
             />
-          }
-        />
-        <StyledButton
-          title="SOLICITAR MOEDAS"
-          backgroundColor={SECUNDARY}
-          color={PRIMARY}
-        />
+          </View>
+          <StyledButton
+            title="SOLICITAR"
+            backgroundColor={SECUNDARY}
+            color={PRIMARY}
+            width={'45%'}
+          />
+        </View>
         <StyledButton title="SALVAR" backgroundColor={PRIMARY} color={WHITE} />
       </View>
+      <Center>
+        <Text style={styles.sair} onPress={handleLogout}>SAIR</Text>
+      </Center>
     </ScrollView>
   );
 };
@@ -104,7 +113,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     display: 'flex',
-    marginTop: 10,
+    marginTop: 20,
   },
   inputLabel: {
     marginLeft: 5,
@@ -112,5 +121,21 @@ const styles = StyleSheet.create({
     color: BACKGROUND,
     fontSize: 16,
     fontWeight: '600',
+  },
+  moedas: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  sairContainer: {
+    borderBottomWidth: 1,
+    width: '30%',
+  },
+  sair: {
+    color: BACKGROUND,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: -10,
   },
 });
