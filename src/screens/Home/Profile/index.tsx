@@ -91,6 +91,7 @@ const Profile = () => {
             />
           </View>
           <StyledButton
+            borderRadius={30}
             title="SOLICITAR"
             backgroundColor={SECUNDARY}
             color={PRIMARY}
@@ -136,6 +137,6 @@ const styles = StyleSheet.create({
     color: BACKGROUND,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: -10,
+    marginTop: -15,
   },
 });

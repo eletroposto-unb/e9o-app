@@ -8,19 +8,27 @@ type inputProps = {
   color: string;
   backgroundColor: string;
   width?: string;
+  borderRadius?: number;
 };
 
-const StyledButton = ({title, onPress, color, backgroundColor, width}: inputProps) => {
+const StyledButton = ({
+  title,
+  onPress,
+  color,
+  backgroundColor,
+  width,
+  borderRadius,
+}: inputProps) => {
   return (
     <Button
       style={styles.container}
       width={width ? width : '100%'}
       onPress={onPress}
+      borderRadius={borderRadius ? borderRadius : 15}
       backgroundColor={backgroundColor}>
-      <Text 
-      style={styles.text}
-      color={color}
-      >{title}</Text>
+      <Text style={styles.text} color={color}>
+        {title}
+      </Text>
     </Button>
   );
 };
@@ -30,7 +38,6 @@ export default StyledButton;
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    borderRadius: 15,
     marginTop: 10,
     height: 50,
   },
