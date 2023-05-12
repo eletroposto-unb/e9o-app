@@ -38,7 +38,6 @@ export default StyledButton;
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    marginTop: 10,
     height: 50,
   },
   text: {
