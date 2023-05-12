@@ -18,6 +18,7 @@ type inputProps = {
   readOnly?: boolean;
   color?: string;
   width?: string;
+  keyboardType?: string;
 };
 
 const InputForm = ({
@@ -34,7 +35,7 @@ const InputForm = ({
   borderColor,
   readOnly,
   color,
-  width
+  width,
 }: inputProps) => {
   return (
     <Input

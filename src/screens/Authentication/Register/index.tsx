@@ -1,7 +1,14 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
+import {
+  useToast,
+  Box,
+  Text,
+  Alert,
+  HStack,
+  VStack,
+} from 'native-base';
 import {useForm, Controller} from 'react-hook-form';
-import {useToast, Button, Box, Text, Alert} from 'native-base';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
 import {
@@ -14,9 +21,9 @@ import {
 import {
   emailRegex,
   cpfRegex,
-  nameRegex,
   passwordRegex,
 } from '../../../utils/regex';
+import {ScrollView} from 'react-native-gesture-handler';
 
 type formData = {
   name: string;
@@ -74,141 +81,181 @@ const Register = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Controller
-        control={control}
-        name="name"
-        rules={{
-          required: 'Nome Obrigatório',
-        }}
-        render={({field: {value, onChange}}) => (
-          <InputForm
-            backgroundColor={BACKGROUND}
-            color={WHITE}
-            borderWidth={0}
-            variant="rounded"
-            placeHolder="Nome"
-            value={value}
-            secureTextEntry={false}
-            autoCapitalize="words"
-            onChangeText={onChange}
-          />
+    <ScrollView>
+      <View style={styles.container}>
+        <Controller
+          control={control}
+          name="name"
+          rules={{
+            required: 'Nome Obrigatório',
+          }}
+          render={({field: {value, onChange}}) => (
+            <InputForm
+              backgroundColor={BACKGROUND}
+              color={WHITE}
+              borderWidth={0}
+              variant="rounded"
+              placeHolder="Nome"
+              value={value}
+              secureTextEntry={false}
+              autoCapitalize="words"
+              onChangeText={onChange}
+            />
+          )}
+        />
+        {errors?.name && (
+          <Text style={styles.messageError}>{errors.name.message}</Text>
         )}
-      />
-      {errors?.name && (
-        <Text style={styles.messageError}>{errors.name.message}</Text>
-      )}
-      <Controller
-        control={control}
-        name="email"
-        rules={{
-          required: 'Email Obrigatório',
-          pattern: {
-            message: 'Email inválido',
-            value: emailRegex,
-          },
-        }}
-        render={({field: {value, onChange}}) => (
-          <InputForm
-            backgroundColor={BACKGROUND}
-            color={WHITE}
-            borderWidth={0}
-            variant="rounded"
-            placeHolder="Email"
-            value={value}
-            secureTextEntry={false}
-            autoCapitalize="none"
-            onChangeText={onChange}
-          />
+        <Controller
+          control={control}
+          name="email"
+          rules={{
+            required: 'Email Obrigatório',
+            pattern: {
+              message: 'Email inválido',
+              value: emailRegex,
+            },
+          }}
+          render={({field: {value, onChange}}) => (
+            <InputForm
+              backgroundColor={BACKGROUND}
+              color={WHITE}
+              borderWidth={0}
+              variant="rounded"
+              placeHolder="Email"
+              value={value}
+              secureTextEntry={false}
+              autoCapitalize="none"
+              onChangeText={onChange}
+            />
+          )}
+        />
+        {errors?.email && (
+          <Text style={styles.messageError}>{errors.email.message}</Text>
         )}
-      />
-      {errors?.email && (
-        <Text style={styles.messageError}>{errors.email.message}</Text>
-      )}
-      <Controller
-        control={control}
-        name="cpf"
-        rules={{
-          required: 'CPF Obrigatório',
-          pattern: {
-            message: 'CPF inválido',
-            value: cpfRegex,
-          },
-        }}
-        render={({field: {value, onChange}}) => (
-          <InputForm
-            backgroundColor={BACKGROUND}
-            color={WHITE}
-            borderWidth={0}
-            variant="rounded"
-            placeHolder="CPF"
-            value={value}
-            secureTextEntry={false}
-            autoCapitalize="words"
-            onChangeText={onChange}
-          />
+        <Controller
+          control={control}
+          name="cpf"
+          rules={{
+            required: 'CPF Obrigatório',
+            pattern: {
+              message: 'CPF inválido',
+              value: cpfRegex,
+            },
+          }}
+          render={({field: {value, onChange}}) => (
+            <InputForm
+              backgroundColor={BACKGROUND}
+              color={WHITE}
+              borderWidth={0}
+              variant="rounded"
+              placeHolder="CPF"
+              value={value}
+              secureTextEntry={false}
+              autoCapitalize="words"
+              onChangeText={onChange}
+            />
+          )}
+        />
+        {errors?.cpf && (
+          <Text style={styles.messageError}>{errors.cpf.message}</Text>
         )}
-      />
-      {errors?.cpf && (
-        <Text style={styles.messageError}>{errors.cpf.message}</Text>
-      )}
-      <Controller
-        control={control}
-        name="password"
-        rules={{
-          required: 'Senha obrigatória',
-          pattern: {
-            message: 'Senha inválida',
-            value: passwordRegex,
-          },
-        }}
-        render={({field: {value, onChange}}) => (
-          <InputForm
-            backgroundColor={BACKGROUND}
-            color={WHITE}
-            borderWidth={0}
-            variant="rounded"
-            placeHolder="Senha"
-            value={value}
-            secureTextEntry={true}
-            onChangeText={onChange}
-          />
+        <Controller
+          control={control}
+          name="password"
+          rules={{
+            required: 'Senha obrigatória',
+            pattern: {
+              message: 'Senha inválida',
+              value: passwordRegex,
+            },
+          }}
+          render={({field: {value, onChange}}) => (
+            <InputForm
+              backgroundColor={BACKGROUND}
+              color={WHITE}
+              borderWidth={0}
+              variant="rounded"
+              placeHolder="Senha"
+              value={value}
+              secureTextEntry={true}
+              onChangeText={onChange}
+            />
+          )}
+        />
+        {errors?.password && (
+          <Text style={styles.messageError}>{errors.password.message}</Text>
         )}
-      />
-      {errors?.password && (
-        <Text style={styles.messageError}>{errors.password.message}</Text>
-      )}
-      <Controller
-        control={control}
-        name="confirm_password"
-        rules={{
-          required: 'Confirmação de senha obrigatória',
-        }}
-        render={({field: {value, onChange}}) => (
-          <InputForm
-            backgroundColor={BACKGROUND}
-            color={WHITE}
-            borderWidth={0}
-            variant="rounded"
-            placeHolder="Confirmar senha"
-            value={value}
-            secureTextEntry={true}
-            onChangeText={onChange}
-          />
+        <Controller
+          control={control}
+          name="confirm_password"
+          rules={{
+            required: 'Confirmação de senha obrigatória',
+          }}
+          render={({field: {value, onChange}}) => (
+            <InputForm
+              backgroundColor={BACKGROUND}
+              color={WHITE}
+              borderWidth={0}
+              variant="rounded"
+              placeHolder="Confirmar senha"
+              value={value}
+              secureTextEntry={true}
+              onChangeText={onChange}
+            />
+          )}
+        />
+        {errors?.confirm_password && (
+          <Text style={styles.messageError}>
+            {errors.confirm_password.message}
+          </Text>
         )}
-      />
-      {errors?.confirm_password && (
-        <Text style={styles.messageError}>
-          {errors.confirm_password.message}
-        </Text>
-      )}
-      <StyledButton
-        onPress={handleSubmit(onSubmit)}
-        title="REGISTRAR"
-        backgroundColor={SECUNDARY}
-        color={PRIMARY}
-      />
-    </View>
+        <StyledButton
+          onPress={handleSubmit(onSubmit)}
+          title="REGISTRAR"
+          backgroundColor={SECUNDARY}
+          color={PRIMARY}
+        />
+        {errors.password && (
+          <View style={styles.infoContainer}>
+            <Alert maxW="400" status="error">
+              <VStack space={1} flexShrink={1} w="100%">
+                <HStack
+                  flexShrink={1}
+                  space={2}
+                  alignItems="center"
+                  justifyContent="space-between">
+                  <HStack flexShrink={1} space={2} alignItems="center">
+                    <Alert.Icon />
+                    <Text
+                      fontSize="md"
+                      fontWeight="medium"
+                      _dark={{
+                        color: 'coolGray.800',
+                      }}>
+                      A senha deve conter
+                    </Text>
+                  </HStack>
+                </HStack>
+                <Box
+                  pl="6"
+                  _dark={{
+                    _text: {
+                      color: 'coolGray.400',
+                    },
+                  }}>
+                  <Text>Pelo menos uma letra minúscula;</Text>
+                  <Text>Pelo menos uma letra maiúscula;</Text>
+                  <Text>Pelo menos um número;</Text>
+                  <Text>Pelo menos um careactere especial;</Text>
+                  <Text>No mínimo 6 caracteres.</Text>
+                </Box>
+              </VStack>
+            </Alert>
+          </View>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -254,5 +301,10 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     color: PRIMARY,
+  },
+  infoContainer: {
+    marginTop: 15,
+    width: '100%',
+    marginBottom: 50,
   },
 });
