@@ -299,7 +299,7 @@ PODS:
   - React-jsinspector (0.71.7)
   - React-logger (0.71.7):
     - glog
-  - react-native-safe-area-context (3.3.2):
+  - react-native-safe-area-context (3.4.1):
     - React-Core
   - React-perflogger (0.71.7)
   - React-RCTActionSheet (0.71.7):
@@ -389,14 +389,14 @@ PODS:
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
-  - RNFBApp (17.4.3):
+  - RNFBApp (17.5.0):
     - Firebase/CoreOnly (= 10.7.0)
     - React-Core
-  - RNFBAuth (17.4.3):
+  - RNFBAuth (17.5.0):
     - Firebase/Auth (= 10.7.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.9.0):
+  - RNGestureHandler (2.10.0):
     - React-Core
   - RNReanimated (3.1.0):
     - DoubleConversion
@@ -428,8 +428,8 @@ PODS:
   - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
-  - RNSVG (12.1.1):
-    - React
+  - RNSVG (12.5.1):
+    - React-Core
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -609,7 +609,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: eaa5f71eb8f6861cf0e57f1a0f52aeb020d9e18e
   React-jsinspector: 9885f6f94d231b95a739ef7bb50536fb87ce7539
   React-logger: 3f8ebad1be1bf3299d1ab6d7f971802d7395c7ef
-  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   React-perflogger: 2d505bbe298e3b7bacdd9e542b15535be07220f6
   React-RCTActionSheet: 0e96e4560bd733c9b37efbf68f5b1a47615892fb
   React-RCTAnimation: fd138e26f120371c87e406745a27535e2c8a04ef
@@ -625,14 +625,14 @@ SPEC CHECKSUMS:
   ReactCommon: 5307873a227ee34ddd3e7f2ec1086ebbfccc7618
   RNCAsyncStorage: b90b71f45b8b97be43bc4284e71a6af48ac9f547
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNFBApp: 922564a99c97a8cab366d5a918f9fecff6b563d5
-  RNFBAuth: 55fd07310abde3fa2f3a6568f6d3ef590383d241
-  RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
+  RNFBApp: d59efa0872fff4e27de03cca3c528c203a436ae5
+  RNFBAuth: 54e598bb1358a0cf6c0a187f43161cd1bde90455
+  RNGestureHandler: e145476da655f3dbc48ef2f0a08cf7a34338c02b
   RNReanimated: b1220a0e5168745283ff5d53bfc7d2144b2cee1b
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
-  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  RNSVG: d7d7bc8229af3842c9cfc3a723c815a52cdd1105
   Yoga: d56980c8914db0b51692f55533409e844b66133c
 
 PODFILE CHECKSUM: 01fe5ba19315e95131a58be42f7c6b11d34f7148
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.12.0
