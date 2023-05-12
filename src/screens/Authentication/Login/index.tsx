@@ -1,7 +1,8 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useContext} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {AuthContext} from '../../../context/authProvider';
-import {Stack, Icon, Pressable, Button, Text} from 'native-base';
+import {Stack, Icon, Pressable, Text, Box, useToast, Alert} from 'native-base';
 import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
 import InputForm from '../../../components/Input';
 import {Controller, useForm} from 'react-hook-form';
@@ -22,16 +23,33 @@ const Login = () => {
     handleSubmit,
     formState: {errors},
   } = useForm<formData>();
+  const toast = useToast();
 
   const onSubmit = (data: formData) => {
-    // login();
     auth()
-      .createUserWithEmailAndPassword(data.email, data.password)
+      .signInWithEmailAndPassword(data.email, data.password)
       .then(() => {
-        console.log('User account created & signed in!');
+        login();
+        console.log('Usuário Logado!');
       })
-      .catch(error => console.log(error));
-    console.log('data', data);
+      .catch(() => {
+        toast.show({
+          render: () => {
+            return (
+              <Box
+                bg={'error.300'}
+                px="3"
+                py="2"
+                rounded="sm"
+                mb={5}
+                style={styles.toastMessage}>
+                <Alert.Icon style={{marginRight: 10}} />
+                E-mail ou senha incorretos!
+              </Box>
+            );
+          },
+        });
+      });
   };
 
   const handleForgotPassword = () => {
@@ -145,6 +163,12 @@ const styles = StyleSheet.create({
   forgotPassword: {
     marginTop: 15,
     color: SECUNDARY,
+  },
+  toastMessage: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 
