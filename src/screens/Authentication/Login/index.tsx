@@ -26,30 +26,24 @@ const Login = () => {
   const toast = useToast();
 
   const onSubmit = (data: formData) => {
-    auth()
-      .signInWithEmailAndPassword(data.email, data.password)
-      .then(() => {
-        login();
-        console.log('Usuário Logado!');
-      })
-      .catch(() => {
-        toast.show({
-          render: () => {
-            return (
-              <Box
-                bg={'error.300'}
-                px="3"
-                py="2"
-                rounded="sm"
-                mb={5}
-                style={styles.toastMessage}>
-                <Alert.Icon style={{marginRight: 10}} />
-                E-mail ou senha incorretos!
-              </Box>
-            );
-          },
-        });
+    login(data.email, data.password).catch(() => {
+      toast.show({
+        render: () => {
+          return (
+            <Box
+              bg={'error.300'}
+              px="3"
+              py="2"
+              rounded="sm"
+              mb={5}
+              style={styles.toastMessage}>
+              <Alert.Icon style={{marginRight: 10}} />
+              E-mail ou senha incorretos!
+            </Box>
+          );
+        },
       });
+    });
   };
 
   const handleForgotPassword = () => {
