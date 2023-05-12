@@ -1,13 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {
-  useToast,
-  Box,
-  Text,
-  Alert,
-  HStack,
-  VStack,
-} from 'native-base';
+import {useToast, Box, Text, Alert, HStack, VStack} from 'native-base';
+import auth from '@react-native-firebase/auth';
 import {useForm, Controller} from 'react-hook-form';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
@@ -18,11 +12,7 @@ import {
   PRIMARY,
   WHITE,
 } from '../../../styles/colors';
-import {
-  emailRegex,
-  cpfRegex,
-  passwordRegex,
-} from '../../../utils/regex';
+import {emailRegex, cpfRegex, passwordRegex} from '../../../utils/regex';
 import {ScrollView} from 'react-native-gesture-handler';
 
 type formData = {
@@ -42,24 +32,48 @@ const Register = () => {
   } = useForm<formData>();
 
   const onSubmit = (data: formData) => {
-    console.log('data', data);
+    console.log('dataAAAAA', data);
 
     if (data.password === data.confirm_password) {
-      toast.show({
-        render: () => {
-          return (
-            <Box
-              bg={`error.100`}
-              px="3"
-              py="2"
-              rounded="sm"
-              mb={5}
-              style={styles.toastMessage}>
-              Usuário cadastrado com sucesso!
-            </Box>
-          );
-        },
-      });
+      auth()
+        .createUserWithEmailAndPassword(data.email, data.password)
+        .then(userData => {
+          console.log(userData); // chama endpoint de cadastrar no banco de dados
+          toast.show({
+            render: () => {
+              return (
+                <Box
+                  bg={`error.100`}
+                  px="3"
+                  py="2"
+                  rounded="sm"
+                  mb={5}
+                  style={styles.toastMessage}>
+                  Usuário cadastrado com sucesso!
+                </Box>
+              );
+            },
+          });
+          console.log('Usuário Logado!');
+        })
+        .catch(() => {
+          toast.show({
+            render: () => {
+              return (
+                <Box
+                  bg={`error.300`}
+                  px="3"
+                  py="2"
+                  rounded="sm"
+                  mb={5}
+                  style={styles.toastMessage}>
+                  <Alert.Icon style={{marginRight: 10}} />
+                  Usuário não cadastrado! Tente novamente.
+                </Box>
+              );
+            },
+          });
+        });
     } else {
       toast.show({
         render: () => {
@@ -72,7 +86,7 @@ const Register = () => {
               mb={5}
               style={styles.toastMessage}>
               <Alert.Icon style={{marginRight: 10}} />
-              As senhas digitadas não coincidem!
+              As senhas não coincidem! Tente novamente.
             </Box>
           );
         },
