@@ -4,6 +4,7 @@ import {useForm, Controller} from 'react-hook-form';
 import {useToast, Button, Box, Text, Alert} from 'native-base';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
+import auth from '@react-native-firebase/auth';
 import {
   BACKGROUND,
   SECUNDARY,
@@ -38,6 +39,16 @@ const Register = () => {
     console.log('data', data);
 
     if (data.password === data.confirm_password) {
+      auth()
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .then(function (userCreds) {
+        var uid = userCreds.user.uid;
+        console.log('User account created!');
+        console.log('User ID Token on Firebase: ', uid);
+      })
+      .catch(error => console.log(error));
+      console.log('data', data);
+
       toast.show({
         render: () => {
           return (

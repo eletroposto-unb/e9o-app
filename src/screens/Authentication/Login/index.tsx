@@ -26,9 +26,9 @@ const Login = () => {
   const onSubmit = (data: formData) => {
     // login();
     auth()
-      .createUserWithEmailAndPassword(data.email, data.password)
+      .signInWithEmailAndPassword(data.email, data.password)
       .then(() => {
-        console.log('User account created & signed in!');
+        console.log('User signed in!');
       })
       .catch(error => console.log(error));
     console.log('data', data);
