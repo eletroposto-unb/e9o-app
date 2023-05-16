@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {AuthContext} from '../../../context/authProvider';
 import {Stack, Icon, Pressable, Text, Box, useToast, Alert} from 'native-base';
@@ -8,6 +8,7 @@ import InputForm from '../../../components/Input';
 import {Controller, useForm} from 'react-hook-form';
 import Entypo from 'react-native-vector-icons/Entypo';
 import StyledButton from '../../../components/Button';
+import SpinnerLoading from '../../../components/SpinnerLoading';
 import auth from '@react-native-firebase/auth';
 
 type formData = {
@@ -16,7 +17,8 @@ type formData = {
 };
 
 const Login = () => {
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {login} = useContext(AuthContext);
   const {
     control,
@@ -25,7 +27,8 @@ const Login = () => {
   } = useForm<formData>();
   const toast = useToast();
 
-  const onSubmit = (data: formData) => {
+  const onSubmit = async (data: formData) => {
+    setLoading(true);
     login(data.email, data.password).catch(() => {
       toast.show({
         render: () => {
@@ -44,6 +47,7 @@ const Login = () => {
         },
       });
     });
+    setLoading(false);
   };
 
   const handleForgotPassword = () => {
@@ -123,6 +127,7 @@ const Login = () => {
           Clique aqui!
         </Text>
       </Text>
+      {loading && <SpinnerLoading />}
     </View>
   );
 };
