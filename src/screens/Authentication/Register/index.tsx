@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useToast, Box, Text, Alert, HStack, VStack} from 'native-base';
-import auth from '@react-native-firebase/auth';
+import {useToast, Box, Text, Alert, HStack, VStack, Center} from 'native-base';
 import {useForm, Controller} from 'react-hook-form';
+import {AuthContext} from '../../../context/authProvider';
+import {createUser} from '../../../services/user/user.service';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
+import SpinnerLoading from '../../../components/SpinnerLoading';
 import {
   BACKGROUND,
   SECUNDARY,
@@ -25,20 +27,44 @@ type formData = {
 
 const Register = () => {
   const toast = useToast();
+  const {register} = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const {
     control,
     handleSubmit,
     formState: {errors},
   } = useForm<formData>();
 
-  const onSubmit = (data: formData) => {
-    console.log('dataAAAAA', data);
+  const formatPayload = (data: formData | User) => {
+    const fullName = data.name;
+    const nameParts = fullName.split(' ');
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(' ');
+    return {
+      name: firstName,
+      surname: lastName,
+      email: data.email,
+      cpf: data.cpf,
+      is_admin: false,
+      telefone: '',
+      status: 'active',
+    };
+  };
 
-    if (data.password === data.confirm_password) {
-      auth()
-        .createUserWithEmailAndPassword(data.email, data.password)
-        .then(userData => {
-          console.log(userData); // chama endpoint de cadastrar no banco de dados
+  const verifyPasswords = (password: string, confirm_password: string) => {
+    if (password === confirm_password) return true;
+    else return false;
+  };
+
+  const onSubmit = async (data: formData) => {
+    setLoading(true);
+    if (verifyPasswords(data.password, data.confirm_password)) {
+      const firebaseUser = await register(data.email, data.password);
+      const payload = formatPayload(data);
+      if (firebaseUser?.user?.uid) {
+        const userCreated = await createUser(payload, firebaseUser.user.uid);
+        if (userCreated.value) {
+          console.log('userCreated', userCreated);
           toast.show({
             render: () => {
               return (
@@ -49,31 +75,30 @@ const Register = () => {
                   rounded="sm"
                   mb={5}
                   style={styles.toastMessage}>
-                  Usuário cadastrado com sucesso!
+                  <Text>Usuário cadastrado com sucesso!</Text>
                 </Box>
               );
             },
           });
-          console.log('Usuário Logado!');
-        })
-        .catch(() => {
-          toast.show({
-            render: () => {
-              return (
-                <Box
-                  bg={`error.300`}
-                  px="3"
-                  py="2"
-                  rounded="sm"
-                  mb={5}
-                  style={styles.toastMessage}>
-                  <Alert.Icon style={{marginRight: 10}} />
-                  Usuário não cadastrado! Tente novamente.
-                </Box>
-              );
-            },
-          });
+        }
+      } else {
+        toast.show({
+          render: () => {
+            return (
+              <Box
+                bg={`error.300`}
+                px="3"
+                py="2"
+                rounded="sm"
+                mb={5}
+                style={styles.toastMessage}>
+                <Alert.Icon style={{marginRight: 10}} />
+                Usuário já existe! Tente novamente com outro email.
+              </Box>
+            );
+          },
         });
+      }
     } else {
       toast.show({
         render: () => {
@@ -92,6 +117,7 @@ const Register = () => {
         },
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -269,6 +295,18 @@ const Register = () => {
           </View>
         )}
       </View>
+      <Center>
+        <Text
+          style={styles.privacyPolicy}
+          onPress={() =>
+            console.log(
+              'DEVE REDIRECIONAR PARA PÁGINA DE POLÍTICA DE PRIVACIDADE',
+            )
+          }>
+          Política de privacidade
+        </Text>
+      </Center>
+      {loading && <SpinnerLoading />}
     </ScrollView>
   );
 };
@@ -320,5 +358,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width: '100%',
     marginBottom: 50,
+  },
+  privacyPolicy: {
+    color: SECUNDARY,
+    fontWeight: 'bold',
+    position: 'absolute',
+    bottom: 0,
   },
 });
