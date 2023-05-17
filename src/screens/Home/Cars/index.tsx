@@ -10,8 +10,6 @@ import {Fonts} from '../../../styles/fonts';
 import Svg, {Image} from 'react-native-svg';
 import Car from '../../../assets/car.png';
 import StyledButton from '../../../components/Button';
-import {Controller} from 'react-hook-form';
-import InputForm from '../../../components/Input';
 
 const Cars = () => {
   const [page, setPage] = React.useState(1);
@@ -74,44 +72,72 @@ const Cars = () => {
         {
           // THIS SHOULD BE A COMPONENT BUT I'M LAZY
           page === 2 && (
-            <FlexDiv direction="column" aligment="flex-start" gap={10}>
-              <Text>ADD CAR</Text>
+            <FlexDiv direction="column" aligment="flex-start" gap={20}>
               <FlexDiv direction="column" gap={5} width={'100%'}>
-                <Text>Modelo</Text>
-                <Input variant="rounded" placeholder="Modelo" />
+                <Text style={{...Fonts.labelBlue}}>Modelo</Text>
+                <Input
+                  variant="rounded"
+                  placeholder="Modelo"
+                  style={loggendAreaInput}
+                />
               </FlexDiv>
               <FlexDiv direction="column" gap={5} width={'100%'}>
-                <Text>Marca</Text>
-                <Input variant="rounded" placeholder="Marca" />
+                <Text style={{...Fonts.labelBlue}}>Marca</Text>
+                <Input
+                  variant="rounded"
+                  placeholder="Marca"
+                  style={loggendAreaInput}
+                />
               </FlexDiv>
-              <FlexDiv direction="column" gap={5} width={'100%'}>
-                <Text>Placa</Text>
-                <Input variant="rounded" placeholder="Placa" />
+              <FlexDiv width={'100%'} direction="row" justify="space-between">
+                <FlexDiv direction="column" gap={5} width={'45%'}>
+                  <Text style={{...Fonts.labelBlue}}>Placa</Text>
+                  <Input
+                    variant="rounded"
+                    placeholder="Placa"
+                    style={loggendAreaInput}
+                  />
+                </FlexDiv>
+                <FlexDiv direction="column" gap={5} width={'45%'}>
+                  <Text style={{...Fonts.labelBlue}}>Ano</Text>
+                  <Input
+                    variant="rounded"
+                    placeholder="Ano"
+                    style={loggendAreaInput}
+                  />
+                </FlexDiv>
               </FlexDiv>
-              <FlexDiv direction="column" gap={5} width={'100%'}>
-                <Text>Ano</Text>
-                <Input variant="rounded" placeholder="Ano" />
+
+              <FlexDiv direction="column" gap={5} width={'60%'}>
+                <Text style={{...Fonts.labelBlue}}>Tipo</Text>
+                <Input
+                  variant="rounded"
+                  placeholder="Tipo"
+                  style={loggendAreaInput}
+                />
               </FlexDiv>
-              <FlexDiv direction="column" gap={5} width={'100%'}>
-                <Text>Tipo</Text>
-                <Input variant="rounded" placeholder="Tipo" />
+              <FlexDiv direction="column" gap={5} width={'60%'}>
+                <Text style={{...Fonts.labelBlue}}>Plug</Text>
+                <Input
+                  variant="rounded"
+                  placeholder="Plug"
+                  style={loggendAreaInput}
+                />
               </FlexDiv>
-              <FlexDiv direction="column" gap={5} width={'100%'}>
-                <Text>Plug</Text>
-                <Input variant="rounded" placeholder="Plug" />
+              <FlexDiv direction="column" gap={1} width={'100%'}>
+                <StyledButton
+                  title="SALVAR"
+                  onPress={() => setPage(1)}
+                  backgroundColor={PRIMARY}
+                  color={WHITE}
+                />
+                <StyledButton
+                  title="CANCELAR"
+                  onPress={() => setPage(1)}
+                  backgroundColor={ERROR}
+                  color={WHITE}
+                />
               </FlexDiv>
-              <StyledButton
-                title="SALVAR"
-                onPress={() => setPage(1)}
-                backgroundColor={PRIMARY}
-                color={WHITE}
-              />
-              <StyledButton
-                title="CANCELAR"
-                onPress={() => setPage(1)}
-                backgroundColor={ERROR}
-                color={WHITE}
-              />
             </FlexDiv>
           )
         }
@@ -126,7 +152,11 @@ const loggendAreaInput = {
   // width: '100%',
   backgroundColor: '#FFF',
   borderRadius: 20,
-  paddingHorizontal: 20,
-  paddingVertical: 16,
-  border: '1px solid #BDBDBD',
+  paddingTop: 5,
+  paddingBottom: 5,
+  paddingLeft: 20,
+  paddingRight: 20,
+  height: 50,
+  fontSize: 16,
+  lineHeight: 19,
 };
