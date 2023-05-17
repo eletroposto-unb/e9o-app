@@ -21,5 +21,15 @@ export const Fonts = {
     fontSize: 14,
     fontWeight: '400',
   },
+  thinBlue: {
+    color: PRIMARY,
+    fontSize: 14,
+    fontWeight: '400',
+  },
+  title: {
+    color: PRIMARY,
+    fontSize: 32,
+    fontWeight: '600',
+  },
   // Add more font styles as needed
 };
