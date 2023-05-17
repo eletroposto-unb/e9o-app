@@ -12,6 +12,7 @@ interface FlexDivProps {
     | 'flex-start'
     | 'flex-end';
   gap?: number;
+  width?: number | string;
 }
 
 export const FlexDiv = ({
@@ -20,10 +21,12 @@ export const FlexDiv = ({
   aligment,
   gap,
   justify,
+  width,
 }: FlexDivProps) => {
   return (
     <View
       style={{
+        width: width,
         display: 'flex',
         flexDirection: direction,
         alignItems: aligment,
