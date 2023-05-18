@@ -6,7 +6,7 @@ import {getUserByUid} from '../services/user/user.service';
 export const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({children}: any) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [user, setUser] = useState(Object || null);
 
   const login = async (email: string, password: string) => {
