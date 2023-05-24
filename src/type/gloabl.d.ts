@@ -12,6 +12,14 @@ declare global {
     firebase_uid?: string;
   };
 
+  type formData = {
+    name: string;
+    email: string;
+    cpf: string;
+    password: string;
+    confirm_password: string;
+  };
+
   type Result<T> = ResultSuccess<T> | ResultError;
   type ResultSuccess<T> = {type: 'success'; value: T};
   type ResultError = {type: 'error'; error: Error; value: undefined};
