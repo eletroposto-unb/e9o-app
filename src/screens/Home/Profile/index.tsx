@@ -1,21 +1,21 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {Text, Icon, Center, useToast, Box, Alert} from 'native-base';
+import {Text, Icon, Center, useToast, Box, Alert, HStack} from 'native-base';
 import {AuthContext} from '../../../context/authProvider';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
 import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {getUser} from '../../../context/asyncStorage';
+import {getUser, storeUser} from '../../../context/asyncStorage';
 import {updateUser} from '../../../services/user/user.service';
 import SpinnerLoading from '../../../components/SpinnerLoading';
 
 const Profile = () => {
   const toast = useToast();
-  const {logout, user} = useContext(AuthContext);
+  const {logout, user, setUser} = useContext(AuthContext);
   const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(false);
-  const [telefone, setTelefone] = useState('');
+  const [telephone, setTelephone] = useState('');
 
   useEffect(() => {
     handleUserData();
@@ -32,6 +32,7 @@ const Profile = () => {
     if (!user) {
       currentUser = await getUser();
       setUserData(currentUser);
+      setTelephone(currentUser?.telefone && currentUser.telefone);
     } else setUserData(user);
     setLoading(false);
   };
@@ -44,11 +45,13 @@ const Profile = () => {
       email: userData?.email,
       cpf: userData?.cpf,
       is_admin: userData?.is_admin,
-      telefone: telefone,
-      status: userData.status,
+      telefone: telephone,
+      status: userData?.status,
     };
     const userUpdated = await updateUser(payload, payload.cpf);
-    if (userUpdated) {
+    if (userUpdated?.value?.cpf) {
+      await storeUser(userUpdated?.value);
+      setUser(userUpdated && userUpdated?.value);
       toast.show({
         render: () => {
           return (
@@ -76,7 +79,7 @@ const Profile = () => {
               mb={5}
               style={styles.toastMessage}>
               <Alert.Icon style={{marginRight: 10}} />
-              Erro ao atualizar usuário, tente novamente!.
+              Erro ao atualizar usuário, tente novamente!
             </Box>
           );
         },
@@ -85,110 +88,137 @@ const Profile = () => {
     setLoading(false);
   };
 
-  return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.inputLabel}>Nome</Text>
-        <InputForm
-          readOnly={true}
-          defaultValue={userData?.name + ' ' + userData?.surname}
-          backgroundColor={WHITE}
-          borderWidth={1}
-          borderColor={BACKGROUND}
-          color={BACKGROUND}
-          variant="rounded"
-          placeHolder="Nome"
-          secureTextEntry={false}
-        />
-        <Text style={styles.inputLabel}>Email</Text>
-        <InputForm
-          defaultValue={userData?.email}
-          readOnly={true}
-          backgroundColor={WHITE}
-          borderWidth={1}
-          borderColor={BACKGROUND}
-          color={BACKGROUND}
-          variant="rounded"
-          placeHolder="Email"
-          secureTextEntry={false}
-          autoCapitalize="words"
-        />
-        <Text style={styles.inputLabel}>CPF</Text>
-        <InputForm
-          defaultValue={userData?.cpf}
-          readOnly={true}
-          backgroundColor={WHITE}
-          borderWidth={1}
-          borderColor={BACKGROUND}
-          color={BACKGROUND}
-          variant="rounded"
-          placeHolder="CPF"
-          secureTextEntry={false}
-        />
-        <Text style={styles.inputLabel}>Telefone</Text>
-        <InputForm
-          backgroundColor={WHITE}
-          borderWidth={1}
-          value={telefone}
-          borderColor={BACKGROUND}
-          color={BACKGROUND}
-          variant="rounded"
-          placeHolder="Telefone"
-          secureTextEntry={false}
-          onChangeText={value => setTelefone(value)}
-        />
-        <View style={styles.moedas}>
-          <View style={{width: '50%'}}>
-            <Text style={styles.inputLabel}>Moedas</Text>
-            <InputForm
-              readOnly={true}
-              backgroundColor={WHITE}
-              borderWidth={1}
-              borderColor={BACKGROUND}
-              color={BACKGROUND}
-              width={'100%'}
-              variant="rounded"
-              placeHolder="Moedas"
-              secureTextEntry={false}
-              inputRightElement={
-                <Icon
-                  as={<FontAwesome5 name="coins" />}
-                  size={6}
-                  mr="4"
-                  color="muted.400"
-                />
-              }
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Center>
+          <SpinnerLoading color={PRIMARY} />
+        </Center>
+      </View>
+    );
+  } else {
+    return (
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={styles.inputLabel}>Nome</Text>
+          <InputForm
+            readOnly={true}
+            defaultValue={userData?.name + ' ' + userData?.surname}
+            backgroundColor={WHITE}
+            borderWidth={1}
+            borderColor={BACKGROUND}
+            color={BACKGROUND}
+            variant="rounded"
+            placeHolder="Nome"
+            secureTextEntry={false}
+            autoCapitalize="words"
+          />
+          <Text style={styles.inputLabel}>Email</Text>
+          <InputForm
+            defaultValue={userData?.email}
+            readOnly={true}
+            backgroundColor={WHITE}
+            borderWidth={1}
+            borderColor={BACKGROUND}
+            color={BACKGROUND}
+            variant="rounded"
+            placeHolder="Email"
+            secureTextEntry={false}
+            autoCapitalize="words"
+          />
+          <Text style={styles.inputLabel}>CPF</Text>
+          <InputForm
+            defaultValue={userData?.cpf}
+            readOnly={true}
+            backgroundColor={WHITE}
+            borderWidth={1}
+            borderColor={BACKGROUND}
+            color={BACKGROUND}
+            variant="rounded"
+            placeHolder="CPF"
+            secureTextEntry={false}
+          />
+          <Text style={styles.inputLabel}>Telefone</Text>
+          <InputForm
+            defaultValue={userData?.telefone}
+            backgroundColor={WHITE}
+            borderWidth={1}
+            borderColor={BACKGROUND}
+            color={BACKGROUND}
+            variant="rounded"
+            placeHolder="Telefone"
+            secureTextEntry={false}
+            onChangeText={value => setTelephone(value)}
+          />
+          {!userData?.telefone && (
+            <View style={styles.infoContainer}>
+              <Alert maxW="400" status="warning" marginBottom={2} padding={1}>
+                <HStack
+                  flexShrink={1}
+                  space={2}
+                  alignItems="center"
+                  justifyContent="space-between">
+                  <HStack flexShrink={1} space={2} alignItems="center">
+                    <Alert.Icon />
+                    <Text
+                      fontSize="md"
+                      fontWeight="medium"
+                      _dark={{
+                        color: 'coolGray.800',
+                      }}>
+                      Adicione seu numero de contato.
+                    </Text>
+                  </HStack>
+                </HStack>
+              </Alert>
+            </View>
+          )}
+          <View style={styles.moedas}>
+            <View style={{width: '50%'}}>
+              <Text style={styles.inputLabel}>Moedas</Text>
+              <InputForm
+                readOnly={true}
+                backgroundColor={WHITE}
+                borderWidth={1}
+                borderColor={BACKGROUND}
+                color={BACKGROUND}
+                width={'100%'}
+                variant="rounded"
+                placeHolder="Moedas"
+                secureTextEntry={false}
+                inputRightElement={
+                  <Icon
+                    as={<FontAwesome5 name="coins" />}
+                    size={6}
+                    mr="4"
+                    color="muted.400"
+                  />
+                }
+              />
+            </View>
+            <StyledButton
+              borderRadius={30}
+              title="SOLICITAR"
+              backgroundColor={SECUNDARY}
+              color={PRIMARY}
+              width={'45%'}
             />
           </View>
           <StyledButton
-            borderRadius={30}
-            title="SOLICITAR"
-            backgroundColor={SECUNDARY}
-            color={PRIMARY}
-            width={'45%'}
+            title="SALVAR"
+            backgroundColor={PRIMARY}
+            color={WHITE}
+            onPress={handleUpdateUser}
           />
         </View>
-        <StyledButton
-          title="SALVAR"
-          backgroundColor={PRIMARY}
-          color={WHITE}
-          onPress={handleUpdateUser}
-        />
-      </View>
-      <Center>
-        <Text style={styles.sair} onPress={handleLogout}>
-          SAIR
-        </Text>
-      </Center>
-      {loading && (
-        <View style={styles.loadingContainer}>
-          <Center>
-            <SpinnerLoading color={PRIMARY} />
-          </Center>
-        </View>
-      )}
-    </ScrollView>
-  );
+        <Center>
+          <Text style={styles.sair} onPress={handleLogout}>
+            SAIR
+          </Text>
+        </Center>
+      </ScrollView>
+    );
+  }
 };
 
 export default Profile;
@@ -234,5 +264,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  infoContainer: {
+    width: '100%',
   },
 });

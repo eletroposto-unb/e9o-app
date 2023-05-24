@@ -76,7 +76,7 @@ export const updateUser = async (
   cpf: string,
 ): Promise<Result<User>> => {
   try {
-    const res = await api.put<User>(`/users/cpf/${cpf}`, payload);
+    const res = await api.put<User>(`/users/${cpf}`, payload);
     return {type: 'success', value: res.data} as unknown as Result<User>;
   } catch (error) {
     if (error instanceof Error) return {type: 'error', error, value: undefined};
