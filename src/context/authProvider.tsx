@@ -6,26 +6,36 @@ import {getUserByUid} from '../services/user/user.service';
 export const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({children}: any) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(Object || null);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [user, setUser] = useState();
 
   const login = async (email: string, password: string) => {
     const firebaseUser = await auth()
       .signInWithEmailAndPassword(email, password)
       .then(async data => {
-        await storeUser(data.user);
-        setUser(data.user);
         setIsAuthenticated(true);
         return data;
       });
     const userDb = await getUserByUid(firebaseUser.user.uid);
-    // Buscar dados do usuário no banco por meio do uid
-    // Criar state para salvar usuário nesse contexto 
-    // Funçãou logout deve remover dados do asyncStorage e do state criado para salvar os dados do user
+    if (userDb && userDb.value && firebaseUser && firebaseUser.user) {
+      const userStorage: User = {
+        name: userDb.value.name,
+        surname: userDb.value.surname,
+        email: userDb.value.email,
+        cpf: userDb.value.cpf,
+        is_admin: userDb.value.is_admin,
+        telefone: userDb.value.telefone,
+        status: userDb.value.status,
+        firebase_uid: firebaseUser.user.uid,
+      };
+      setUser(userStorage);
+      console.info('userStorage', userStorage);
+      await storeUser(userStorage);
+    }
   };
 
   const register = async (email: string, password: string) => {
-    console.log('register data', email, password);
+    console.info('register data', email, password);
     const firebaseUser = await auth()
       .createUserWithEmailAndPassword(email, password)
       .then(async data => {
@@ -39,10 +49,10 @@ export const AuthContextProvider = ({children}: any) => {
   };
 
   const logout = async () => {
-    await auth().signOut();
     await removeUser();
     setIsAuthenticated(false);
     setUser(null);
+    await auth().signOut();
   };
 
   return (

@@ -2,11 +2,15 @@ import React from 'react';
 import {Spinner, Center} from 'native-base';
 import {SECUNDARY} from '../../styles/colors';
 
-const SpinnerLoading = () => {
+type inputProps = {
+  color?: string;
+};
+
+const SpinnerLoading = ({color}: inputProps) => {
   return (
     <Center>
       <Spinner
-        color={SECUNDARY}
+        color={color || SECUNDARY}
         size="lg"
         accessibilityLabel="Loading login"
         marginTop={10}

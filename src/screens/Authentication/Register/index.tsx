@@ -7,6 +7,7 @@ import {createUser} from '../../../services/user/user.service';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
 import SpinnerLoading from '../../../components/SpinnerLoading';
+import {formatPayload} from '../../../utils/formatName';
 import {
   BACKGROUND,
   SECUNDARY,
@@ -17,14 +18,6 @@ import {
 import {emailRegex, cpfRegex, passwordRegex} from '../../../utils/regex';
 import {ScrollView} from 'react-native-gesture-handler';
 
-type formData = {
-  name: string;
-  email: string;
-  cpf: string;
-  password: string;
-  confirm_password: string;
-};
-
 const Register = () => {
   const toast = useToast();
   const {register} = useContext(AuthContext);
@@ -34,22 +27,6 @@ const Register = () => {
     handleSubmit,
     formState: {errors},
   } = useForm<formData>();
-
-  const formatPayload = (data: formData | User) => {
-    const fullName = data.name;
-    const nameParts = fullName.split(' ');
-    const firstName = nameParts[0];
-    const lastName = nameParts.slice(1).join(' ');
-    return {
-      name: firstName,
-      surname: lastName,
-      email: data.email,
-      cpf: data.cpf,
-      is_admin: false,
-      telefone: '',
-      status: 'active',
-    };
-  };
 
   const verifyPasswords = (password: string, confirm_password: string) => {
     if (password === confirm_password) return true;
@@ -306,7 +283,7 @@ const Register = () => {
           Política de privacidade
         </Text>
       </Center>
-      {loading && <SpinnerLoading />}
+      {loading && <SpinnerLoading color={SECUNDARY} />}
     </ScrollView>
   );
 };
@@ -357,7 +334,6 @@ const styles = StyleSheet.create({
   infoContainer: {
     marginTop: 15,
     width: '100%',
-    marginBottom: 50,
   },
   privacyPolicy: {
     color: SECUNDARY,
