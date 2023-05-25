@@ -12,6 +12,7 @@ import StyledButton from '../../../components/Button';
 import {useForm, Controller} from 'react-hook-form';
 import InputForm from '../../../components/Input';
 import SpinnerLoading from '../../../components/SpinnerLoading';
+import NoCarsRegistered from './NoCarsRegistered';
 import {
   createCar,
   getCarsByCpf,
@@ -38,6 +39,7 @@ const Cars = () => {
   }, [page]);
 
   const handleUserCars = async () => {
+    console.log('atualiza carros');
     setLoading(true);
     const cars = await getCarsByCpf(user.cpf);
     setUserCars(cars?.value);
@@ -180,9 +182,16 @@ const Cars = () => {
                         width={'60%'}>
                         <Text style={Fonts?.labelBlue}>{carro.modelo}</Text>
                         <Text>{carro.marca}</Text>
+                        <Text style={{textTransform: 'uppercase'}}>
+                          {carro.placa}
+                        </Text>
                       </FlexDiv>
                     </>
-                    <FlexDiv width={'40%'} ma>
+                    <FlexDiv
+                      width={'40%'}
+                      direction="column"
+                      aligment="flex-start"
+                      gap={5}>
                       <MaterialCommunityIcons
                         name="delete"
                         size={25}
@@ -194,6 +203,11 @@ const Cars = () => {
                 </RowItem>
               );
             })}
+          {!userCars && (
+            <Center>
+              <NoCarsRegistered />
+            </Center>
+          )}
           <Center>
             <Button
               style={{
