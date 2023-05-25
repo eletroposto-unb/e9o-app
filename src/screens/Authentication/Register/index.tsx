@@ -7,7 +7,7 @@ import {createUser} from '../../../services/user/user.service';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
 import SpinnerLoading from '../../../components/SpinnerLoading';
-import {formatPayload} from '../../../utils/formatName';
+import {formatUserPayload} from '../../../utils/formatPayload';
 import {
   BACKGROUND,
   SECUNDARY,
@@ -23,6 +23,7 @@ const Register = () => {
   const {register} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const {
+    reset,
     control,
     handleSubmit,
     formState: {errors},
@@ -37,7 +38,7 @@ const Register = () => {
     setLoading(true);
     if (verifyPasswords(data.password, data.confirm_password)) {
       const firebaseUser = await register(data.email, data.password);
-      const payload = formatPayload(data);
+      const payload = formatUserPayload(data);
       if (firebaseUser?.user?.uid) {
         const userCreated = await createUser(payload, firebaseUser.user.uid);
         if (userCreated.value) {
@@ -58,6 +59,7 @@ const Register = () => {
             },
           });
         }
+        reset();
       } else {
         toast.show({
           render: () => {

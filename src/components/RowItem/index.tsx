@@ -14,7 +14,7 @@ export const RowItem = ({children}: RowItemProps) => {
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '100%',
-        padding: 21,
+        padding: 15,
         shadowColor: '#000',
         shadowOffset: {
           width: 0,

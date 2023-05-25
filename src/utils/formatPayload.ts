@@ -6,7 +6,7 @@ export const formatName = (name: string) => {
   return {firstName, lastName};
 };
 
-export const formatPayload = (data: formData | User) => {
+export const formatUserPayload = (data: formData | User) => {
   const {firstName, lastName} = formatName(data.name);
   return {
     name: firstName,
@@ -16,5 +16,18 @@ export const formatPayload = (data: formData | User) => {
     is_admin: false,
     telefone: '',
     status: 'active',
+  };
+};
+
+export const formatCarPayload = (data: formCarData | Car, user: User) => {
+  console.log('formatCarPayload', data);
+  return {
+    placa: data.placa,
+    modelo: data.modelo,
+    tipo: data.tipo,
+    marca: data.marca,
+    ano: data.ano,
+    tipoPlug: data.tipoPlug,
+    cpf: user.cpf,
   };
 };

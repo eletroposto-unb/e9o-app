@@ -146,7 +146,7 @@ const Profile = () => {
             borderColor={BACKGROUND}
             color={BACKGROUND}
             variant="rounded"
-            placeHolder="Telefone"
+            placeHolder="61 900000000"
             secureTextEntry={false}
             onChangeText={value => setTelephone(value)}
           />
