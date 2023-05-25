@@ -1,6 +1,5 @@
-import React, {useState, useContext} from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
-import {mockCarros} from './_mockCarros';
+import React, {useState, useContext, useEffect} from 'react';
+import {View, Text, ScrollView, StyleSheet, RefreshControl} from 'react-native';
 import {RowItem} from '../../../components/RowItem';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {FlexDiv} from '../../../components/DisplayFlex/FlexDiv';
@@ -13,16 +12,20 @@ import StyledButton from '../../../components/Button';
 import {useForm, Controller} from 'react-hook-form';
 import InputForm from '../../../components/Input';
 import SpinnerLoading from '../../../components/SpinnerLoading';
-import {createCar} from '../../../services/car/car.service';
+import {
+  createCar,
+  getCarsByCpf,
+  deleteCar,
+} from '../../../services/car/car.service';
 import {formatCarPayload} from '../../../utils/formatPayload';
 import {AuthContext} from '../../../context/authProvider';
-import {getUser} from '../../../context/asyncStorage';
 
 const Cars = () => {
   const toast = useToast();
   const {user} = useContext(AuthContext);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [userCars, setUserCars] = useState<Car[]>([]);
   const {
     reset,
     control,
@@ -30,18 +33,74 @@ const Cars = () => {
     formState: {errors},
   } = useForm<formCarData>();
 
+  useEffect(() => {
+    handleUserCars();
+  }, [page]);
+
+  const handleUserCars = async () => {
+    setLoading(true);
+    const cars = await getCarsByCpf(user.cpf);
+    setUserCars(cars?.value);
+    setLoading(false);
+  };
+
+  const handleDeleteCar = async car => {
+    setLoading(true);
+    const carDeleted = await deleteCar(car.id);
+    if (carDeleted?.value?.modelo) {
+      toast.show({
+        render: () => {
+          return (
+            <Box
+              bg={`error.100`}
+              px="3"
+              py="2"
+              rounded="sm"
+              mb={5}
+              style={styles.toastMessage}>
+              <MaterialCommunityIcons
+                name="check-circle"
+                size={20}
+                color={'green'}
+              />
+              <Text style={{marginLeft: 2}}>Carro deletado com sucesso!</Text>
+            </Box>
+          );
+        },
+      });
+      await handleUserCars();
+    } else {
+      toast.show({
+        render: () => {
+          return (
+            <Box
+              bg={`warning.100`}
+              px="3"
+              py="2"
+              rounded="sm"
+              mb={5}
+              style={styles.toastMessage}>
+              <Alert.Icon style={{marginRight: 10}} />
+              <Text style={{marginLeft: 2}}>
+                Carro não deletado, tente novamente!
+              </Text>
+            </Box>
+          );
+        },
+      });
+    }
+    setLoading(false);
+  };
+
   const handleAddCarButton = () => {
     setPage(2);
   };
 
   const onSubmit = async (data: formCarData) => {
     setLoading(true);
-    const user = await getUser();
     const payload = formatCarPayload(data, user);
-    console.log('PAYLOAD', payload);
     const carCreated = await createCar(payload);
     if (carCreated.value) {
-      console.log('carCreated', carCreated);
       toast.show({
         render: () => {
           return (
@@ -62,6 +121,7 @@ const Cars = () => {
           );
         },
       });
+      await handleUserCars();
       reset();
     } else {
       toast.show({
@@ -83,29 +143,57 @@ const Cars = () => {
         },
       });
     }
-
     setLoading(false);
   };
 
   if (page === 1) {
     return (
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <ScrollView
+        contentContainerStyle={{flexGrow: 1}}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={handleUserCars}
+            colors={[BACKGROUND]}
+            tintColor={BACKGROUND}
+          />
+        }>
         <View style={styles.carListingcontainer}>
-          {mockCarros.map((carro, id) => {
-            return (
-              <RowItem key={`${carro.modelo}-${id}`}>
-                <FlexDiv direction="row" aligment="center" gap={15}>
-                  <Svg width={50} height={45}>
-                    <Image href={Car} width={50} height={45} />
-                  </Svg>
-                  <FlexDiv direction="column" aligment="flex-start" gap={5}>
-                    <Text style={Fonts?.labelBlue}>{carro.modelo}</Text>
-                    <Text>{carro.marca}</Text>
+          {userCars &&
+            userCars.map((carro, id) => {
+              return (
+                <RowItem key={`${carro.modelo}-${id}`}>
+                  <FlexDiv
+                    direction="row"
+                    aligment="center"
+                    gap={15}
+                    justify="space-between"
+                    width={'100%'}>
+                    <>
+                      <Svg width={50} height={45}>
+                        <Image href={Car} width={50} height={45} />
+                      </Svg>
+                      <FlexDiv
+                        direction="column"
+                        aligment="flex-start"
+                        gap={5}
+                        width={'60%'}>
+                        <Text style={Fonts?.labelBlue}>{carro.modelo}</Text>
+                        <Text>{carro.marca}</Text>
+                      </FlexDiv>
+                    </>
+                    <FlexDiv width={'40%'} ma>
+                      <MaterialCommunityIcons
+                        name="delete"
+                        size={25}
+                        color={BACKGROUND}
+                        onPress={() => handleDeleteCar(carro)}
+                      />
+                    </FlexDiv>
                   </FlexDiv>
-                </FlexDiv>
-              </RowItem>
-            );
-          })}
+                </RowItem>
+              );
+            })}
           <Center>
             <Button
               style={{
@@ -116,6 +204,7 @@ const Cars = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                marginTop: 10,
               }}
               onPress={handleAddCarButton}>
               <MaterialCommunityIcons name="plus" size={30} color={'white'} />
@@ -330,7 +419,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     marginTop: 20,
     flexDirection: 'column',
-    justifyContent: 'space-between',
     height: '90%',
     paddingHorizontal: 5,
   },

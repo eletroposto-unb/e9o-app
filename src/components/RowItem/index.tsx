@@ -1,4 +1,5 @@
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import {View} from 'native-base';
 
 interface RowItemProps {
@@ -12,6 +13,7 @@ export const RowItem = ({children}: RowItemProps) => {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        marginBottom: 18,
         justifyContent: 'space-between',
         width: '100%',
         padding: 15,
