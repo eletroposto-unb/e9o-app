@@ -19,6 +19,7 @@ type inputProps = {
   color?: string;
   width?: string;
   keyboardType?: string;
+  defaultValue?: string;
 };
 
 const InputForm = ({
@@ -36,9 +37,11 @@ const InputForm = ({
   readOnly,
   color,
   width,
+  defaultValue,
 }: inputProps) => {
   return (
     <Input
+      defaultValue={defaultValue}
       width={width}
       readOnly={readOnly}
       size="xl"

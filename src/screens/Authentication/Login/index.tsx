@@ -51,8 +51,7 @@ const Login = () => {
   };
 
   const handleForgotPassword = () => {
-    console.log('dataaaaaaa');
-    login();
+    console.log('handleForgotPassword');
   };
 
   return (
