@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import UnderConstruction from '../screens/UnderConstruction';
 import Charge from '../screens/Charge';
 import NfcReader from '../screens/NFC';
 import QrCodeReader from '../screens/QRCode';
@@ -14,10 +15,10 @@ import Octicons from 'react-native-vector-icons/Octicons';
 
 const TabScreens = [
   {name: 'Home', component: Home},
-  {name: 'Charger', component: Charge},
-  {name: 'NfcReader', component: NfcReader},
-  {name: 'QrCodeReader', component: QrCodeReader},
-  {name: 'History', component: History},
+  {name: 'Charger', component: UnderConstruction},
+  {name: 'NfcReader', component: UnderConstruction},
+  {name: 'QrCodeReader', component: UnderConstruction},
+  {name: 'History', component: UnderConstruction},
 ];
 
 const icons: {[key: string]: any} = {
