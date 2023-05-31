@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import UnderConstruction from '../screens/UnderConstruction';
 import Charge from '../screens/Charge';
 import NfcReader from '../screens/NFC';
@@ -30,6 +31,7 @@ const icons: {[key: string]: any} = {
 };
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export function PrivateNavigator() {
   return (

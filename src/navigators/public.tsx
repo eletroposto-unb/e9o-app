@@ -2,9 +2,11 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Authentication from '../screens/Authentication';
 import Login from '../screens/Authentication/Login';
 import Register from '../screens/Authentication/Register';
+import Help from '../screens/Help';
 import SafeAreaWrapper from '../components/SafeArea';
 
 const StackScreens = [
+  // {name: 'Help', component: Help},
   {name: 'Authentication', component: Authentication},
   {name: 'Login', component: Login},
   {name: 'Register', component: Register},
