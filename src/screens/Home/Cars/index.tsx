@@ -418,7 +418,7 @@ const Cars = () => {
             backgroundColor={PRIMARY}
             color={WHITE}
             onPress={handleSubmit(onSubmit)}
-            loading={true}
+            loading={loading}
             loadingColor={SECUNDARY}
           />
           <Center>
