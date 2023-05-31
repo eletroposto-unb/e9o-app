@@ -1,14 +1,18 @@
-import {Button} from 'native-base';
+/* eslint-disable react/react-in-jsx-scope */
+import {Button, Spinner} from 'native-base';
 import {StyleSheet} from 'react-native';
 import {Text} from 'native-base';
+import {PRIMARY} from '../../styles/colors';
 
 type inputProps = {
-  title: string;
+  title?: string;
   onPress?: any;
   color: string;
   backgroundColor: string;
   width?: string;
   borderRadius?: number;
+  loading?: boolean;
+  loadingColor?: string;
 };
 
 const StyledButton = ({
@@ -18,6 +22,8 @@ const StyledButton = ({
   backgroundColor,
   width,
   borderRadius,
+  loading,
+  loadingColor,
 }: inputProps) => {
   return (
     <Button
@@ -26,9 +32,13 @@ const StyledButton = ({
       onPress={onPress}
       borderRadius={borderRadius ? borderRadius : 15}
       backgroundColor={backgroundColor}>
-      <Text style={styles.text} color={color}>
-        {title}
-      </Text>
+      {!loading ? (
+        <Text style={styles.text} color={color}>
+          {title}
+        </Text>
+      ) : (
+        <Spinner size="sm" color={loadingColor ? loadingColor : PRIMARY} />
+      )}
     </Button>
   );
 };

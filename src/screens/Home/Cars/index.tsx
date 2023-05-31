@@ -4,7 +4,13 @@ import {RowItem} from '../../../components/RowItem';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {FlexDiv} from '../../../components/DisplayFlex/FlexDiv';
 import {Button, Center, Icon, useToast, Box, Alert} from 'native-base';
-import {PRIMARY, WHITE, BACKGROUND, WARNING} from '../../../styles/colors';
+import {
+  PRIMARY,
+  WHITE,
+  BACKGROUND,
+  WARNING,
+  SECUNDARY,
+} from '../../../styles/colors';
 import {Fonts} from '../../../styles/fonts';
 import Svg, {Image} from 'react-native-svg';
 import Car from '../../../assets/car.png';
@@ -54,7 +60,7 @@ const Cars = () => {
         render: () => {
           return (
             <Box
-              bg={`error.100`}
+              bg={'error.100'}
               px="3"
               py="2"
               rounded="sm"
@@ -76,7 +82,7 @@ const Cars = () => {
         render: () => {
           return (
             <Box
-              bg={`warning.100`}
+              bg={'warning.100'}
               px="3"
               py="2"
               rounded="sm"
@@ -107,7 +113,7 @@ const Cars = () => {
         render: () => {
           return (
             <Box
-              bg={`error.100`}
+              bg={'error.100'}
               px="3"
               py="2"
               rounded="sm"
@@ -130,7 +136,7 @@ const Cars = () => {
         render: () => {
           return (
             <Box
-              bg={`warning.100`}
+              bg={'warning.100'}
               px="3"
               py="2"
               rounded="sm"
@@ -412,13 +418,14 @@ const Cars = () => {
             backgroundColor={PRIMARY}
             color={WHITE}
             onPress={handleSubmit(onSubmit)}
+            loading={true}
+            loadingColor={SECUNDARY}
           />
           <Center>
             <Text style={styles.sair} onPress={() => setPage(1)}>
               SAIR
             </Text>
           </Center>
-          {loading && <SpinnerLoading color={BACKGROUND} />}
         </View>
       </ScrollView>
     );

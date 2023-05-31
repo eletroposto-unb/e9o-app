@@ -6,7 +6,6 @@ import {AuthContext} from '../../../context/authProvider';
 import {createUser} from '../../../services/user/user.service';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
-import SpinnerLoading from '../../../components/SpinnerLoading';
 import {formatUserPayload} from '../../../utils/formatPayload';
 import {
   BACKGROUND,
@@ -30,8 +29,11 @@ const Register = () => {
   } = useForm<formData>();
 
   const verifyPasswords = (password: string, confirm_password: string) => {
-    if (password === confirm_password) return true;
-    else return false;
+    if (password === confirm_password) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const onSubmit = async (data: formData) => {
@@ -47,7 +49,7 @@ const Register = () => {
             render: () => {
               return (
                 <Box
-                  bg={`error.100`}
+                  bg={'error.100'}
                   px="3"
                   py="2"
                   rounded="sm"
@@ -65,7 +67,7 @@ const Register = () => {
           render: () => {
             return (
               <Box
-                bg={`error.300`}
+                bg={'error.300'}
                 px="3"
                 py="2"
                 rounded="sm"
@@ -83,7 +85,7 @@ const Register = () => {
         render: () => {
           return (
             <Box
-              bg={`error.300`}
+              bg={'error.300'}
               px="3"
               py="2"
               rounded="sm"
@@ -234,6 +236,7 @@ const Register = () => {
           title="REGISTRAR"
           backgroundColor={SECUNDARY}
           color={PRIMARY}
+          loading={loading}
         />
         {errors.password && (
           <View style={styles.infoContainer}>
@@ -285,7 +288,6 @@ const Register = () => {
           Política de privacidade
         </Text>
       </Center>
-      {loading && <SpinnerLoading color={SECUNDARY} />}
     </ScrollView>
   );
 };

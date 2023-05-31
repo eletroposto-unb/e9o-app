@@ -8,8 +8,6 @@ import InputForm from '../../../components/Input';
 import {Controller, useForm} from 'react-hook-form';
 import Entypo from 'react-native-vector-icons/Entypo';
 import StyledButton from '../../../components/Button';
-import SpinnerLoading from '../../../components/SpinnerLoading';
-import auth from '@react-native-firebase/auth';
 
 type formData = {
   email: string;
@@ -30,6 +28,8 @@ const Login = () => {
   const onSubmit = async (data: formData) => {
     setLoading(true);
     login(data.email, data.password).catch(() => {
+      console.log('error');
+      setLoading(false);
       toast.show({
         render: () => {
           return (
@@ -47,7 +47,6 @@ const Login = () => {
         },
       });
     });
-    setLoading(false);
   };
 
   const handleForgotPassword = () => {
@@ -116,9 +115,10 @@ const Login = () => {
       </Stack>
       <StyledButton
         onPress={handleSubmit(onSubmit)}
-        title="ENTRAR"
         backgroundColor={SECUNDARY}
         color={PRIMARY}
+        loading={loading}
+        title="ENTRAR"
       />
       <Text style={styles.forgotPassword}>
         Esqueceu sua senha?{' '}
@@ -126,7 +126,6 @@ const Login = () => {
           Clique aqui!
         </Text>
       </Text>
-      {loading && <SpinnerLoading />}
     </View>
   );
 };

@@ -53,6 +53,7 @@ const Home = () => {
               bold
               fontSize={18}
               onPress={handleLogin}
+              marginBottom={3}
               style={styles.text}>
               {action.profile.title}
             </Text>
@@ -62,6 +63,7 @@ const Home = () => {
               color={PRIMARY}
               bold
               fontSize={18}
+              marginBottom={3}
               onPress={handleRegister}
               style={styles.text}>
               {action.cars.title}
@@ -95,7 +97,4 @@ const styles = StyleSheet.create({
     borderBottomColor: PRIMARY,
     borderBottomWidth: type === 1 ? 1 : 0,
   }),
-  text: {
-    marginBottom: 3,
-  },
 });
