@@ -6,6 +6,8 @@ import SafeAreaWrapper from '../components/SafeArea';
 import {createStackNavigator} from '@react-navigation/stack';
 import {PrivateNavigator} from './private';
 import {PublicNavigator} from './public';
+import {NavigableScreens} from './screens';
+import Help from '../screens/Help';
 
 const Stack = createStackNavigator();
 
@@ -14,7 +16,7 @@ function ApplicationRoutes() {
 
   useEffect(() => {
     handleUser();
-  }, []);
+  }, [user]);
 
   const handleUser = async () => {
     const userStoraged = await getUser();
@@ -24,7 +26,20 @@ function ApplicationRoutes() {
   return (
     <SafeAreaWrapper>
       <NavigationContainer>
-        {isAuthenticated ? <PrivateNavigator /> : <PublicNavigator />}
+        {isAuthenticated && user ? (
+          <Stack.Navigator
+            screenOptions={{
+              title: '',
+              headerShown: false,
+              headerTransparent: false,
+              headerShadowVisible: false,
+            }}>
+            <Stack.Screen name="TabScreens" component={PrivateNavigator} />
+            <Stack.Screen name="Help" component={Help} />
+          </Stack.Navigator>
+        ) : (
+          <PublicNavigator />
+        )}
       </NavigationContainer>
     </SafeAreaWrapper>
   );

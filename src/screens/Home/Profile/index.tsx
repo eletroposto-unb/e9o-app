@@ -1,17 +1,30 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {Text, Icon, Center, useToast, Box, Alert, HStack} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
+import {
+  Text,
+  Icon,
+  Center,
+  useToast,
+  Box,
+  Alert,
+  HStack,
+  Tooltip,
+  Fab,
+} from 'native-base';
 import {AuthContext} from '../../../context/authProvider';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
 import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {getUser, storeUser} from '../../../context/asyncStorage';
 import {updateUser} from '../../../services/user/user.service';
 import SpinnerLoading from '../../../components/SpinnerLoading';
 
 const Profile = () => {
   const toast = useToast();
+  const navigation = useNavigation();
   const {logout, user, setUser} = useContext(AuthContext);
   const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(false);
@@ -210,12 +223,29 @@ const Profile = () => {
             color={WHITE}
             onPress={handleUpdateUser}
           />
+          <View
+            style={{
+              paddingTop: 30,
+            }}>
+            <Center>
+              <Text style={styles.sair} onPress={handleLogout}>
+                SAIR
+              </Text>
+            </Center>
+          </View>
+          <View style={styles.footer}>
+            <Fab
+              renderInPortal={true}
+              shadow={9}
+              size="sm"
+              backgroundColor={PRIMARY}
+              onPress={() =>
+                navigation.navigate('Help', {navigation: navigation})
+              }
+              icon={<Icon color="white" as={Entypo} name="help" size="lg" />}
+            />
+          </View>
         </View>
-        <Center>
-          <Text style={styles.sair} onPress={handleLogout}>
-            SAIR
-          </Text>
-        </Center>
       </ScrollView>
     );
   }
@@ -267,5 +297,13 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     width: '100%',
+  },
+  footer: {
+    width: '100%',
+    height: '100%',
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    textAlign: 'center',
   },
 });
