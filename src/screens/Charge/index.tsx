@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, Text } from 'react-native';
+import {View} from 'react-native';
+import Map from '../../components/Map';
 
 const Charge = () => {
   return (
     <View>
-      <Text>Charge</Text>
+      <Map />
     </View>
   );
 };

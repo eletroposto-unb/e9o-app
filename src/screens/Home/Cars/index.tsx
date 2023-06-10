@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useContext, useEffect} from 'react';
 import {View, Text, ScrollView, StyleSheet, RefreshControl} from 'react-native';
 import {RowItem} from '../../../components/RowItem';
@@ -12,7 +13,6 @@ import {
   SECUNDARY,
 } from '../../../styles/colors';
 import {Fonts} from '../../../styles/fonts';
-import Svg, {Image} from 'react-native-svg';
 import Car from '../../../assets/car.png';
 import StyledButton from '../../../components/Button';
 import {useForm, Controller} from 'react-hook-form';
@@ -26,6 +26,7 @@ import {
 } from '../../../services/car/car.service';
 import {formatCarPayload} from '../../../utils/formatPayload';
 import {AuthContext} from '../../../context/authProvider';
+import Svg from 'react-native-svg';
 
 const Cars = () => {
   const toast = useToast();
@@ -238,7 +239,7 @@ const Cars = () => {
       <ScrollView>
         <View style={styles.carCreatingContainer}>
           <Text style={styles.inputLabel}>Modelo</Text>
-          <Controller
+          <ControllerF
             control={control}
             name="modelo"
             rules={{
