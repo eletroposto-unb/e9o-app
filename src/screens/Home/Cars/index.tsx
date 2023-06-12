@@ -1,5 +1,12 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {View, Text, ScrollView, StyleSheet, RefreshControl} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  RefreshControl,
+  Modal,
+} from 'react-native';
 import {RowItem} from '../../../components/RowItem';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {FlexDiv} from '../../../components/DisplayFlex/FlexDiv';
@@ -26,6 +33,9 @@ import {
 } from '../../../services/car/car.service';
 import {formatCarPayload} from '../../../utils/formatPayload';
 import {AuthContext} from '../../../context/authProvider';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {CreateAxiosDefaults} from 'axios';
+import EditCarModal from './EditCarModal';
 
 const Cars = () => {
   const toast = useToast();
@@ -33,6 +43,8 @@ const Cars = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [userCars, setUserCars] = useState<Car[]>([]);
+  const [editModal, setEditModal] = useState(false);
+  const [currentCar, setCurrentCar] = useState<Car | null>();
   const {
     reset,
     control,
@@ -154,6 +166,20 @@ const Cars = () => {
     setLoading(false);
   };
 
+  const handleOpenEditCar = carro => {
+    setLoading(true);
+    setEditModal(true);
+    setCurrentCar(carro);
+    setLoading(false);
+  };
+
+  const handleCloseEditCar = carro => {
+    setLoading(true);
+    setEditModal(false);
+    setCurrentCar(null);
+    setLoading(false);
+  };
+
   if (page === 1) {
     return (
       <ScrollView
@@ -170,43 +196,47 @@ const Cars = () => {
           {userCars &&
             userCars.map((carro, id) => {
               return (
-                <RowItem key={`${carro.modelo}-${id}`}>
-                  <FlexDiv
-                    direction="row"
-                    aligment="center"
-                    gap={15}
-                    justify="space-between"
-                    width={'100%'}>
-                    <>
-                      <Svg width={50} height={45}>
-                        <Image href={Car} width={50} height={45} />
-                      </Svg>
+                <TouchableOpacity
+                  onPress={() => handleOpenEditCar(carro)}
+                  key={`${carro.modelo}-${id}`}>
+                  <RowItem>
+                    <FlexDiv
+                      direction="row"
+                      aligment="center"
+                      gap={15}
+                      justify="space-between"
+                      width={'100%'}>
+                      <>
+                        <Svg width={50} height={45}>
+                          <Image href={Car} width={50} height={45} />
+                        </Svg>
+                        <FlexDiv
+                          direction="column"
+                          aligment="flex-start"
+                          gap={5}
+                          width={'60%'}>
+                          <Text style={Fonts?.labelBlue}>{carro.modelo}</Text>
+                          <Text>{carro.marca}</Text>
+                          <Text style={{textTransform: 'uppercase'}}>
+                            {carro.placa}
+                          </Text>
+                        </FlexDiv>
+                      </>
                       <FlexDiv
+                        width={'40%'}
                         direction="column"
                         aligment="flex-start"
-                        gap={5}
-                        width={'60%'}>
-                        <Text style={Fonts?.labelBlue}>{carro.modelo}</Text>
-                        <Text>{carro.marca}</Text>
-                        <Text style={{textTransform: 'uppercase'}}>
-                          {carro.placa}
-                        </Text>
+                        gap={5}>
+                        <MaterialCommunityIcons
+                          name="delete"
+                          size={25}
+                          color={BACKGROUND}
+                          onPress={() => handleDeleteCar(carro)}
+                        />
                       </FlexDiv>
-                    </>
-                    <FlexDiv
-                      width={'40%'}
-                      direction="column"
-                      aligment="flex-start"
-                      gap={5}>
-                      <MaterialCommunityIcons
-                        name="delete"
-                        size={25}
-                        color={BACKGROUND}
-                        onPress={() => handleDeleteCar(carro)}
-                      />
                     </FlexDiv>
-                  </FlexDiv>
-                </RowItem>
+                  </RowItem>
+                </TouchableOpacity>
               );
             })}
           {!userCars && (
@@ -231,6 +261,13 @@ const Cars = () => {
             </Button>
           </Center>
         </View>
+        {editModal && currentCar && (
+          <EditCarModal
+            openModal={editModal}
+            currentCar={currentCar}
+            handleCloseModal={handleCloseEditCar}
+          />
+        )}
       </ScrollView>
     );
   } else if (page === 2) {
