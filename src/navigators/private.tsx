@@ -17,7 +17,7 @@ import Octicons from 'react-native-vector-icons/Octicons';
 const TabScreens = [
   {name: 'Home', component: Home},
   {name: 'Charger', component: UnderConstruction},
-  {name: 'NfcReader', component: UnderConstruction},
+  {name: 'NfcReader', component: NfcReader},
   {name: 'QrCodeReader', component: QrCodeReader},
   {name: 'History', component: UnderConstruction},
 ];
