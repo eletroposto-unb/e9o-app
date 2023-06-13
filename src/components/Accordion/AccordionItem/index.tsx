@@ -1,6 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
-import {BACKGROUND, LIGHTGRAY, PRIMARY, WHITE} from '../../../styles/colors';
+import {PRIMARY, WHITE} from '../../../styles/colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 type AccordionItemPros = PropsWithChildren<{

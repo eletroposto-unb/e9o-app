@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import {BACKGROUND, SECUNDARY, WHITE, PRIMARY} from '../../styles/colors';
+import {BACKGROUND, SECUNDARY, WHITE} from '../../styles/colors';
 
 const UnderConstruction = () => {
   return (

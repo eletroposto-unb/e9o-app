@@ -22,7 +22,7 @@ const ProfileInput = ({
   onChangeText,
   secureTextEntry,
   readOnly,
-  width
+  width,
 }: inputProps) => {
   return (
     <Input
