@@ -18,7 +18,7 @@ const TabScreens = [
   {name: 'Home', component: Home},
   {name: 'Charger', component: UnderConstruction},
   {name: 'NfcReader', component: UnderConstruction},
-  {name: 'QrCodeReader', component: UnderConstruction},
+  {name: 'QrCodeReader', component: QrCodeReader},
   {name: 'History', component: UnderConstruction},
 ];
 
