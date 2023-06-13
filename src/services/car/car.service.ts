@@ -33,6 +33,24 @@ export const createCar = async (
   }
 };
 
+export const updateCar = async (
+  payload: formCarData,
+  id: number,
+): Promise<Result<formCarData>> => {
+  try {
+    const res = await api.put<formCarData>(`/cars/${id}`, payload);
+    return {type: 'success', value: res.data} as unknown as Result<Car>;
+  } catch (error) {
+    if (error instanceof Error) return {type: 'error', error, value: undefined};
+
+    return {
+      type: 'error',
+      error: new Error('Erro desconhecido'),
+      value: undefined,
+    };
+  }
+};
+
 export const deleteCar = async (id: number): Promise<Result<formCarData>> => {
   try {
     const res = await api.delete<formCarData>(`/cars/car/${id}`);

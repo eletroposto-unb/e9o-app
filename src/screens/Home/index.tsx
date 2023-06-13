@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {NativeBaseProvider, Box, Text} from 'native-base';
-import {PRIMARY, SECUNDARY, WHITE} from '../../styles/colors';
+import {PRIMARY} from '../../styles/colors';
 import Profile from './Profile';
 import Cars from './Cars';
 
@@ -17,7 +17,7 @@ const Home = () => {
     },
   });
 
-  const handleLogin = (value: number) => {
+  const handleLogin = () => {
     setAction({
       profile: {
         title: 'PERFIL',
