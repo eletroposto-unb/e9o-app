@@ -1,6 +1,7 @@
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
+import {StationsDTO} from '../../services/dto/Stations.dto';
 
 const {height, width} = Dimensions.get('window');
 
@@ -17,18 +18,31 @@ const styles = StyleSheet.create({
   },
 });
 
-const Map = () => (
-  <View style={styles.container}>
-    <MapView
-      style={styles.map}
-      region={{
-        latitude: -15.988826153080108,
-        longitude: -48.044526246024574,
-        latitudeDelta: 0.015,
-        longitudeDelta: 0.0121,
-      }}
-    />
-  </View>
-);
+const Map = ({stations}: {stations: StationsDTO[]}) => {
+  const initialRegion = {
+    latitude: -16.0077, // Latitude da posição inicial no Gama, DF
+    longitude: -48.0416, // Longitude da posição inicial no Gama, DF
+    latitudeDelta: 0.0922, // Zoom do mapa na direção latitudinal
+    longitudeDelta: 0.0421, // Zoom do mapa na direção longitudinal
+  };
+
+  return (
+    <View style={styles.container}>
+      <MapView style={styles.map} initialRegion={initialRegion}>
+        {stations?.map((station, index) => (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: station.address.latitude,
+              longitude: station.address.longitude,
+            }}
+            title={station.station.nome}
+            description={station.station.descricao}
+          />
+        ))}
+      </MapView>
+    </View>
+  );
+};
 
 export default Map;

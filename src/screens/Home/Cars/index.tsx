@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useContext, useEffect} from 'react';
 import {View, Text, ScrollView, StyleSheet, RefreshControl} from 'react-native';
 import {RowItem} from '../../../components/RowItem';
@@ -21,6 +20,7 @@ import {
   SECUNDARY,
 } from '../../../styles/colors';
 import {Fonts} from '../../../styles/fonts';
+import Svg, {Image} from 'react-native-svg';
 import Car from '../../../assets/car.png';
 import StyledButton from '../../../components/Button';
 import {useForm, Controller} from 'react-hook-form';
@@ -33,7 +33,7 @@ import {
 } from '../../../services/car/car.service';
 import {formatCarPayload} from '../../../utils/formatPayload';
 import {AuthContext} from '../../../context/authProvider';
-import Svg from 'react-native-svg';
+import EditCarModal from './EditCarModal';
 
 const Cars = () => {
   const toast = useToast();
@@ -272,32 +272,27 @@ const Cars = () => {
     );
   } else if (page === 2) {
     return (
-      <ScrollView>
-        <View style={styles.carCreatingContainer}>
-          <Text style={styles.inputLabel}>Modelo</Text>
-          <ControllerF
-            control={control}
-            name="modelo"
-            rules={{
-              required: 'Nome do Modelo Obrigatório',
-            }}
-            render={({field: {value, onChange}}) => (
-              <InputForm
-                backgroundColor={WHITE}
-                borderColor={BACKGROUND}
-                color={BACKGROUND}
-                borderWidth={1}
-                variant="rounded"
-                placeHolder="Ex: Volvo XC40"
-                value={value}
-                secureTextEntry={false}
-                autoCapitalize="words"
-                onChangeText={onChange}
-              />
-            )}
-          />
-          {errors?.modelo && (
-            <Text style={styles.messageError}>{errors.modelo.message}</Text>
+      <View style={styles.carCreatingContainer}>
+        <Text style={styles.inputLabel}>Modelo</Text>
+        <Controller
+          control={control}
+          name="modelo"
+          rules={{
+            required: 'Nome do Modelo Obrigatório',
+          }}
+          render={({field: {value, onChange}}) => (
+            <InputForm
+              backgroundColor={WHITE}
+              borderColor={BACKGROUND}
+              color={BACKGROUND}
+              borderWidth={1}
+              variant="rounded"
+              placeHolder="Ex: Volvo XC40"
+              value={value}
+              secureTextEntry={false}
+              autoCapitalize="words"
+              onChangeText={onChange}
+            />
           )}
         />
         {errors?.modelo && (
