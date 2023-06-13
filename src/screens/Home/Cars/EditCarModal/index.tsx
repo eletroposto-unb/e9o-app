@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {Modal, StyleSheet, View, Text, ScrollView} from 'react-native';
-import {Center, Button} from 'native-base';
+import {Center, Box, useToast} from 'native-base';
 import {useForm, Controller} from 'react-hook-form';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {updateCar} from '../../../../services/car/car.service';
 import InputForm from '../../../../components/Input';
 import StyledButton from '../../../../components/Button';
 import {
@@ -13,17 +15,30 @@ import {
   WARNING,
 } from '../../../../styles/colors';
 
+import {formatCarPayload} from '../../../../utils/formatPayload';
+
 type modalProps = {
   openModal: boolean;
   currentCar: Car;
   handleCloseModal: any;
+  updateUserCars: any;
+  user: User;
 };
 
 const EditCarModal = ({
   openModal,
   currentCar,
   handleCloseModal,
+  updateUserCars,
+  user,
 }: modalProps) => {
+  const [toastMessage, setToastMessage] = useState({
+    bgColor: '',
+    iconName: '',
+    iconColor: '',
+    message: '',
+    status: '',
+  });
   const [loading, setLoading] = useState(false);
   const form = useForm<formCarData>({
     defaultValues: {
@@ -36,14 +51,34 @@ const EditCarModal = ({
     },
   });
   const {
-    reset,
     control,
     handleSubmit,
     formState: {errors},
   } = form;
 
   const onSubmit = async (data: formCarData) => {
-    console.log('DATA', data);
+    setLoading(true);
+    const payload = formatCarPayload(data, user);
+    const carUpdated = await updateCar(payload, currentCar.id);
+    if (carUpdated.value) {
+      setToastMessage({
+        bgColor: 'error.100',
+        iconName: 'check-circle',
+        iconColor: 'green',
+        message: 'Carro atualizado com sucesso',
+        status: 'success',
+      });
+      await updateUserCars();
+    } else {
+      setToastMessage({
+        bgColor: 'warning.100',
+        iconName: 'alert',
+        iconColor: 'red',
+        message: 'Carro não cadastrado, tente novamente!',
+        status: 'error',
+      });
+    }
+    setLoading(false);
   };
 
   return (
@@ -210,7 +245,7 @@ const EditCarModal = ({
                       }}
                       render={({field: {value, onChange}}) => (
                         <InputForm
-                          backgroundColor={WHITE}
+                          backgroundColor={'#eaeaea'}
                           borderColor={BACKGROUND}
                           color={BACKGROUND}
                           borderWidth={1}
@@ -221,6 +256,7 @@ const EditCarModal = ({
                           autoCapitalize="none"
                           onChangeText={onChange}
                           width={'100%'}
+                          readOnly={true}
                         />
                       )}
                     />
@@ -238,6 +274,26 @@ const EditCarModal = ({
                   <Text style={styles.sair} onPress={handleCloseModal}>
                     SAIR
                   </Text>
+                  {console.log('toast message', toastMessage)}
+                  {toastMessage.status && (
+                    <Box
+                      marginTop={5}
+                      bg={toastMessage.bgColor}
+                      px="3"
+                      py="2"
+                      rounded="sm"
+                      mb={5}
+                      style={styles.toastMessage}>
+                      <MaterialCommunityIcons
+                        name={toastMessage.iconName}
+                        size={20}
+                        color={toastMessage.iconColor}
+                      />
+                      <Text style={{marginLeft: 2}}>
+                        {toastMessage.message}
+                      </Text>
+                    </Box>
+                  )}
                 </Center>
               </View>
             </ScrollView>
@@ -272,7 +328,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   header: {
     width: '100%',
