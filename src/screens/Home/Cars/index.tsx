@@ -3,7 +3,15 @@ import {View, Text, ScrollView, StyleSheet, RefreshControl} from 'react-native';
 import {RowItem} from '../../../components/RowItem';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {FlexDiv} from '../../../components/DisplayFlex/FlexDiv';
-import {Button, Center, Icon, useToast, Box, Alert} from 'native-base';
+import {
+  Button,
+  Center,
+  useToast,
+  Box,
+  Alert,
+  Select,
+  CheckIcon,
+} from 'native-base';
 import {
   PRIMARY,
   WHITE,
@@ -17,7 +25,6 @@ import Car from '../../../assets/car.png';
 import StyledButton from '../../../components/Button';
 import {useForm, Controller} from 'react-hook-form';
 import InputForm from '../../../components/Input';
-import SpinnerLoading from '../../../components/SpinnerLoading';
 import NoCarsRegistered from './NoCarsRegistered';
 import {
   createCar,
@@ -26,6 +33,7 @@ import {
 } from '../../../services/car/car.service';
 import {formatCarPayload} from '../../../utils/formatPayload';
 import {AuthContext} from '../../../context/authProvider';
+import EditCarModal from './EditCarModal';
 
 const Cars = () => {
   const toast = useToast();
@@ -33,6 +41,8 @@ const Cars = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [userCars, setUserCars] = useState<Car[]>([]);
+  const [editModal, setEditModal] = useState(false);
+  const [currentCar, setCurrentCar] = useState<Car | null>();
   const {
     reset,
     control,
@@ -154,6 +164,20 @@ const Cars = () => {
     setLoading(false);
   };
 
+  const handleOpenEditCar = carro => {
+    setLoading(true);
+    setEditModal(true);
+    setCurrentCar(carro);
+    setLoading(false);
+  };
+
+  const handleCloseEditCar = carro => {
+    setLoading(true);
+    setEditModal(false);
+    setCurrentCar(null);
+    setLoading(false);
+  };
+
   if (page === 1) {
     return (
       <ScrollView
@@ -178,10 +202,14 @@ const Cars = () => {
                     justify="space-between"
                     width={'100%'}>
                     <>
-                      <Svg width={50} height={45}>
+                      <Svg
+                        width={50}
+                        height={45}
+                        onPress={() => handleOpenEditCar(carro)}>
                         <Image href={Car} width={50} height={45} />
                       </Svg>
                       <FlexDiv
+                        onPress={() => handleOpenEditCar(carro)}
                         direction="column"
                         aligment="flex-start"
                         gap={5}
@@ -231,203 +259,222 @@ const Cars = () => {
             </Button>
           </Center>
         </View>
+        {editModal && currentCar && (
+          <EditCarModal
+            user={user}
+            updateUserCars={handleUserCars}
+            openModal={editModal}
+            currentCar={currentCar}
+            handleCloseModal={handleCloseEditCar}
+          />
+        )}
       </ScrollView>
     );
   } else if (page === 2) {
     return (
-      <ScrollView>
-        <View style={styles.carCreatingContainer}>
-          <Text style={styles.inputLabel}>Modelo</Text>
-          <Controller
-            control={control}
-            name="modelo"
-            rules={{
-              required: 'Nome do Modelo Obrigatório',
-            }}
-            render={({field: {value, onChange}}) => (
-              <InputForm
-                backgroundColor={WHITE}
-                borderColor={BACKGROUND}
-                color={BACKGROUND}
-                borderWidth={1}
-                variant="rounded"
-                placeHolder="Ex: Volvo XC40"
-                value={value}
-                secureTextEntry={false}
-                autoCapitalize="words"
-                onChangeText={onChange}
-              />
-            )}
-          />
-          {errors?.modelo && (
-            <Text style={styles.messageError}>{errors.modelo.message}</Text>
+      <View style={styles.carCreatingContainer}>
+        <Text style={styles.inputLabel}>Modelo</Text>
+        <Controller
+          control={control}
+          name="modelo"
+          rules={{
+            required: 'Nome do Modelo Obrigatório',
+          }}
+          render={({field: {value, onChange}}) => (
+            <InputForm
+              backgroundColor={WHITE}
+              borderColor={BACKGROUND}
+              color={BACKGROUND}
+              borderWidth={1}
+              variant="rounded"
+              placeHolder="Ex: Volvo XC40"
+              value={value}
+              secureTextEntry={false}
+              autoCapitalize="words"
+              onChangeText={onChange}
+            />
           )}
-          <Text style={styles.inputLabel}>Marca</Text>
-          <Controller
-            control={control}
-            name="marca"
-            rules={{
-              required: 'Nome da Marca Obrigatória',
-            }}
-            render={({field: {value, onChange}}) => (
-              <InputForm
-                backgroundColor={WHITE}
-                borderColor={BACKGROUND}
-                color={BACKGROUND}
-                borderWidth={1}
-                variant="rounded"
-                placeHolder="Ex: Volvo"
-                value={value}
-                secureTextEntry={false}
-                autoCapitalize="words"
-                onChangeText={onChange}
-              />
-            )}
-          />
-          {errors?.marca && (
-            <Text style={styles.messageError}>{errors.marca.message}</Text>
+        />
+        {errors?.modelo && (
+          <Text style={styles.messageError}>{errors.modelo.message}</Text>
+        )}
+        <Text style={styles.inputLabel}>Marca</Text>
+        <Controller
+          control={control}
+          name="marca"
+          rules={{
+            required: 'Nome da Marca Obrigatória',
+          }}
+          render={({field: {value, onChange}}) => (
+            <InputForm
+              backgroundColor={WHITE}
+              borderColor={BACKGROUND}
+              color={BACKGROUND}
+              borderWidth={1}
+              variant="rounded"
+              placeHolder="Ex: Volvo"
+              value={value}
+              secureTextEntry={false}
+              autoCapitalize="words"
+              onChangeText={onChange}
+            />
           )}
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <View style={{width: '49%'}}>
-              <Text style={styles.inputLabel}>Placa</Text>
-              <Controller
-                control={control}
-                name="placa"
-                rules={{
-                  required: 'Placa Obrigatória',
-                }}
-                render={({field: {value, onChange}}) => (
-                  <InputForm
-                    backgroundColor={WHITE}
-                    borderColor={BACKGROUND}
-                    color={BACKGROUND}
-                    borderWidth={1}
-                    variant="rounded"
-                    placeHolder="Ex: BSB0000"
-                    value={value}
-                    secureTextEntry={false}
-                    autoCapitalize="words"
-                    onChangeText={onChange}
-                  />
-                )}
-              />
-              {errors?.placa && (
-                <Text style={styles.messageError}>{errors.placa.message}</Text>
+        />
+        {errors?.marca && (
+          <Text style={styles.messageError}>{errors.marca.message}</Text>
+        )}
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <View style={{width: '49%'}}>
+            <Text style={styles.inputLabel}>Placa</Text>
+            <Controller
+              control={control}
+              name="placa"
+              rules={{
+                required: 'Placa Obrigatória',
+              }}
+              render={({field: {value, onChange}}) => (
+                <InputForm
+                  backgroundColor={WHITE}
+                  borderColor={BACKGROUND}
+                  color={BACKGROUND}
+                  borderWidth={1}
+                  variant="rounded"
+                  placeHolder="Ex: BSB0000"
+                  value={value}
+                  secureTextEntry={false}
+                  autoCapitalize="words"
+                  onChangeText={onChange}
+                />
               )}
-            </View>
-            <View style={{width: '49%'}}>
-              <Text style={styles.inputLabel}>Ano</Text>
-              <Controller
-                control={control}
-                name="ano"
-                rules={{
-                  required: 'Ano Obrigatório',
-                }}
-                render={({field: {value, onChange}}) => (
-                  <InputForm
-                    backgroundColor={WHITE}
-                    borderColor={BACKGROUND}
-                    color={BACKGROUND}
-                    borderWidth={1}
-                    variant="rounded"
-                    placeHolder="Ex: 2023"
-                    value={value}
-                    secureTextEntry={false}
-                    autoCapitalize="words"
-                    onChangeText={onChange}
-                    width={'100%'}
-                  />
-                )}
-              />
-              {errors?.ano && (
-                <Text style={styles.messageError}>{errors.ano.message}</Text>
-              )}
-            </View>
+            />
+            {errors?.placa && (
+              <Text style={styles.messageError}>{errors.placa.message}</Text>
+            )}
           </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <View style={{width: '49%'}}>
-              <Text style={styles.inputLabel}>Tipo</Text>
-              <Controller
-                control={control}
-                name="tipo"
-                rules={{
-                  required: 'Tipo Obrigatório',
-                }}
-                render={({field: {value, onChange}}) => (
-                  <InputForm
-                    backgroundColor={WHITE}
-                    borderColor={BACKGROUND}
-                    color={BACKGROUND}
-                    borderWidth={1}
-                    variant="rounded"
-                    placeHolder="Ex: Elétrico"
-                    value={value}
-                    secureTextEntry={false}
-                    onChangeText={onChange}
-                    width={'100%'}
-                  />
-                )}
-              />
-              {errors?.tipo && (
-                <Text style={styles.messageError}>{errors.tipo.message}</Text>
+          <View style={{width: '49%'}}>
+            <Text style={styles.inputLabel}>Ano</Text>
+            <Controller
+              control={control}
+              name="ano"
+              rules={{
+                required: 'Ano Obrigatório',
+              }}
+              render={({field: {value, onChange}}) => (
+                <InputForm
+                  backgroundColor={WHITE}
+                  borderColor={BACKGROUND}
+                  color={BACKGROUND}
+                  borderWidth={1}
+                  variant="rounded"
+                  placeHolder="Ex: 2023"
+                  value={value}
+                  secureTextEntry={false}
+                  autoCapitalize="words"
+                  onChangeText={onChange}
+                  width={'100%'}
+                />
               )}
-            </View>
-            <View style={{width: '49%'}}>
-              <Text style={styles.inputLabel}>Plug</Text>
-              <Controller
-                control={control}
-                name="tipoPlug"
-                rules={{
-                  required: 'Plug Obrigatório',
-                }}
-                render={({field: {value, onChange}}) => (
-                  <InputForm
-                    backgroundColor={WHITE}
-                    borderColor={BACKGROUND}
-                    color={BACKGROUND}
-                    borderWidth={1}
-                    variant="rounded"
-                    placeHolder="Ex: Tipo 2"
-                    value={value}
-                    secureTextEntry={false}
-                    autoCapitalize="none"
-                    onChangeText={onChange}
-                    width={'100%'}
-                  />
-                )}
-              />
-              {errors?.tipoPlug && (
-                <Text style={styles.messageError}>
-                  {errors.tipoPlug.message}
-                </Text>
-              )}
-            </View>
+            />
+            {errors?.ano && (
+              <Text style={styles.messageError}>{errors.ano.message}</Text>
+            )}
           </View>
-          <StyledButton
-            title="SALVAR"
-            backgroundColor={PRIMARY}
-            color={WHITE}
-            onPress={handleSubmit(onSubmit)}
-            loading={loading}
-            loadingColor={SECUNDARY}
-          />
-          <Center>
-            <Text style={styles.sair} onPress={() => setPage(1)}>
-              SAIR
-            </Text>
-          </Center>
         </View>
-      </ScrollView>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <View style={{width: '49%'}}>
+            <Text style={styles.inputLabel}>Tipo</Text>
+            <Controller
+              control={control}
+              name="tipo"
+              rules={{
+                required: 'Tipo Obrigatório',
+              }}
+              render={({field: {value, onChange}}) => (
+                <InputForm
+                  backgroundColor={WHITE}
+                  borderColor={BACKGROUND}
+                  color={BACKGROUND}
+                  borderWidth={1}
+                  variant="rounded"
+                  placeHolder="Ex: Elétrico"
+                  value={value}
+                  secureTextEntry={false}
+                  onChangeText={onChange}
+                  width={'100%'}
+                />
+              )}
+            />
+            {errors?.tipo && (
+              <Text style={styles.messageError}>{errors.tipo.message}</Text>
+            )}
+          </View>
+          <View style={{width: '49%'}}>
+            <Text style={styles.inputLabel}>Plug</Text>
+            <Controller
+              control={control}
+              name="tipoPlug"
+              rules={{
+                required: 'Plug Obrigatório',
+              }}
+              render={({field: {value, onChange}}) => (
+                <Select
+                  size="xl"
+                  height={50}
+                  marginBottom={3}
+                  paddingTop={3}
+                  paddingBottom={3}
+                  paddingRight={7}
+                  fontSize={17}
+                  minWidth="100"
+                  width={'100%'}
+                  variant="rounded"
+                  paddingX={10}
+                  textAlign={'center'}
+                  borderColor={BACKGROUND}
+                  color={BACKGROUND}
+                  backgroundColor={WHITE}
+                  accessibilityLabel="Plug"
+                  placeholder="Plug"
+                  onValueChange={onChange}
+                  value={value}
+                  _selectedItem={{
+                    bg: 'teal.600',
+                    endIcon: <CheckIcon size={3} />,
+                  }}
+                  mt="1">
+                  <Select.Item label="Tipo 2" value="tipo 2" />
+                </Select>
+              )}
+            />
+            {errors?.tipoPlug && (
+              <Text style={styles.messageError}>{errors.tipoPlug.message}</Text>
+            )}
+          </View>
+        </View>
+        <StyledButton
+          title="SALVAR"
+          backgroundColor={PRIMARY}
+          color={WHITE}
+          onPress={handleSubmit(onSubmit)}
+          loading={loading}
+          loadingColor={SECUNDARY}
+        />
+        <Center>
+          <Text style={styles.sair} onPress={() => setPage(1)}>
+            SAIR
+          </Text>
+        </Center>
+      </View>
     );
   }
 };

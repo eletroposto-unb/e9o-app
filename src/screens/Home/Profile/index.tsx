@@ -9,7 +9,6 @@ import {
   Box,
   Alert,
   HStack,
-  Tooltip,
   Fab,
 } from 'native-base';
 import {AuthContext} from '../../../context/authProvider';
@@ -20,7 +19,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {getUser, storeUser} from '../../../context/asyncStorage';
 import {updateUser} from '../../../services/user/user.service';
-import SpinnerLoading from '../../../components/SpinnerLoading';
 
 const Profile = () => {
   const toast = useToast();
@@ -32,7 +30,7 @@ const Profile = () => {
 
   useEffect(() => {
     handleUserData();
-  }, [user]);
+  }, [user && user]);
 
   const handleLogout = () => {
     console.log('REALIZA LOGOUT');
