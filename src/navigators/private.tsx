@@ -3,9 +3,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import UnderConstruction from '../screens/UnderConstruction';
 import Charge from '../screens/Charge';
-import NfcReader from '../screens/NFC';
-import QrCodeReader from '../screens/QRCode';
-import History from '../screens/History';
 import Home from '../screens/Home';
 import React from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -16,7 +13,7 @@ import Octicons from 'react-native-vector-icons/Octicons';
 
 const TabScreens = [
   {name: 'Home', component: Home},
-  {name: 'Charger', component: UnderConstruction},
+  {name: 'Charger', component: Charge},
   {name: 'NfcReader', component: UnderConstruction},
   {name: 'QrCodeReader', component: UnderConstruction},
   {name: 'History', component: UnderConstruction},
