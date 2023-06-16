@@ -1,7 +1,13 @@
 import {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, ScrollView, Alert} from 'react-native';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../styles/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {startNFC} from './NFCHelper';
+
+const title = 'Sistema NFC ';
+const subTitle =
+  'Aproxime seu celular da tag NFC disponível no Toten para dar inicio ao seu carregamento.';
+const helperText = 'Aguardando aproximação...';
 
 const NfcReader = () => {
   const [tagInfo, setTagInfo] = useState();
@@ -18,21 +24,18 @@ const NfcReader = () => {
   return (
     <View style={styles.container}>
       <View style={styles.nfcContainer}>
-        <ScrollView>
-          <Text style={styles.primaryText}>NFC System </Text>
-          <Text style={styles.secondaryText}>
-            Bring your phone to the NFC tag for ticket validation
-          </Text>
-          <View style={styles.nfcIconContainer}>
-            <MaterialCommunityIcons
-              name="cellphone-nfc"
-              color="#cc2b5e"
-              size={96}
-            />
-          </View>
-          <Text style={styles.descriptionMessage}></Text>
-        </ScrollView>
+        <Text style={styles.primaryText}>{title}</Text>
+        <Text style={styles.secondaryText}>{subTitle}</Text>
+        <View style={styles.nfcIconContainer}>
+          <MaterialCommunityIcons
+            name="cellphone-nfc"
+            color={SECUNDARY}
+            size={96}
+          />
+        </View>
+        <Text style={styles.helperText}> {helperText}</Text>
       </View>
+      <View></View>
     </View>
   );
 };
@@ -42,20 +45,35 @@ export default NfcReader;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: BACKGROUND,
     width: '100%',
+  },
+  nfcContainer: {
+    height: '80%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   primaryText: {
-    width: '100%',
-    textAlign: 'center',
-    margin: 0,
-    marginTop: '30%',
+    color: WHITE,
+    fontSize: 24,
+    fontWeight: 'bold',
   },
   secondaryText: {
-    width: '100%',
+    width: '80%',
     textAlign: 'center',
     marginTop: 10,
-    paddingHorizontal: '20%',
+    color: WHITE,
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  helperText: {
+    width: '80%',
+    textAlign: 'center',
+    marginTop: 10,
+    color: WHITE,
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   nfcIconContainer: {
     display: 'flex',
@@ -63,13 +81,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 40,
   },
-  nfcContainer: {
-    height: '80%',
-  },
-  descriptionMessage: {
-    fontWeight: 'normal',
-    fontSize: 16,
-    marginTop: 12,
-    textAlign: 'center',
-  },
+  qrCodeContainer: {},
 });
