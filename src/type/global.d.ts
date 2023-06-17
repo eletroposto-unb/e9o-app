@@ -43,6 +43,34 @@ declare global {
     cpf?: string;
   };
 
+  type station = {
+    idPosto?: number;
+    nome: string;
+    descricao: string;
+    horarioFuncionamento: string;
+    tipoTomada: string;
+    comodidade: string;
+    statusFuncionamento: string;
+    precoKwh: number;
+    cabo: any;
+    potencia: number;
+  };
+
+  type address = {
+    latitude?: number;
+    longitude?: number;
+    endereco: string;
+    estado: string;
+    cep: string;
+    cidade: string;
+    numero: number;
+    complemento: string;
+  };
+
+  type ChargeStation = {
+    station: station;
+    address: address;
+  };
   type Result<T> = ResultSuccess<T> | ResultError;
   type ResultSuccess<T> = {type: 'success'; value: T};
   type ResultError = {type: 'error'; error: Error; value: undefined};
