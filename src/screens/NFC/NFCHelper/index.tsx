@@ -1,5 +1,5 @@
 import NfcManager, {NfcTech, Ndef} from 'react-native-nfc-manager';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 
 const isNFCSupported = async () => NfcManager.isSupported();
 
@@ -61,4 +61,35 @@ export const startNFC = async () => {
       [{text: 'FECHAR', onPress: () => console.log('OK Pressed')}],
     );
   }
+};
+
+export const writeNdef = async (text = '') => {
+  let result = false;
+  let serial;
+  try {
+    await NfcManager.requestTechnology(NfcTech.Ndef);
+    const te = await NfcManager.getTag();
+    serial = te?.id;
+
+    if (text) {
+      const bytes = Ndef.encodeMessage([Ndef.textRecord(text)]);
+      if (bytes) {
+        await NfcManager.ndefHandler.writeNdefMessage(bytes);
+        result = true;
+      }
+    } else {
+      await NfcManager.ndefHandler.writeNdefMessage([]);
+      result = true;
+    }
+  } catch (ex) {
+    console.error(JSON.stringify(ex));
+  } finally {
+    if (!result) {
+      if (Platform.OS === 'ios')
+        await NfcManager.invalidateSessionWithErrorIOS('Recording error!');
+    }
+    NfcManager.cancelTechnologyRequest({throwOnError: true});
+  }
+
+  return {result, serial};
 };
