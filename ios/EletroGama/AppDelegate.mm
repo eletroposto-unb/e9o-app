@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import <GoogleMaps/GoogleMaps.h>
 #import <Firebase.h>
 
 #import <React/RCTBundleURLProvider.h>
@@ -7,6 +8,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [GMSServices provideAPIKey:@"AIzaSyA2jTfcNfSKXVP6ezfO7zrBbzTHm4c0Tf8"];
   [FIRApp configure];
   self.moduleName = @"EletroGama";
   // You can add your custom initial props in the dictionary below.

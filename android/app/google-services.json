@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "204142699829",
+    "project_id": "eletroposto-e9o",
+    "storage_bucket": "eletroposto-e9o.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204142699829:android:ca94f5f9ee5bdc973d987c",
+        "android_client_info": {
+          "package_name": "com.eletrogama"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204142699829-kjjr2b4kk8ul3l7kvijtvnt22urr0tt8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-z7sAJ6kNsyoR-Yfi94u9sJt7UfYVxAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204142699829-kjjr2b4kk8ul3l7kvijtvnt22urr0tt8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "204142699829-ehfikv5ccms817h7o32k6ltltskc9n7e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.eletrogama"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
