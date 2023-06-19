@@ -29,8 +29,10 @@
 		3041B2B22A0B17DC0083A311 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3041B2A22A0B17DC0083A311 /* MaterialCommunityIcons.ttf */; };
 		42F18130FCA4C98976CB0306 /* Pods_EletroGama.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFEA207F32FFF15B9146C59C /* Pods_EletroGama.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8917B9EAAB61BC00A40EE792 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67061DDA3233C5318FB72CAD /* ExpoModulesProvider.swift */; };
 		8E00BD2D7247E909EE1AB399 /* Pods_EletroGama_EletroGamaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 815B0658AAA500467BE87FB9 /* Pods_EletroGama_EletroGamaTests.framework */; };
 		967D50C82A142FA100C6E793 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 967D50C72A142FA100C6E793 /* GoogleService-Info.plist */; };
+		AE0B095B1680A1E01EB8F0CF /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEEAE40C70C19FF713FAC38 /* ExpoModulesProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,10 +74,12 @@
 		3B4392A12AC88292D35C810B /* Pods-EletroGama.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EletroGama.debug.xcconfig"; path = "Target Support Files/Pods-EletroGama/Pods-EletroGama.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-EletroGama.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EletroGama.release.xcconfig"; path = "Target Support Files/Pods-EletroGama/Pods-EletroGama.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-EletroGama-EletroGamaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EletroGama-EletroGamaTests.debug.xcconfig"; path = "Target Support Files/Pods-EletroGama-EletroGamaTests/Pods-EletroGama-EletroGamaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		67061DDA3233C5318FB72CAD /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-EletroGama-EletroGamaTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		815B0658AAA500467BE87FB9 /* Pods_EletroGama_EletroGamaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EletroGama_EletroGamaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = EletroGama/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-EletroGama-EletroGamaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EletroGama-EletroGamaTests.release.xcconfig"; path = "Target Support Files/Pods-EletroGama-EletroGamaTests/Pods-EletroGama-EletroGamaTests.release.xcconfig"; sourceTree = "<group>"; };
 		967D50C72A142FA100C6E793 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "EletroGama/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BCEEAE40C70C19FF713FAC38 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-EletroGama/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EFEA207F32FFF15B9146C59C /* Pods_EletroGama.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EletroGama.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -130,6 +134,23 @@
 			name = EletroGama;
 			sourceTree = "<group>";
 		};
+		1DD6550E17741881C9D84979 /* EletroGamaTests */ = {
+			isa = PBXGroup;
+			children = (
+				67061DDA3233C5318FB72CAD /* ExpoModulesProvider.swift */,
+			);
+			name = EletroGamaTests;
+			sourceTree = "<group>";
+		};
+		26E4BF8EE2D9B9C9CA4F5B9C /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				4D748989440AF05DB1CE5A08 /* EletroGama */,
+				1DD6550E17741881C9D84979 /* EletroGamaTests */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +184,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		4D748989440AF05DB1CE5A08 /* EletroGama */ = {
+			isa = PBXGroup;
+			children = (
+				BCEEAE40C70C19FF713FAC38 /* ExpoModulesProvider.swift */,
+			);
+			name = EletroGama;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +210,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				26E4BF8EE2D9B9C9CA4F5B9C /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -495,6 +525,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* EletroGamaTests.m in Sources */,
+				8917B9EAAB61BC00A40EE792 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,6 +535,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				AE0B095B1680A1E01EB8F0CF /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,7 +561,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = EletroGamaTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -540,6 +572,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EletroGama.app/EletroGama";
@@ -554,7 +587,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = EletroGamaTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -565,6 +598,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EletroGama.app/EletroGama";
@@ -592,6 +626,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.atenasolutions.eletrogama;
 				PRODUCT_NAME = EletroGama;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -620,6 +655,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.atenasolutions.eletrogama;
 				PRODUCT_NAME = EletroGama;
 				SWIFT_VERSION = 5.0;
@@ -676,7 +712,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -741,7 +777,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",

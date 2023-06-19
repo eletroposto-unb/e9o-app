@@ -13,7 +13,7 @@ import {Text, View, StyleSheet, Button} from 'react-native';
 import {BarCodeScanner} from 'expo-barcode-scanner';
 
 const QrCodeReader = (): JSX.Element => {
-  const [hasPermission, setHasPermission] = useState(null);
+  const [hasPermission, setHasPermission] = useState(false);
   const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
@@ -25,9 +25,11 @@ const QrCodeReader = (): JSX.Element => {
     getBarCodeScannerPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({type, data}) => {
+  const handleBarCodeScanned = ({type, data}: any) => {
+    console.log('type', type);
+    console.log('data', data);
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 
   if (hasPermission === null) {
