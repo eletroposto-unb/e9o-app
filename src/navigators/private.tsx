@@ -10,12 +10,13 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
+import NfcReader from '../screens/NFC';
 import QrCodeReader from '../screens/QRCode';
 
 const TabScreens = [
   {name: 'Home', component: Home},
   {name: 'Charger', component: Charge},
-  {name: 'NfcReader', component: UnderConstruction},
+  {name: 'NfcReader', component: NfcReader},
   {name: 'QrCodeReader', component: QrCodeReader},
   {name: 'History', component: UnderConstruction},
 ];

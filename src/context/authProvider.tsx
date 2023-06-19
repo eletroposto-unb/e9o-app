@@ -55,9 +55,29 @@ export const AuthContextProvider = ({children}: any) => {
     await auth().signOut();
   };
 
+  const deleteAccount = async (firebase_uid: string) => {
+    let user = await auth().currentUser;
+    user
+      .delete()
+      .then(() => {
+        return true;
+      })
+      .catch(error => {
+        return false;
+      });
+  };
+
   return (
     <AuthContext.Provider
-      value={{isAuthenticated, user, login, setUser, logout, register}}>
+      value={{
+        isAuthenticated,
+        user,
+        login,
+        setUser,
+        logout,
+        register,
+        deleteAccount,
+      }}>
       {children}
     </AuthContext.Provider>
   );

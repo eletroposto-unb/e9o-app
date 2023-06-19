@@ -8,6 +8,7 @@ import {PrivateNavigator} from './private';
 import {PublicNavigator} from './public';
 import {NavigableScreens} from './screens';
 import Help from '../screens/Help';
+import NfcWrite from '../screens/NFC/NFCWrite';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,7 @@ function ApplicationRoutes() {
             }}>
             <Stack.Screen name="TabScreens" component={PrivateNavigator} />
             <Stack.Screen name="Help" component={Help} />
+            <Stack.Screen name="NfcWrite" component={NfcWrite} />
           </Stack.Navigator>
         ) : (
           <PublicNavigator />
