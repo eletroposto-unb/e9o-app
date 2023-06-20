@@ -1,55 +1,35 @@
-// import {useState, useEffect} from 'react';
-// import {
-//   StyleSheet,
-//   Text,
-//   View,
-//   TouchableOpacity,
-//   Image,
-//   Linking,
-// } from 'react-native';
-// import {Camera, useCameraDevices} from 'react-native-vision-camera';
-import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, Button} from 'react-native';
-import {BarCodeScanner} from 'expo-barcode-scanner';
+import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
+import QrCodeLanding from './Steps/Landing';
+import QrcodeStep from './Steps/QrCodeStep';
 
 const QrCodeReader = (): JSX.Element => {
-  const [hasPermission, setHasPermission] = useState(false);
-  const [scanned, setScanned] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
 
-  useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
-      const {status} = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    };
-
-    getBarCodeScannerPermissions();
-  }, []);
-
-  const handleBarCodeScanned = ({type, data}: any) => {
-    console.log('type', type);
-    console.log('data', data);
-    setScanned(true);
-    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 1:
+        return <QrCodeLanding onNextStep={handleNextStep} />;
+      case 2:
+        return <QrcodeStep onBack={handlePreviousStep} />;
+      default:
+        return null;
+    }
   };
 
-  if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  const handleNextStep = () => {
+    if (currentStep < 2) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
 
-  return (
-    <View style={styles.container}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
-      {scanned && (
-        <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
-      )}
-    </View>
-  );
+  const handlePreviousStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  return <View style={styles.container}>{renderStepContent()}</View>;
 };
 
 export default QrCodeReader;
@@ -57,15 +37,16 @@ export default QrCodeReader;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  text: {
-    marginTop: 15,
-    backgroundColor: 'white',
+  button: {
+    backgroundColor: 'blue',
+    padding: 16,
+    borderRadius: 8,
   },
-  textError: {
-    color: 'red',
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
   },
 });
