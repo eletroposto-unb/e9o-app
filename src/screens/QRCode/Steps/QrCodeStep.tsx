@@ -26,7 +26,7 @@ const QrcodeStep = ({}: Props) => {
   useEffect(() => {
     getInformacaoPosto();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idPosto]);
+  }, [idPosto, posto]);
 
   async function getInformacaoPosto() {
     try {
@@ -79,6 +79,7 @@ const QrcodeStep = ({}: Props) => {
             title={'Clique para ler de novo'}
             onPress={() => {
               setPosto(undefined);
+              setIdPosto(null);
               setScanned(false);
             }}
           />
