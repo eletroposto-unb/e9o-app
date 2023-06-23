@@ -9,6 +9,7 @@ import {getCarsByCpf} from '../../../services/car/car.service';
 import {AuthContext} from '../../../context/authProvider';
 import StyledButton from '../../../components/Button';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 function ChargeForm(props: any) {
   const {posto} = props.route.params;
@@ -47,86 +48,91 @@ function ChargeForm(props: any) {
 
   return (
     <NativeBaseProvider>
-      <ScrollView>
-        <View style={styles.container}>
-          <FlexDiv direction="column" gap={10}>
-            <Text style={Fonts.title}>{posto.nome}</Text>
-            <Text style={Fonts.labelBlue}>Custo</Text>
-            <Text style={Fonts.thinBlack}>
-              {`${posto.precoKwh} moedas pow KWh`}
-            </Text>
-            <Text style={Fonts.labelBlue}>Tempo de Carga:</Text>
-            <Select
-              size="xl"
-              height={50}
-              marginBottom={3}
-              paddingTop={3}
-              paddingBottom={3}
-              paddingRight={7}
-              fontSize={17}
-              minWidth="100"
-              width={'100%'}
-              variant="rounded"
-              paddingX={10}
-              textAlign={'left'}
-              borderColor={BACKGROUND}
-              color={BACKGROUND}
-              backgroundColor={WHITE}
-              accessibilityLabel="time"
-              placeholder="Tempo de carga"
-              onValueChange={handleTimeChange}
-              _selectedItem={{
-                bg: 'teal.600',
-                endIcon: <CheckIcon size={3} />,
-              }}
-              mt="1">
-              <Select.Item label="15 minutos" value="15" />
-              <Select.Item label="30 minutos" value="30" />
-            </Select>
-            <Text style={Fonts.labelBlue}>Carro:</Text>
-            <Select
-              size="xl"
-              height={50}
-              marginBottom={3}
-              paddingTop={3}
-              paddingBottom={3}
-              paddingRight={7}
-              fontSize={17}
-              minWidth="100"
-              width={'100%'}
-              variant="rounded"
-              paddingX={10}
-              textAlign={'left'}
-              borderColor={BACKGROUND}
-              color={BACKGROUND}
-              backgroundColor={WHITE}
-              accessibilityLabel="car"
-              placeholder="Carro"
-              onValueChange={handleCarChange}
-              _selectedItem={{
-                bg: 'teal.600',
-                endIcon: <CheckIcon size={3} />,
-              }}
-              mt="1">
-              {cars.map((car, index) => (
-                <Select.Item
-                  key={index}
-                  label={`${car.modelo} - ${car.placa}`}
-                  value={index.toString()}
-                />
-              ))}
-            </Select>
-            <StyledButton
-              loading={loading}
-              loadingColor={SECUNDARY}
-              title="SALVAR"
-              backgroundColor={PRIMARY}
-              color={WHITE}
-              onPress={handleChargeClick}
-            />
-          </FlexDiv>
-        </View>
-      </ScrollView>
+      <View style={styles.container}>
+        <FlexDiv direction="column" gap={10}>
+          <Text style={Fonts.title}>{posto.nome}</Text>
+          <Text style={Fonts.labelBlue}>Custo</Text>
+          <Text style={Fonts.thinBlack}>
+            {`${posto.precoKwh} moedas pow KWh`}{' '}
+            <FontAwesome5 name="coins" size={20} color={SECUNDARY} />
+          </Text>
+          {console.log('first', posto.potencia)}
+          <Text style={Fonts.labelBlue}>Potência Aproximada</Text>
+          <Text style={Fonts.thinBlack}>
+            {`${posto.potencia} W`}{' '}
+            <FontAwesome5 name="charging-station" size={20} color={SECUNDARY} />
+          </Text>
+          <Text style={Fonts.labelBlue}>Tempo de Carga:</Text>
+          <Select
+            size="xl"
+            height={50}
+            marginBottom={3}
+            paddingTop={3}
+            paddingBottom={3}
+            paddingRight={7}
+            fontSize={17}
+            minWidth="100"
+            width={'100%'}
+            variant="rounded"
+            paddingX={10}
+            textAlign={'left'}
+            borderColor={BACKGROUND}
+            color={BACKGROUND}
+            backgroundColor={WHITE}
+            accessibilityLabel="time"
+            placeholder="Tempo de carga"
+            onValueChange={handleTimeChange}
+            _selectedItem={{
+              bg: 'teal.600',
+              endIcon: <CheckIcon size={3} />,
+            }}
+            mt="1">
+            <Select.Item label="15 minutos" value="15" />
+            <Select.Item label="30 minutos" value="30" />
+          </Select>
+          <Text style={Fonts.labelBlue}>Carro:</Text>
+          <Select
+            size="xl"
+            height={50}
+            marginBottom={3}
+            paddingTop={3}
+            paddingBottom={3}
+            paddingRight={7}
+            fontSize={17}
+            minWidth="100"
+            width={'100%'}
+            variant="rounded"
+            paddingX={10}
+            textAlign={'left'}
+            borderColor={BACKGROUND}
+            color={BACKGROUND}
+            backgroundColor={WHITE}
+            accessibilityLabel="car"
+            placeholder="Carro"
+            onValueChange={handleCarChange}
+            _selectedItem={{
+              bg: 'teal.600',
+              endIcon: <CheckIcon size={3} />,
+            }}
+            mt="1">
+            {cars.map((car, index) => (
+              <Select.Item
+                key={index}
+                label={`${car.modelo} - ${car.placa}`}
+                value={index.toString()}
+              />
+            ))}
+          </Select>
+          <StyledButton
+            loading={loading}
+            loadingColor={SECUNDARY}
+            title="SALVAR"
+            backgroundColor={PRIMARY}
+            color={WHITE}
+            onPress={handleChargeClick}
+          />
+        </FlexDiv>
+      </View>
     </NativeBaseProvider>
   );
 }

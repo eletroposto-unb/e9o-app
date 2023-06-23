@@ -27,7 +27,8 @@ const NfcWrite = props => {
 
   const onSubmit = async () => {
     const payload_string = JSON.stringify({
-      nome: chargeStation?.station.idPosto,
+      idPosto: chargeStation?.station.idPosto,
+      nome: chargeStation?.station.nome,
       descricao: chargeStation?.station.descricao,
       horarioFuncionamento: chargeStation?.station.horarioFuncionamento,
       tipoTomada: chargeStation?.station.tipoTomada,

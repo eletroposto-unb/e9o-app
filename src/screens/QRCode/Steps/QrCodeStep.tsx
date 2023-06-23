@@ -46,8 +46,9 @@ const QrcodeStep = () => {
   const handleBarCodeScanned = ({data}: any) => {
     console.log('qrcode data', data);
     const qrCodeData = JSON.parse(data);
-
+    console.log('qrCodeData.idPosto', qrCodeData);
     if (qrCodeData.idPosto) {
+      console.log('qrCodeData.idPosto', qrCodeData.idPosto);
       setIdPosto(qrCodeData.idPosto);
     }
 
