@@ -9,6 +9,7 @@ import {PublicNavigator} from './public';
 import Help from '../screens/Help';
 import NfcWrite from '../screens/NFC/NFCWrite';
 import ChargeForm from '../screens/Charge/Form/ChargeForm';
+import {Charging} from '../screens/Charge/Charging/Charging';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,7 @@ function ApplicationRoutes() {
             <Stack.Screen name="Help" component={Help} />
             <Stack.Screen name="NfcWrite" component={NfcWrite} />
             <Stack.Screen name="ChargeForm" component={ChargeForm} />
+            <Stack.Screen name="Charging" component={Charging} />
           </Stack.Navigator>
         ) : (
           <PublicNavigator />

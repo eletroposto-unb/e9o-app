@@ -8,10 +8,11 @@ import {Select, CheckIcon, NativeBaseProvider} from 'native-base';
 import {getCarsByCpf} from '../../../services/car/car.service';
 import {AuthContext} from '../../../context/authProvider';
 import StyledButton from '../../../components/Button';
-
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 function ChargeForm(props: any) {
   const {posto} = props.route.params;
+  const navigator = useNavigation<NavigationProp<any>>();
 
   const {user} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -41,7 +42,7 @@ function ChargeForm(props: any) {
   }
 
   const handleChargeClick = () => {
-    setLoading(true);
+    navigator.navigate('Charging', {totalTime: +time});
   };
 
   return (
