@@ -4,16 +4,15 @@ import {Station} from '../../../services/dto/Stations.dto';
 import {FlexDiv} from '../../../components/DisplayFlex/FlexDiv';
 import {Fonts} from '../../../styles/fonts';
 import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
-import {Select, CheckIcon, Box, NativeBaseProvider} from 'native-base';
+import {Select, CheckIcon, NativeBaseProvider} from 'native-base';
 import {getCarsByCpf} from '../../../services/car/car.service';
 import {AuthContext} from '../../../context/authProvider';
 import StyledButton from '../../../components/Button';
 
-type Props = {
-  posto: Station;
-};
 
-const ChargeForm = ({posto}: Props) => {
+function ChargeForm(props: any) {
+  const {posto} = props.route.params;
+
   const {user} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [time, setTime] = useState('15');
@@ -52,10 +51,9 @@ const ChargeForm = ({posto}: Props) => {
           <FlexDiv direction="column" gap={10}>
             <Text style={Fonts.title}>{posto.nome}</Text>
             <Text style={Fonts.labelBlue}>Custo</Text>
-            <Text
-              style={
-                Fonts.thinBlack
-              }>{`${posto.precoKwh} moedas pow KWh`}</Text>
+            <Text style={Fonts.thinBlack}>
+              {`${posto.precoKwh} moedas pow KWh`}
+            </Text>
             <Text style={Fonts.labelBlue}>Tempo de Carga:</Text>
             <Select
               size="xl"
@@ -130,7 +128,7 @@ const ChargeForm = ({posto}: Props) => {
       </ScrollView>
     </NativeBaseProvider>
   );
-};
+}
 
 export default ChargeForm;
 

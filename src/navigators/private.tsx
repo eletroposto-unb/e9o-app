@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createStackNavigator} from '@react-navigation/stack';
 import UnderConstruction from '../screens/UnderConstruction';
 import Charge from '../screens/Charge';
 import Home from '../screens/Home';
@@ -30,7 +29,6 @@ const icons: {[key: string]: any} = {
 };
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
 
 export function PrivateNavigator() {
   return (
@@ -52,45 +50,53 @@ export function PrivateNavigator() {
           headerTransparent: false,
           headerShadowVisible: false,
         }}>
-        {TabScreens.map((screen, index) => (
-          <Tab.Screen
-            key={index}
-            name={screen.name}
-            component={screen.component}
-            options={({route}) => ({
-              tabBarIcon: ({color}) => {
-                const icon = icons[route.name];
-                if (icon.font === 'Octicons') {
-                  return <Octicons name={icon.icon} size={25} color={color} />;
-                }
-                if (icon.font === 'FontAwesome') {
-                  return (
-                    <FontAwesomeIcon name={icon.icon} size={25} color={color} />
-                  );
-                }
-                if (icon.font === 'MaterialCommunityIcons') {
-                  return (
-                    <MaterialCommunityIcon
-                      name={icon.icon}
-                      size={25}
-                      color={color}
-                    />
-                  );
-                }
-                if (icon.font === 'FontAwesome5') {
-                  return (
-                    <FontAwesome5 name={icon.icon} size={25} color={color} />
-                  );
-                }
-                if (icon.font === 'MaterialIcons') {
-                  return (
-                    <MaterialIcons name={icon.icon} size={25} color={color} />
-                  );
-                }
-              },
-            })}
-          />
-        ))}
+        <>
+          {TabScreens.map((screen, index) => (
+            <Tab.Screen
+              key={index}
+              name={screen.name}
+              component={screen.component}
+              options={({route}) => ({
+                tabBarIcon: ({color}) => {
+                  const icon = icons[route.name];
+                  if (icon.font === 'Octicons') {
+                    return (
+                      <Octicons name={icon.icon} size={25} color={color} />
+                    );
+                  }
+                  if (icon.font === 'FontAwesome') {
+                    return (
+                      <FontAwesomeIcon
+                        name={icon.icon}
+                        size={25}
+                        color={color}
+                      />
+                    );
+                  }
+                  if (icon.font === 'MaterialCommunityIcons') {
+                    return (
+                      <MaterialCommunityIcon
+                        name={icon.icon}
+                        size={25}
+                        color={color}
+                      />
+                    );
+                  }
+                  if (icon.font === 'FontAwesome5') {
+                    return (
+                      <FontAwesome5 name={icon.icon} size={25} color={color} />
+                    );
+                  }
+                  if (icon.font === 'MaterialIcons') {
+                    return (
+                      <MaterialIcons name={icon.icon} size={25} color={color} />
+                    );
+                  }
+                },
+              })}
+            />
+          ))}
+        </>
       </Tab.Group>
     </Tab.Navigator>
   );

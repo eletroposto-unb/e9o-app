@@ -3,16 +3,16 @@ import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
 import {getStationById} from '../../../services/stations/stations.service';
 import {Station} from '../../../services/dto/Stations.dto';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 
-type Props = {
-  onBack: () => void;
-};
-
-const QrcodeStep = ({}: Props) => {
+const QrcodeStep = () => {
   const [hasPermission, setHasPermission] = useState(false);
   const [scanned, setScanned] = useState(false);
   const [idPosto, setIdPosto] = useState<number | null>(null);
   const [posto, setPosto] = useState<Station | undefined>(undefined);
+
+  const navigation = useNavigation<StackNavigationProp<any>>();
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -30,15 +30,21 @@ const QrcodeStep = ({}: Props) => {
 
   async function getInformacaoPosto() {
     try {
-      const response = await getStationById(idPosto!);
-      setPosto(response.value);
+      await getStationById(idPosto!).then(response => {
+        if (response.type === 'success') {
+          navigation.navigate('ChargeForm', {
+            posto: response.value as Station,
+            teste: 'teste',
+          });
+        }
+      });
     } catch (error) {
       console.log('error', error);
     }
   }
 
   const handleBarCodeScanned = ({data}: any) => {
-    console.log('data', data);
+    console.log('qrcode data', data);
     const qrCodeData = JSON.parse(data);
 
     if (qrCodeData.idPosto) {
@@ -65,16 +71,6 @@ const QrcodeStep = ({}: Props) => {
       )}
       {scanned && (
         <>
-          <View style={{backgroundColor: 'black'}}>
-            {posto && (
-              <>
-                <Text>Nome: {posto.nome}</Text>
-                <Text>Descrição: {posto.descricao}</Text>
-                <Text>Tipo: {posto.tipoTomada}</Text>
-                <Text>Valor KWh: {posto.precoKwh}</Text>
-              </>
-            )}
-          </View>
           <Button
             title={'Clique para ler de novo'}
             onPress={() => {

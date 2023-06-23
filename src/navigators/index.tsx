@@ -6,9 +6,9 @@ import SafeAreaWrapper from '../components/SafeArea';
 import {createStackNavigator} from '@react-navigation/stack';
 import {PrivateNavigator} from './private';
 import {PublicNavigator} from './public';
-import {NavigableScreens} from './screens';
 import Help from '../screens/Help';
 import NfcWrite from '../screens/NFC/NFCWrite';
+import ChargeForm from '../screens/Charge/Form/ChargeForm';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +38,7 @@ function ApplicationRoutes() {
             <Stack.Screen name="TabScreens" component={PrivateNavigator} />
             <Stack.Screen name="Help" component={Help} />
             <Stack.Screen name="NfcWrite" component={NfcWrite} />
+            <Stack.Screen name="ChargeForm" component={ChargeForm} />
           </Stack.Navigator>
         ) : (
           <PublicNavigator />
