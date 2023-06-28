@@ -1,25 +1,28 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
-import {Station} from '../../../services/dto/Stations.dto';
+import {View, Text, StyleSheet} from 'react-native';
 import {FlexDiv} from '../../../components/DisplayFlex/FlexDiv';
 import {Fonts} from '../../../styles/fonts';
 import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
-import {Select, CheckIcon, NativeBaseProvider} from 'native-base';
+import {Select, CheckIcon, NativeBaseProvider, Box, Toast} from 'native-base';
 import {getCarsByCpf} from '../../../services/car/car.service';
 import {AuthContext} from '../../../context/authProvider';
 import StyledButton from '../../../components/Button';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-function ChargeForm(props: any) {
+import firestore from '@react-native-firebase/firestore';
+
+const db = firestore();
+
+const ChargeForm = (props: any) => {
   const {posto} = props.route.params;
-  const navigator = useNavigation<NavigationProp<any>>();
 
   const {user} = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
-  const [time, setTime] = useState('15');
+  const [time, setTime] = useState('');
   const [selectedCar, setSelectedCar] = useState<Car>();
   const [cars, setCars] = useState<Car[]>([]);
+  const navigator = useNavigation<NavigationProp<any>>();
+
   const handleTimeChange = (value: string) => {
     setTime(value);
   };
@@ -34,6 +37,17 @@ function ChargeForm(props: any) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = db.collection('station').onSnapshot(querySnapshot => {
+      querySnapshot.forEach(documentSnapshot => {
+        // do something with documentSnapshot data
+      });
+    });
+    return () => {
+      unsubscribe(); // Stop the snapshot listener when the component unmounts or when the dependency changes
+    };
+  }, [posto.idPosto]);
+
   async function getCars() {
     await getCarsByCpf(user.cpf).then(response => {
       if (response.type === 'success' && response.value.length > 0) {
@@ -42,8 +56,50 @@ function ChargeForm(props: any) {
     });
   }
 
+  const validate = () => {
+    if (!time) {
+      Toast.show({
+        duration: 3000,
+        render: () => {
+          return (
+            <Box
+              bg={'error.600'}
+              px="3"
+              py="2"
+              rounded="sm"
+              mb={5}
+              style={{...styles.toastMessage, backgroundColor: 'red'}}>
+              <Text>Selecione um tempo</Text>
+            </Box>
+          );
+        },
+      });
+      return false;
+    }
+    if (!selectedCar) {
+      Toast.show({
+        duration: 3000,
+        render: () => {
+          return (
+            <Box
+              bg={'error.600'}
+              px="3"
+              py="2"
+              rounded="sm"
+              mb={5}
+              style={{...styles.toastMessage, backgroundColor: 'red'}}>
+              <Text>Selecione um carro</Text>
+            </Box>
+          );
+        },
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleChargeClick = () => {
-    navigator.navigate('Charging', {totalTime: +time});
+    if (validate()) navigator.navigate('Charging', {totalTime: +time});
   };
 
   return (
@@ -56,7 +112,6 @@ function ChargeForm(props: any) {
             {`${posto.precoKwh} moedas pow KWh`}{' '}
             <FontAwesome5 name="coins" size={20} color={SECUNDARY} />
           </Text>
-          {console.log('first', posto.potencia)}
           <Text style={Fonts.labelBlue}>Potência Aproximada</Text>
           <Text style={Fonts.thinBlack}>
             {`${posto.potencia} W`}{' '}
@@ -126,7 +181,7 @@ function ChargeForm(props: any) {
           <StyledButton
             loading={loading}
             loadingColor={SECUNDARY}
-            title="SALVAR"
+            title="Carregar"
             backgroundColor={PRIMARY}
             color={WHITE}
             onPress={handleChargeClick}
@@ -135,7 +190,7 @@ function ChargeForm(props: any) {
       </View>
     </NativeBaseProvider>
   );
-}
+};
 
 export default ChargeForm;
 
@@ -181,6 +236,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    color: WHITE,
   },
   infoContainer: {
     width: '100%',
