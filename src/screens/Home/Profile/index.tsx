@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable radix */
 import React, {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -10,31 +12,61 @@ import {
   Alert,
   HStack,
   Fab,
+  Modal,
+  Button,
 } from 'native-base';
 import {AuthContext} from '../../../context/authProvider';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
-import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
+import {
+  BACKGROUND,
+  ERROR,
+  PRIMARY,
+  SECUNDARY,
+  WHITE,
+} from '../../../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {getUser, storeUser} from '../../../context/asyncStorage';
 import {updateUser} from '../../../services/user/user.service';
+import {Controller, useForm} from 'react-hook-form';
+import {
+  getCredits,
+  requestCredits,
+} from '../../../services/wallet/wallet.service';
 
 const Profile = () => {
   const toast = useToast();
   const navigation = useNavigation();
   const {logout, user, setUser} = useContext(AuthContext);
   const [userData, setUserData] = useState();
+  const [coins, setCoins] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [loadingCoins, setLoadingCoins] = useState(false);
   const [telephone, setTelephone] = useState('');
+  const [showModal, setShowModal] = useState(false);
+
+  const form = useForm<formCarData>();
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = form;
 
   useEffect(() => {
     handleUserData();
-  }, [user && user]);
+    handleCoins();
+  }, [user && user, coins]);
 
   const handleLogout = () => {
     console.log('REALIZA LOGOUT');
     logout();
+  };
+
+  const handleCoins = async () => {
+    const response = await getCredits(userData?.cpf);
+
+    setCoins(response?.value?.qtdCreditos);
   };
 
   const handleUserData = async () => {
@@ -44,7 +76,9 @@ const Profile = () => {
       currentUser = await getUser();
       setUserData(currentUser);
       setTelephone(currentUser?.telefone && currentUser.telefone);
-    } else setUserData(user);
+    } else {
+      setUserData(user);
+    }
     setLoading(false);
   };
 
@@ -67,7 +101,7 @@ const Profile = () => {
         render: () => {
           return (
             <Box
-              bg={`error.100`}
+              bg={'error.100'}
               px="3"
               py="2"
               rounded="sm"
@@ -83,7 +117,7 @@ const Profile = () => {
         render: () => {
           return (
             <Box
-              bg={`error.300`}
+              bg={'error.300'}
               px="3"
               py="2"
               rounded="sm"
@@ -99,15 +133,55 @@ const Profile = () => {
     setLoading(false);
   };
 
-  // if (loading) {
-  //   return (
-  //     <View style={styles.loadingContainer}>
-  //       <Center>
-  //         <SpinnerLoading color={PRIMARY} />
-  //       </Center>
-  //     </View>
-  //   );
-  // } else {
+  const handleRequestCoins = async (data: {coins: number}) => {
+    setLoadingCoins(true);
+
+    const payload = {
+      qtdCreditosSolicitados: data.coins,
+    };
+
+    const response = await requestCredits(userData?.cpf, payload);
+
+    if (response?.type === 'success') {
+      setShowModal(false);
+      toast.show({
+        render: () => {
+          return (
+            <Box
+              bg={'success.300'}
+              px="3"
+              py="2"
+              rounded="sm"
+              mb={5}
+              style={styles.toastMessage}>
+              <Text>Solicitação realizada com sucesso!</Text>
+            </Box>
+          );
+        },
+      });
+    } else {
+      setShowModal(false);
+      toast.show({
+        render: () => {
+          return (
+            <Box
+              bg={'error.300'}
+              px="3"
+              py="2"
+              rounded="sm"
+              mb={5}
+              style={styles.toastMessage}>
+              <Alert.Icon style={{marginRight: 10}} />
+              Erro ao solicitar moedas, tente novamente!
+            </Box>
+          );
+        },
+      });
+    }
+
+    setLoadingCoins(false);
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -188,6 +262,7 @@ const Profile = () => {
           <View style={{width: '50%'}}>
             <Text style={styles.inputLabel}>Moedas</Text>
             <InputForm
+              defaultValue={coins?.toString()}
               readOnly={true}
               backgroundColor={WHITE}
               borderWidth={1}
@@ -213,6 +288,7 @@ const Profile = () => {
             backgroundColor={SECUNDARY}
             color={PRIMARY}
             width={'45%'}
+            onPress={() => setShowModal(true)}
           />
         </View>
         <StyledButton
@@ -245,6 +321,51 @@ const Profile = () => {
             icon={<Icon color="white" as={Entypo} name="help" size="lg" />}
           />
         </View>
+        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+          <Modal.Content minWidth="80%">
+            <Modal.CloseButton />
+            <Modal.Header>Solicitar moedas</Modal.Header>
+            <Modal.Body gap={2} paddingBottom={10} paddingTop={10}>
+              <Text style={styles.inputLabel}>Quantidade de moedas</Text>
+              <Controller
+                control={control}
+                name="coins"
+                rules={{
+                  required: true,
+                  validate: {
+                    positiveNumber: value =>
+                      parseInt(value) > 0 || 'Quantidade de moedas inválida',
+                  },
+                }}
+                render={({field: {value, onChange}}) => (
+                  <InputForm
+                    backgroundColor={WHITE}
+                    borderWidth={1}
+                    borderColor={BACKGROUND}
+                    color={BACKGROUND}
+                    variant="rounded"
+                    placeHolder="100"
+                    secureTextEntry={false}
+                    value={value}
+                    onChangeText={onChange}
+                    keyboardType="numeric"
+                  />
+                )}
+              />
+              <Button.Group justifyContent="center">
+                <StyledButton
+                  borderRadius={30}
+                  title="SOLICITAR"
+                  backgroundColor={SECUNDARY}
+                  color={PRIMARY}
+                  width={'80%'}
+                  onPress={handleSubmit(handleRequestCoins)}
+                  loading={loadingCoins}
+                />
+              </Button.Group>
+            </Modal.Body>
+          </Modal.Content>
+        </Modal>
       </View>
     </ScrollView>
   );

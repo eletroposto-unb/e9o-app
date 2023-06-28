@@ -6,7 +6,6 @@ import SafeAreaWrapper from '../components/SafeArea';
 import {createStackNavigator} from '@react-navigation/stack';
 import {PrivateNavigator} from './private';
 import {PublicNavigator} from './public';
-import {NavigableScreens} from './screens';
 import Help from '../screens/Help';
 
 const Stack = createStackNavigator();
@@ -20,7 +19,9 @@ function ApplicationRoutes() {
 
   const handleUser = async () => {
     const userStoraged = await getUser();
-    if (!user) setUser(userStoraged);
+    if (!user) {
+      setUser(userStoraged);
+    }
   };
 
   return (
