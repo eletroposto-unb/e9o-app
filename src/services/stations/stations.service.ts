@@ -1,11 +1,13 @@
 import api from '../../config/api';
-import {Station} from '../dto/Stations.dto';
+import {Station, StationsDTO} from '../dto/stations.dto';
 
-export const getAllStations = async (): Promise<Result<[]>> => {
+export const getAllStations = async (): Promise<Result<StationsDTO[]>> => {
   try {
     const res = await api.get('/stations/');
 
-    return {type: 'success', value: res.data} as unknown as Result<[]>;
+    return {type: 'success', value: res.data} as unknown as Result<
+      StationsDTO[]
+    >;
   } catch (error) {
     if (error instanceof Error) {
       return {type: 'error', error, value: undefined};

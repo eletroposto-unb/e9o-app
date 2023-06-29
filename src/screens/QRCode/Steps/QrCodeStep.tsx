@@ -2,7 +2,7 @@ import {BarCodeScanner} from 'expo-barcode-scanner';
 import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
 import {getStationById} from '../../../services/stations/stations.service';
-import {Station} from '../../../services/dto/Stations.dto';
+import {Station} from '../../../services/dto/stations.dto';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack/lib/typescript/src/types';
 

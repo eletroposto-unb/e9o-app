@@ -1,5 +1,4 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import SafeAreaWrapper from '../components/SafeArea';
 import Help from '../screens/Help';
 import NfcWrite from '../screens/NFC/NFCWrite';
 

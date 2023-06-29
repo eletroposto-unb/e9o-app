@@ -22,7 +22,9 @@ function ApplicationRoutes() {
 
   const handleUser = async () => {
     const userStoraged = await getUser();
-    if (!user) setUser(userStoraged);
+    if (!user) {
+      setUser(userStoraged);
+    }
   };
 
   return (
