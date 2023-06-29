@@ -42,3 +42,22 @@ export const getStationById = async (
     };
   }
 };
+
+export const startCharge = async (
+  id: number,
+  minutes: number,
+): Promise<String> => {
+  try {
+    const res = await api.post(`/stations/activate/${id}`, {
+      charge_time: minutes,
+    });
+
+    return res.status.toString();
+  } catch (error) {
+    if (error instanceof Error) {
+      return error.message;
+    }
+
+    return 'Erro desconhecido';
+  }
+};

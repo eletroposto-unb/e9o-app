@@ -11,6 +11,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import firestore from '@react-native-firebase/firestore';
+import {startCharge} from '../../../services/stations/stations.service';
 
 const db = firestore();
 
@@ -21,6 +22,7 @@ const ChargeForm = (props: any) => {
   const [time, setTime] = useState('');
   const [selectedCar, setSelectedCar] = useState<Car>();
   const [cars, setCars] = useState<Car[]>([]);
+  const [loading, setLoading] = useState(false);
   const navigator = useNavigation<NavigationProp<any>>();
 
   const handleTimeChange = (value: string) => {
@@ -98,8 +100,23 @@ const ChargeForm = (props: any) => {
     return true;
   };
 
-  const handleChargeClick = () => {
-    if (validate()) navigator.navigate('Charging', {totalTime: +time});
+  const handleChargeClick = async () => {
+    setLoading(true);
+    if (validate()) {
+      await startCharge(1, +time)
+        .then(response => {
+          console.log(typeof response);
+          if (response === '200') {
+            console.log('navigating');
+            navigator.navigate('Charging', {totalTime: +time});
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      setLoading(false);
+    }
+    setLoading(false);
   };
 
   return (
