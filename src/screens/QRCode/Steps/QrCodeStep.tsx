@@ -66,7 +66,7 @@ const QrcodeStep = () => {
     <View style={styles.container}>
       {!scanned && (
         <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          onBarCodeScanned={handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
         />
       )}

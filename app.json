@@ -1,4 +1,14 @@
 {
   "name": "EletroGama",
-  "displayName": "EletroGama"
+  "displayName": "EletroGama",
+  "expo": {
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+        }
+      ]
+    ]
+  }
 }
