@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import Map from '../../components/Map';
 import {getAllStations} from '../../services/stations/stations.service';
-import {StationsDTO} from '../../services/dto/Stations.dto';
 import {BACKGROUND} from '../../styles/colors';
 import {NativeBaseProvider} from 'native-base';
 
@@ -12,7 +11,7 @@ const Charge = () => {
 
   const handleChargeStations = async () => {
     const stations = await getAllStations();
-    setStations(stations.value as StationsDTO[]);
+    setStations(stations.value);
   };
 
   useEffect(() => {

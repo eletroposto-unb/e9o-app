@@ -1,7 +1,7 @@
 import MapView, {Marker, Callout} from 'react-native-maps';
 import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
-import {StationsDTO} from '../../services/dto/Stations.dto';
+import {StationsDTO} from '../../services/dto/stations.dto';
 import {Text} from 'native-base';
 import {BLACK, ERROR, PRIMARY, SUCCESS} from '../../styles/colors';
 

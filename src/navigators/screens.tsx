@@ -1,7 +1,11 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import Help from '../screens/Help';
+import NfcWrite from '../screens/NFC/NFCWrite';
 
-const StackScreens = [{name: 'Help', component: Help}];
+const StackScreens = [
+  {name: 'Help', component: Help},
+  {name: 'NfcWrite', component: NfcWrite},
+];
 
 const Stack = createStackNavigator();
 

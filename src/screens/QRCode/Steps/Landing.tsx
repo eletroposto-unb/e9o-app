@@ -1,16 +1,19 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import QrcodeStep from './Steps/QrCodeStep';
+import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
-const QrCodeReader = (): JSX.Element => {
+type Props = {
+  onNextStep: () => void;
+};
+
+const QrCodeLanding = ({onNextStep}: Props) => {
   return (
     <View style={styles.container}>
-      <QrcodeStep />
+      <TouchableOpacity onPress={onNextStep} style={styles.button}>
+        <Text style={styles.buttonText}>Ler QR Code</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-export default QrCodeReader;
 
 const styles = StyleSheet.create({
   container: {
@@ -28,3 +31,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
+export default QrCodeLanding;
