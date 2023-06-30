@@ -1,6 +1,13 @@
 export {};
 
 declare global {
+  type Wallet = {
+    idCarteira: number;
+    qtdCreditos: number;
+    qtdCreditosSolicitados: number;
+    cpf: string;
+  };
+
   type User = {
     name: string;
     surname: string;
@@ -10,6 +17,7 @@ declare global {
     telefone?: string;
     status: string;
     firebase_uid?: string;
+    wallet?: Wallet;
   };
 
   type formData = {

@@ -7,7 +7,7 @@ export const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({children}: any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User>();
 
   const login = async (email: string, password: string) => {
     const firebaseUser = await auth()
@@ -27,6 +27,7 @@ export const AuthContextProvider = ({children}: any) => {
         telefone: userDb.value.telefone,
         status: userDb.value.status,
         firebase_uid: firebaseUser.user.uid,
+        wallet: userDb.value.wallet,
       };
       setUser(userStorage);
       console.info('userStorage', userStorage);

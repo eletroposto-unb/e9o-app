@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, RefreshControl} from 'react-native';
 import {
   Text,
   Icon,
@@ -18,12 +18,9 @@ import {StaggerComponent} from '../../../components/Stagger';
 import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {getUser, storeUser} from '../../../context/asyncStorage';
-import {updateUser} from '../../../services/user/user.service';
+import {getUserByCpf, updateUser} from '../../../services/user/user.service';
 import SpinnerLoading from '../../../components/SpinnerLoading';
-import {
-  getCredits,
-  requestCredits,
-} from '../../../services/wallet/wallet.service';
+import {requestCredits} from '../../../services/wallet/wallet.service';
 import {Controller, useForm} from 'react-hook-form';
 
 const Profile = () => {
@@ -45,7 +42,6 @@ const Profile = () => {
 
   useEffect(() => {
     handleUserData();
-    handleCoins();
   }, [user && user, coins && coins]);
 
   const handleLogout = () => {
@@ -62,6 +58,7 @@ const Profile = () => {
       setTelephone(currentUser?.telefone && currentUser.telefone);
     } else {
       setUserData(user);
+      setCoins(user.wallet?.qtdCreditos);
     }
     setLoading(false);
   };
@@ -117,12 +114,12 @@ const Profile = () => {
     setLoading(false);
   };
 
-  const handleCoins = async () => {
-    setLoading(true);
-    const response = await getCredits(userData?.cpf);
-    setCoins(response?.value?.qtdCreditos);
-    setLoading(false);
-  };
+  // const handleCoins = async () => {
+  //   setLoading(true);
+  //   const response = await getCredits(userData?.cpf);
+  //   setCoins(response?.value?.qtdCreditos);
+  //   setLoading(false);
+  // };
 
   const handleRequestCoins = async (data: {coins: number}) => {
     setLoadingCoins(true);
@@ -173,6 +170,12 @@ const Profile = () => {
     setLoadingCoins(false);
   };
 
+  const handleNewUserData = async () => {
+    const newUserData = await getUserByCpf(user.cpf);
+    setUser(newUserData?.value);
+    await storeUser(newUserData?.value);
+  };
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -183,7 +186,15 @@ const Profile = () => {
     );
   } else {
     return (
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={handleNewUserData}
+            colors={[BACKGROUND]}
+            tintColor={BACKGROUND}
+          />
+        }>
         <View style={styles.container}>
           <Text style={styles.inputLabel}>Nome</Text>
           <InputForm
@@ -264,7 +275,7 @@ const Profile = () => {
               <InputForm
                 defaultValue={String(coins)}
                 readOnly={true}
-                backgroundColor={WHITE}
+                backgroundColor={'#eaeaea'}
                 borderWidth={1}
                 borderColor={BACKGROUND}
                 color={BACKGROUND}
@@ -319,10 +330,12 @@ const Profile = () => {
               icon={<Icon color="white" as={Entypo} name="help" size="lg" />}
             /> */}
           </View>
-          <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-            <Modal.Content minWidth="80%">
+          <Modal
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}
+            style={{borderRadius: 20}}>
+            <Modal.Content minWidth="80%" borderRadius={20}>
               <Modal.CloseButton />
-              <Modal.Header>Solicitar moedas</Modal.Header>
               <Modal.Body gap={2} paddingBottom={10} paddingTop={10}>
                 <Text style={styles.inputLabel}>Quantidade de moedas</Text>
                 <Controller
@@ -342,7 +355,7 @@ const Profile = () => {
                       borderColor={BACKGROUND}
                       color={BACKGROUND}
                       variant="rounded"
-                      placeHolder="100"
+                      placeHolder="Ex: 100"
                       secureTextEntry={false}
                       value={value}
                       onChangeText={onChange}
