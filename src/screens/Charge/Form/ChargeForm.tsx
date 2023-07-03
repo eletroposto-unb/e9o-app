@@ -108,7 +108,11 @@ const ChargeForm = (props: any) => {
           console.log(typeof response);
           if (response === '200') {
             console.log('navigating');
-            navigator.navigate('Charging', {totalTime: +time});
+            navigator.navigate('Charging', {
+              totalTime: +time,
+              coins: posto?.precoKwh,
+              potencia: posto?.potencia,
+            });
           }
         })
         .catch(error => {
