@@ -1,5 +1,6 @@
 import api from '../../config/api';
 import {Station, StationsDTO} from '../dto/stations.dto';
+import {firebase} from '@react-native-firebase/auth';
 
 export const getAllStations = async (): Promise<Result<StationsDTO[]>> => {
   try {
@@ -47,10 +48,29 @@ export const startCharge = async (
   id: number,
   minutes: number,
 ): Promise<String> => {
-  try {
-    const res = await api.post(`/stations/activate/${id}`, {
-      charge_time: minutes,
+  const jwtToken = await new Promise(resolve => {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        user.getIdToken().then(function (idToken) {
+          resolve(idToken);
+        });
+      }
     });
+  });
+
+  try {
+    const res = await api.post(
+      `/stations/activate/${id}`,
+      {
+        charge_time: minutes,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwtToken?.toString()}`,
+        },
+      },
+    );
 
     return res.status.toString();
   } catch (error) {

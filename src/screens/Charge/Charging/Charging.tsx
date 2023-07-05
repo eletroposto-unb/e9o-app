@@ -1,21 +1,17 @@
-import {NativeBaseProvider, Text, View} from 'native-base';
+import {Box, NativeBaseProvider, Text, Toast, View} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
 import StyledButton from '../../../components/Button';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {SECUNDARY} from '../../../styles/colors';
+import {SECUNDARY, WHITE} from '../../../styles/colors';
+import {startCharge} from '../../../services/stations/stations.service';
+import {useNavigation} from '@react-navigation/native';
+import {firebase} from '@react-native-firebase/auth';
 
 export function Charging({route}: any) {
-  const [currentTime, setCurrentTime] = useState(route.params.totalTime * 60);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime((prevTime: number) => prevTime - 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const navigator = useNavigation<NavigationProp<any>>();
 
   const children = (remainingTime: number) => {
     const hours = Math.floor(remainingTime / 3600);
@@ -23,6 +19,39 @@ export function Charging({route}: any) {
     const seconds = remainingTime % 60;
 
     return `${hours}:${minutes}:${seconds}`;
+  };
+
+  const tempoRecarga = 0.1;
+
+  const handleChargeCanceled = async () => {
+    setLoading(true);
+    await startCharge(1, tempoRecarga)
+      .then(response => {
+        console.log(response);
+        if (response === '200') {
+          Toast.show({
+            duration: 3000,
+            render: () => {
+              return (
+                <Box
+                  bg={'success.400'}
+                  px="3"
+                  py="2"
+                  rounded="sm"
+                  mb={5}
+                  style={{...styled.toastMessage}}>
+                  <Text>Carregamento parado com sucesso!</Text>
+                </Box>
+              );
+            },
+          });
+          navigator.navigate('Home');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    setLoading(false);
   };
 
   return (
@@ -35,11 +64,9 @@ export function Charging({route}: any) {
         height="100%">
         <CountdownCircleTimer
           isPlaying
-          duration={currentTime}
+          duration={route.params.totalTime * 60}
           colors={SECUNDARY}
-          size={250}
-          // colorsTime={[7]}
-        >
+          size={250}>
           {({remainingTime}) => (
             <Text style={styled.timer}>{children(remainingTime)}</Text>
           )}
@@ -63,9 +90,10 @@ export function Charging({route}: any) {
           title="Parar carregamento"
           backgroundColor="#27AE60"
           color="#FFF"
-          onPress={() => {}}
           loadingColor="#FFF"
           width="80%"
+          loading={loading}
+          onPress={handleChargeCanceled}
         />
       </View>
     </NativeBaseProvider>
@@ -108,5 +136,12 @@ const styled = StyleSheet.create({
     borderColor: '#BDBDBD',
     height1: 1,
     lineHeight: 1,
+  },
+  toastMessage: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    color: WHITE,
   },
 });
