@@ -47,6 +47,7 @@ export const getStationById = async (
 export const startCharge = async (
   id: number,
   minutes: number,
+  id_carro: number,
 ): Promise<String> => {
   const jwtToken = await new Promise(resolve => {
     firebase.auth().onAuthStateChanged(function (user) {
@@ -63,6 +64,7 @@ export const startCharge = async (
       `/stations/activate/${id}`,
       {
         charge_time: minutes,
+        id_carro: id_carro,
       },
       {
         headers: {
@@ -71,6 +73,41 @@ export const startCharge = async (
         },
       },
     );
+
+    return res.status.toString();
+  } catch (error) {
+    if (error instanceof Error) {
+      return error.message;
+    }
+
+    return 'Erro desconhecido';
+  }
+};
+
+export const stopCharge = async (
+  id: number,
+  id_carro: number,
+): Promise<String> => {
+  const jwtToken = await new Promise(resolve => {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        user.getIdToken().then(function (idToken) {
+          resolve(idToken);
+        });
+      }
+    });
+  });
+
+  try {
+    const res = await api.delete(`/stations/activate/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwtToken?.toString()}`,
+      },
+      data: {
+        id_carro: id_carro,
+      },
+    });
 
     return res.status.toString();
   } catch (error) {

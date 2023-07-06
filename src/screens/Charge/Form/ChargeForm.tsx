@@ -102,8 +102,11 @@ const ChargeForm = (props: any) => {
 
   const handleChargeClick = async () => {
     setLoading(true);
+
+    const car = await getCarsByCpf(user.cpf);
+
     if (validate()) {
-      await startCharge(1, +time)
+      await startCharge(1, +time, car[0]?.id)
         .then(response => {
           console.log(response);
           if (response === '200') {
