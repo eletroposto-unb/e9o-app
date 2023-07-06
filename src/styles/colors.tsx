@@ -6,5 +6,6 @@ export const BLACK = '#000000';
 export const SUCCESS = '#27AE60';
 export const WARNING = '#E2B93B';
 export const ERROR = '#EB5757';
+export const LIGHTBLACK = '#454545';
 export const LIGHTGRAY = '#EAEAEA';
 export const MEDIUMGRAY = '#C4C4C4';

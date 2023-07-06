@@ -39,6 +39,14 @@ declare global {
     cpf?: string;
   };
 
+  type History = {
+    horarioEntrada: Date;
+    horarioSaida: Date;
+    valorTotal: number;
+    idPosto: number;
+    cpf: string;
+  };
+
   type Car = {
     id: number;
     placa: string;
