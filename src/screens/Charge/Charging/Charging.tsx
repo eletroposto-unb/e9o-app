@@ -54,6 +54,20 @@ export function Charging({route}: any) {
     setLoading(false);
   };
 
+  const [coinCount, setCoinCount] = useState(0);
+
+  useEffect(() => {
+    const valor = route.params.coins / 60;
+
+    const interval = setInterval(() => {
+      setCoinCount(prevCount => Math.round(prevCount + valor));
+    }, 59000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [route.params.coins]);
+
   return (
     <NativeBaseProvider>
       <View
@@ -80,9 +94,7 @@ export function Charging({route}: any) {
           </View>
           <View style={styled.line} />
           <View style={styled.painelItem}>
-            <Text style={{fontSize: 22, fontWeight: 'bold'}}>
-              {route.params.coins}
-            </Text>
+            <Text style={{fontSize: 22, fontWeight: 'bold'}}>{coinCount}</Text>
             <FontAwesome5 name="coins" size={20} color={SECUNDARY} />
           </View>
         </View>

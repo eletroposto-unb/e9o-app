@@ -105,7 +105,7 @@ const ChargeForm = (props: any) => {
     if (validate()) {
       await startCharge(1, +time)
         .then(response => {
-          console.log(typeof response);
+          console.log(response);
           if (response === '200') {
             console.log('navigating');
             navigator.navigate('Charging', {

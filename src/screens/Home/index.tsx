@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {NativeBaseProvider, Box, Text} from 'native-base';
 import {PRIMARY} from '../../styles/colors';
 import Profile from './Profile';
 import Cars from './Cars';
+import {StaggerComponent} from '../../components/Stagger';
+import {AuthContext} from '../../context/authProvider';
 
 const Home = () => {
   const [action, setAction] = useState({
@@ -16,6 +18,7 @@ const Home = () => {
       status: false,
     },
   });
+  const {user} = useContext(AuthContext);
 
   const handleLogin = () => {
     setAction({
@@ -72,6 +75,9 @@ const Home = () => {
         </View>
         {action.profile.status ? <Profile /> : action.cars.status && <Cars />}
       </View>
+      <View style={styles.footer}>
+        <StaggerComponent user={user} />
+      </View>
     </NativeBaseProvider>
   );
 };
@@ -97,4 +103,10 @@ const styles = StyleSheet.create({
     borderBottomColor: PRIMARY,
     borderBottomWidth: type === 1 ? 1 : 0,
   }),
+  footer: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    flex: 1,
+  },
 });

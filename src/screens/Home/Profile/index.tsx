@@ -14,7 +14,6 @@ import {
 import {AuthContext} from '../../../context/authProvider';
 import InputForm from '../../../components/Input';
 import StyledButton from '../../../components/Button';
-import {StaggerComponent} from '../../../components/Stagger';
 import {BACKGROUND, PRIMARY, SECUNDARY, WHITE} from '../../../styles/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {getUser, storeUser} from '../../../context/asyncStorage';
@@ -320,16 +319,6 @@ const Profile = () => {
               </Text>
             </Center>
           </View>
-          <View style={styles.footer}>
-            <StaggerComponent user={user} />
-            {/* <Fab
-              renderInPortal={true}
-              shadow={9}
-              size="sm"
-              backgroundColor={PRIMARY}
-              icon={<Icon color="white" as={Entypo} name="help" size="lg" />}
-            /> */}
-          </View>
           <Modal
             isOpen={showModal}
             onClose={() => setShowModal(false)}
@@ -435,6 +424,7 @@ const styles = StyleSheet.create({
     bottom: -40,
     right: 5,
     flex: 1,
+    backgroundColor: 'red',
   },
   writeNfcTagContainer: {
     width: '100%',
