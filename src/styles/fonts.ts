@@ -1,4 +1,4 @@
-import {BLACK, PRIMARY} from './colors';
+import {BLACK, PRIMARY, LIGHTBLACK} from './colors';
 
 export const Fonts = {
   regular: {
@@ -31,5 +31,14 @@ export const Fonts = {
     fontSize: 32,
     fontWeight: '600',
   },
-  // Add more font styles as needed
+  detailTitle: {
+    color: PRIMARY,
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  detailText: {
+    color: LIGHTBLACK,
+    fontSize: 16,
+    fontWeight: '400',
+  },
 };

@@ -1,24 +1,49 @@
-import React, {useState} from 'react';
-import {View, Text, ScrollView, TouchableOpacity, Button} from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import {View, Text, ScrollView, Button, StyleSheet} from 'react-native';
 import {Fonts} from '../../styles/fonts';
 import {FlexDiv} from '../../components/DisplayFlex/FlexDiv';
-import {mockHistory} from './_mockHistory';
 import {RowItem} from '../../components/RowItem';
 import {NativeBaseProvider} from 'native-base';
 import {Image, Svg} from 'react-native-svg';
-import historyBack from '../../assets/history-back.jpeg';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import coin from '../../assets/coin.png';
-import {SECUNDARY} from '../../styles/colors';
+import {SECUNDARY, WHITE} from '../../styles/colors';
+import Details from './Details';
 import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br';
+dayjs.locale('pt-br');
+
+import {getHistoryByCpf} from '../../services/history';
+import {AuthContext} from '../../context/authProvider';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const History = () => {
+  const {user} = useContext(AuthContext);
+  const [histories, setHistories] = useState<History[]>([]);
   const [showDetails, setShowDetails] = useState<any>(null);
 
-  const handleShowDetails = (index: number) => {
-    setShowDetails(mockHistory[index]);
+  const handleShowDetails = detail => {
+    setShowDetails(detail);
   };
 
-  console.log(!!showDetails);
+  useEffect(() => {
+    user && handleHistory();
+  }, []);
+
+  const handleHistory = async () => {
+    const res = await getHistoryByCpf(user.cpf);
+    console.log('first', res.value?.history.length);
+    setHistories(res.value?.history);
+  };
+
+  const handleFormatDate = (date: Date) => {
+    const currentDate = dayjs(date);
+    return currentDate.format('D MMMM YYYY, HH:mm');
+  };
+
+  const handleBack = () => {
+    setShowDetails(null);
+  };
 
   return (
     <NativeBaseProvider>
@@ -32,57 +57,64 @@ const History = () => {
             paddingHorizontal: 20,
             gap: 20,
           }}>
-          {showDetails === null && (
+          {showDetails === null ? (
             <>
-              <Text style={Fonts.title}>Histórico de uso</Text>
-              <FlexDiv direction="column" gap={10}>
-                {mockHistory.map((item, index) => {
+              <Text style={{...Fonts.title, textAlign: 'center'}}>
+                Histórico de uso
+              </Text>
+              {histories.length >= 1 &&
+                histories.map((history, index) => {
                   return (
-                    <RowItem key={index}>
-                      <FlexDiv direction="row" gap={10} aligment="center">
-                        <Svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="white"
-                          style={{backgroundColor: 'trasparent'}}>
-                          <Image width={24} height={24} href={historyBack} st />
-                        </Svg>
-                        <FlexDiv direction="column" gap={5}>
-                          <Text style={Fonts.thinBlack}>
-                            {item.horarioEntrada}
-                          </Text>
-                          <Text style={Fonts.labelBlue}>AutoPosto FGA</Text>
-                        </FlexDiv>
-                      </FlexDiv>
-                      <TouchableOpacity
-                        onPress={() => handleShowDetails(index)}>
-                        <Text
-                          style={{
-                            ...Fonts.bold,
-                            color: SECUNDARY,
-                            fontSize: 14,
-                          }}>
-                          {'Detalhes >'}
+                    <TouchableOpacity
+                      gap={10}
+                      aligment="center"
+                      style={styles.historyCard}
+                      key={index}
+                      onPress={() => handleShowDetails(history)}>
+                      <MaterialCommunityIcons
+                        name={'history'}
+                        size={35}
+                        color={SECUNDARY}
+                        style={{marginRight: 10}}
+                      />
+                      <FlexDiv direction="column" gap={5}>
+                        <Text style={Fonts.thinBlack}>
+                          {handleFormatDate(history.horarioEntrada)}
                         </Text>
-                      </TouchableOpacity>
-                    </RowItem>
+                        <Text style={Fonts.labelBlue} numberOfLines={2}>
+                          {history.posto.nome}
+                        </Text>
+                      </FlexDiv>
+                    </TouchableOpacity>
                   );
                 })}
-              </FlexDiv>
             </>
-          )}
-          {showDetails && (
-            <Detalhes
-              handleBack={() => setShowDetails(null)}
-              data={showDetails}
-            />
+          ) : (
+            <Details handleBack={handleBack} history={showDetails} />
           )}
         </View>
       </ScrollView>
     </NativeBaseProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  historyCard: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    width: '100%',
+    backgroundColor: WHITE,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: {width: 5, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+});
 
 export default History;
 
