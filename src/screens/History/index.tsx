@@ -71,10 +71,11 @@ const History = () => {
           }}>
           {showDetails === null ? (
             <>
-              <Text style={{...Fonts.title, textAlign: 'center'}}>
-                Histórico de uso
-              </Text>
-              {loading && <SpinnerLoading />}
+              {histories.length >= 1 && (
+                <Text style={{...Fonts.title, textAlign: 'center'}}>
+                  Histórico de uso
+                </Text>
+              )}
               {histories.length >= 1 ? (
                 histories.map((history, index) => {
                   return (
@@ -95,7 +96,7 @@ const History = () => {
                           {handleFormatDate(history.horarioEntrada)}
                         </Text>
                         <Text style={Fonts.labelBlue} numberOfLines={2}>
-                          {history.posto.nome}
+                          {history?.posto.nome}
                         </Text>
                       </FlexDiv>
                     </TouchableOpacity>

@@ -1,11 +1,15 @@
 import React, {useContext, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, LogBox} from 'react-native';
 import {NativeBaseProvider, Box, Text} from 'native-base';
 import {PRIMARY} from '../../styles/colors';
 import Profile from './Profile';
 import Cars from './Cars';
 import {StaggerComponent} from '../../components/Stagger';
 import {AuthContext} from '../../context/authProvider';
+
+LogBox.ignoreLogs([
+  'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
+]);
 
 const Home = () => {
   const [action, setAction] = useState({
