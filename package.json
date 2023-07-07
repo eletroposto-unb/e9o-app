@@ -1,6 +1,6 @@
 {
   "name": "EletroGama",
-  "version": "1.0.10",
+  "version": "1.0.13",
   "private": true,
   "scripts": {
     "android": "react-native run-android",

@@ -20,6 +20,7 @@ type inputProps = {
   width?: string;
   keyboardType?: string;
   defaultValue?: string;
+  inputLeftElement?: InterfaceInputProps['InputLeftElement'];
 };
 
 const InputForm = ({
@@ -31,6 +32,7 @@ const InputForm = ({
   secureTextEntry,
   type,
   inputRightElement,
+  inputLeftElement,
   backgroundColor,
   borderWidth,
   borderColor,
@@ -64,6 +66,7 @@ const InputForm = ({
       onChangeText={onChangeText}
       type={type}
       InputRightElement={inputRightElement}
+      InputLeftElement={inputLeftElement}
     />
   );
 };

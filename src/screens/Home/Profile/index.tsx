@@ -10,6 +10,7 @@ import {
   HStack,
   Button,
   Modal,
+  InputGroup,
 } from 'native-base';
 import {AuthContext} from '../../../context/authProvider';
 import InputForm from '../../../components/Input';
@@ -21,6 +22,7 @@ import {getUserByCpf, updateUser} from '../../../services/user/user.service';
 import SpinnerLoading from '../../../components/SpinnerLoading';
 import {requestCredits} from '../../../services/wallet/wallet.service';
 import {Controller, useForm} from 'react-hook-form';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const Profile = () => {
   const toast = useToast();
@@ -207,6 +209,14 @@ const Profile = () => {
             placeHolder="Nome"
             secureTextEntry={false}
             autoCapitalize="words"
+            inputRightElement={
+              <Icon
+                as={<MaterialIcons name={'not-interested'} />}
+                size={6}
+                mr="4"
+                color="muted.400"
+              />
+            }
           />
           <Text style={styles.inputLabel}>Email</Text>
           <InputForm
@@ -220,6 +230,14 @@ const Profile = () => {
             placeHolder="Email"
             secureTextEntry={false}
             autoCapitalize="words"
+            inputRightElement={
+              <Icon
+                as={<MaterialIcons name={'not-interested'} />}
+                size={6}
+                mr="4"
+                color="muted.400"
+              />
+            }
           />
           <Text style={styles.inputLabel}>CPF</Text>
           <InputForm
@@ -232,6 +250,14 @@ const Profile = () => {
             variant="rounded"
             placeHolder="CPF"
             secureTextEntry={false}
+            inputRightElement={
+              <Icon
+                as={<MaterialIcons name={'not-interested'} />}
+                size={6}
+                mr="4"
+                color="muted.400"
+              />
+            }
           />
           <Text style={styles.inputLabel}>Telefone</Text>
           <InputForm
@@ -284,10 +310,18 @@ const Profile = () => {
                 secureTextEntry={false}
                 inputRightElement={
                   <Icon
-                    as={<FontAwesome5 name="coins" />}
+                    as={<MaterialIcons name={'not-interested'} />}
                     size={6}
                     mr="4"
-                    color="muted.500"
+                    color="muted.400"
+                  />
+                }
+                inputLeftElement={
+                  <Icon
+                    as={<FontAwesome5 name="coins" />}
+                    size={6}
+                    ml={5}
+                    color={SECUNDARY}
                   />
                 }
               />
