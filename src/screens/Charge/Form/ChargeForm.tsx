@@ -106,15 +106,34 @@ const ChargeForm = (props: any) => {
     const car = await getCarsByCpf(user.cpf);
 
     if (validate()) {
-      await startCharge(1, +time, car[0]?.id)
+      await startCharge(1, +time, car.value[0]?.id)
         .then(response => {
-          console.log(response);
+          // console.log(response);
           if (response === '200') {
             console.log('navigating');
             navigator.navigate('Charging', {
               totalTime: +time,
               coins: posto?.precoKwh,
               potencia: posto?.potencia,
+            });
+          }
+          if (response === '401') {
+            console.log('navigating');
+            Toast.show({
+              duration: 3000,
+              render: () => {
+                return (
+                  <Box
+                    bg={'error.300'}
+                    px="3"
+                    py="2"
+                    rounded="sm"
+                    mb={5}
+                    style={{...styles.toastMessage, backgroundColor: 'red'}}>
+                    <Text>Posto em uso</Text>
+                  </Box>
+                );
+              },
             });
           }
         })

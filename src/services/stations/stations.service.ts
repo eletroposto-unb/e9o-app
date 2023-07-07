@@ -77,7 +77,7 @@ export const startCharge = async (
     return res.status.toString();
   } catch (error) {
     if (error instanceof Error) {
-      return error.message;
+      return '401';
     }
 
     return 'Erro desconhecido';

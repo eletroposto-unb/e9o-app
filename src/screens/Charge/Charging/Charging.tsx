@@ -37,7 +37,7 @@ export function Charging({route}: any) {
 
     const car = await getCarsByCpf(user.cpf);
 
-    await stopCharge(1, car[0]?.id)
+    await stopCharge(1, car.value[0]?.id)
       .then(response => {
         console.log(response);
         if (response === '204') {
