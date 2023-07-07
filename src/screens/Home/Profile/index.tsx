@@ -320,7 +320,7 @@ const Profile = () => {
                   <Icon
                     as={<FontAwesome5 name="coins" />}
                     size={6}
-                    ml={2}
+                    ml={5}
                     color={SECUNDARY}
                   />
                 }

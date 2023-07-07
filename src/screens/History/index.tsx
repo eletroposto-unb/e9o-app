@@ -8,7 +8,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {SECUNDARY, WHITE, BACKGROUND} from '../../styles/colors';
 import Details from './Details';
 import dayjs from 'dayjs';
-import SpinnerLoading from '../../components/SpinnerLoading';
 import NoHistoryMessage from './NoHistoryMessage';
 import 'dayjs/locale/pt-br';
 dayjs.locale('pt-br');

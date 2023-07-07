@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {Modal, StyleSheet, View, Text, ScrollView} from 'react-native';
-import {Center, Box, useToast} from 'native-base';
+import {Center, Box, Icon} from 'native-base';
 import {useForm, Controller} from 'react-hook-form';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {updateCar} from '../../../../services/car/car.service';
 import InputForm from '../../../../components/Input';
 import StyledButton from '../../../../components/Button';
@@ -257,6 +258,14 @@ const EditCarModal = ({
                           onChangeText={onChange}
                           width={'100%'}
                           readOnly={true}
+                          inputRightElement={
+                            <Icon
+                              as={<MaterialIcons name={'not-interested'} />}
+                              size={6}
+                              mr="4"
+                              color="muted.400"
+                            />
+                          }
                         />
                       )}
                     />
