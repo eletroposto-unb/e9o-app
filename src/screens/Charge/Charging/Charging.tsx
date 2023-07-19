@@ -83,11 +83,14 @@ export function Charging({route}: any) {
           )}
         </CountdownCircleTimer>
         <View style={styled.painel}>
-          <View style={styled.painelItem}>
+          {/* <View style={styled.painelItem}>
             <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               Potência: {route.params.totalTime} W
             </Text>
             <FontAwesome5 name="charging-station" size={20} color={SECUNDARY} />
+          </View> */}
+          <View style={styled.painelItem}>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>Custo Atual</Text>
           </View>
           <View style={styled.line} />
           <View style={styled.painelItem}>
